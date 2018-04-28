@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QtGui>
+#include "board.h"
 
 namespace Ui {
 class MainWindow;
@@ -13,10 +17,17 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void displayBoard(Board board);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    QPixmap snail = QPixmap("graphics/snail.png");
+    QPixmap empty = QPixmap("graphics/empty.png");
+    QPixmap cabbage = QPixmap("graphics/cabbage.png");
+    QPixmap snailCabbage = QPixmap("graphics/snailWithCabbage.png");
+    vector <QGraphicsPixmapItem *> boardObjects;
 };
 
 #endif // MAINWINDOW_H

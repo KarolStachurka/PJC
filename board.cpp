@@ -1,0 +1,93 @@
+#include "board.h"
+
+Board::Board()
+{
+    vector<Field> vec;
+    vec.resize(boardRowsNumber*boardColumnsNumber);
+    this->board = vec;
+    setStartingPosition(200, 200);
+}
+Board::Board(int rows, int columns, int snails, int plants)
+{
+    setBoardColumnsNumber(columns);
+    setBoardRowsNumber(rows);
+    vector<Field> vec;
+    position test;
+    test.x = 0, test.y = 0;
+    Helix snail1(test);
+    snailVector.push_back(0);
+    vec.resize(boardRowsNumber*boardColumnsNumber);
+    this->board = vec;
+    if(columns*rows < snails || columns*rows < plants)
+        setStartingPosition(1,1);
+    else
+    setStartingPosition(snails, plants);
+}
+void Board::setBoardColumnsNumber(int columns)
+{
+    this->boardColumnsNumber = columns;
+}
+void Board::setBoardRowsNumber(int rows)
+{
+    this->boardRowsNumber = rows;
+}
+
+vector<Field> Board::getBoard()
+{
+    return board;
+}
+int Board::getBoardRowsNumber()
+{
+    return boardRowsNumber;
+}
+int Board::getBoardColumnsNumber()
+{
+    return boardColumnsNumber;
+}
+
+string Board::testBoard()
+{
+    string helper = "";
+    for (int row = 0; row < boardRowsNumber; row++) {
+        for (int col = 0; col < boardColumnsNumber; col++) {
+            Field current = board[row * boardColumnsNumber + col];
+            if(current.getSnailExistence() && current.getPlantExistence())
+                helper += "F";
+            else if (current.getSnailExistence())
+                helper += "@";
+            else if(current.getPlantExistence())
+                helper+= "0";
+            else
+                helper += "x";
+        }
+        helper +="\n";
+    }
+    return helper;
+}
+void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
+{
+    int snailCounter = 0, plantCounter = 0;
+    srand(time(0));
+    while(snailCounter < numberOfSnails)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board[fieldNumber];
+        if(!current.getSnailExistence())
+        {
+            current.setSnailExistence(true);
+            board[fieldNumber] = current;
+            snailCounter++;
+        }
+    }
+    while(plantCounter < numberOfPlants)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board[fieldNumber];
+        if(!current.getPlantExistence())
+        {
+            current.setPlantExistence(true);
+            board[fieldNumber] = current;
+            plantCounter++;
+        }
+    }
+}
