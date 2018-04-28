@@ -5,6 +5,8 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <algorithm>
+
 #include "field.h"
 #include "lettuce.h"
 #include "helix.h"
@@ -32,6 +34,8 @@ public:
     int getBoardRowsNumber();
     int getBoardColumnsNumber();
     int getTurn();
+    int getSnailNumber();
+    int getPlantNumber();
     vector<Field> getBoard();
     string testBoard();
     void nextTurn();

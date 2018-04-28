@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
-    Board board(10, 10, 10, 1);
+    Board board(50, 50, 10, 20);
     this->board = board;
     QString turnNumber = QString::number(board.getTurn());
     ui->turnNumberDisplay->setText(turnNumber);
@@ -51,5 +51,28 @@ void MainWindow::on_nextTurn_clicked()
     board.nextTurn();
     displayBoard(board);
     QString turnNumber = QString::number(board.getTurn());
+    QString plantNumber = QString::number(board.getPlantNumber());
+    QString snailNumber = QString::number(board.getSnailNumber());
     ui->turnNumberDisplay->setText(turnNumber);
+    ui->plantNumberDisplay->setText(plantNumber);
+    ui->snailNumberDisplay->setText(snailNumber);
+}
+
+void MainWindow::on_automaticMode_clicked()
+{
+    QString text1 = "Start";
+    QString text2 = "Pause";
+    if(!started)
+    {
+        ui->automaticMode->setText(text2);
+        ui->nextTurn->setEnabled(false);
+        started = true;
+    }
+    else
+    {
+        ui->automaticMode->setText(text1);
+        ui->nextTurn->setEnabled(true);
+        started = false;
+    }
+
 }

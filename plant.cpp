@@ -10,5 +10,9 @@ bool Plant::getReproduction()
 }
 void Plant::resetReproducion()
 {
-//    lastReproduction = 0;
+    lastReproduction = 0;
+}
+int Plant::getAge()
+{
+    return age;
 }

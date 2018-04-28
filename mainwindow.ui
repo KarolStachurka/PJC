@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>615</width>
+    <height>505</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
@@ -33,34 +41,16 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QLabel" name="turnNumber">
-            <property name="text">
-             <string>Obecna tura:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="turnNumberDisplay">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QPushButton" name="automaticMode">
+          <property name="text">
+           <string>Start</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="nextTurn">
           <property name="text">
            <string>Następna tura</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="automaticMode">
-          <property name="text">
-           <string>Tryb automatyczny</string>
           </property>
          </widget>
         </item>
@@ -72,10 +62,96 @@
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="logDisplay">
-          <property name="readOnly">
-           <bool>true</bool>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="currentIndex">
+           <number>0</number>
           </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Info</string>
+           </attribute>
+           <widget class="QWidget" name="verticalLayoutWidget">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>271</width>
+              <height>241</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QLabel" name="turnNumber">
+                 <property name="text">
+                  <string>Obecna tura:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="turnNumberDisplay">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QLabel" name="plantNumber">
+                 <property name="text">
+                  <string>Liczba roślin</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="plantNumberDisplay">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QLabel" name="snailNumber">
+                 <property name="text">
+                  <string>Liczba ślimaków</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="snailNumberDisplay">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QPlainTextEdit" name="plainTextEdit"/>
+             </item>
+            </layout>
+           </widget>
+           <zorder></zorder>
+           <zorder>verticalLayoutWidget</zorder>
+          </widget>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>Dodaj roślinę</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>Dodaj ślimaka</string>
+           </attribute>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -89,7 +165,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>650</width>
+     <width>615</width>
      <height>25</height>
     </rect>
    </property>

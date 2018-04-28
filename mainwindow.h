@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QtGui>
+#include <chrono>
+#include <thread>
 #include "board.h"
 
 namespace Ui {
@@ -25,10 +27,13 @@ private slots:
 
     void on_nextTurn_clicked();
 
+    void on_automaticMode_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     Board board;
+    bool started = false;
     QPixmap snail = QPixmap("graphics/snail.png");
     QPixmap empty = QPixmap("graphics/empty.png");
     QPixmap cabbage = QPixmap("graphics/cabbage.png");

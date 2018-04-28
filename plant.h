@@ -13,7 +13,9 @@ public:
     void grow();
     void beEaten();
     void reproduce();
+    int getAge();
     bool getReproduction();
+    bool isDead();
     void resetReproducion();
 protected:
     string type;
@@ -22,6 +24,7 @@ protected:
     int age;
     int lastReproduction;
     bool reproduction;
+    bool dead;
 };
 
 #endif // PLANT_H
