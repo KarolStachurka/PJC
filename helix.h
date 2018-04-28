@@ -6,10 +6,7 @@
 class Helix:public Snail
 {
 public:
-    Helix(position start);
-    void eat();
-    void move();
-    void reproduce();
+    Helix();
     void test();
 };
 

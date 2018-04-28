@@ -12,10 +12,6 @@ Board::Board(int rows, int columns, int snails, int plants)
     setBoardColumnsNumber(columns);
     setBoardRowsNumber(rows);
     vector<Field> vec;
-    position test;
-    test.x = 0, test.y = 0;
-    Helix snail1(test);
-    snailVector.push_back(0);
     vec.resize(boardRowsNumber*boardColumnsNumber);
     this->board = vec;
     if(columns*rows < snails || columns*rows < plants)
@@ -43,6 +39,10 @@ int Board::getBoardRowsNumber()
 int Board::getBoardColumnsNumber()
 {
     return boardColumnsNumber;
+}
+int Board::getTurn()
+{
+    return turn;
 }
 
 string Board::testBoard()
@@ -86,8 +86,84 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
         if(!current.getPlantExistence())
         {
             current.setPlantExistence(true);
+            Lettuce lettuce;
+            lettuce.setX(fieldNumber / boardRowsNumber);
+            lettuce.setY(fieldNumber % boardColumnsNumber);
+            plantVector.push_back(lettuce);
             board[fieldNumber] = current;
             plantCounter++;
         }
     }
+}
+void Board::plantsNextTurn()
+{
+    vector<Plant> tempPlantVector = plantVector;
+    for(auto &i :tempPlantVector)
+    {
+       if(i.getReproduction())
+       {
+          int direction = rand()%4;
+          if(direction == 0 && i.getX() > 0)
+          {
+              Field current = board[boardColumnsNumber*(i.getX() - 1) + i.getY()];
+              if(!current.getPlantExistence())
+              {
+                  Lettuce lettuce;
+                  lettuce.setX(i.getX() - 1);
+                  lettuce.setY(i.getY());
+                  current.setPlantExistence(true);
+                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  plantVector.push_back(lettuce);
+              }
+          }
+          else if(direction == 1 && i.getY() > 0)
+          {
+              Field current = board[boardColumnsNumber*(i.getX()) + i.getY() - 1];
+              if(!current.getPlantExistence())
+              {
+                  Lettuce lettuce;
+                  lettuce.setX(i.getX());
+                  lettuce.setY(i.getY() - 1);
+                  current.setPlantExistence(true);
+                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  plantVector.push_back(lettuce);
+              }
+          }
+          else if(direction == 2 && i.getX() < boardColumnsNumber - 1)
+          {
+              Field current = board[boardColumnsNumber*(i.getX() + 1) + i.getY()];
+              if(!current.getPlantExistence())
+              {
+                  Lettuce lettuce;
+                  lettuce.setX(i.getX() + 1);
+                  lettuce.setY(i.getY());
+                  current.setPlantExistence(true);
+                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  plantVector.push_back(lettuce);
+              }
+          }
+          else if(direction == 3 && i.getY() < boardRowsNumber - 1)
+          {
+              Field current = board[boardColumnsNumber*(i.getX()) + i.getY() + 1];
+              if(!current.getPlantExistence())
+              {
+                  Lettuce lettuce;
+                  lettuce.setX(i.getX());
+                  lettuce.setY(i.getY() + 1);
+                  current.setPlantExistence(true);
+                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  plantVector.push_back(lettuce);
+              }
+          }
+
+       }
+
+    }
+}
+
+void Board::nextTurn()
+{
+    plantsNextTurn();
+    cout<<plantVector.size() << endl;
+    turn++;
 }

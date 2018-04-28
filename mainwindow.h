@@ -20,9 +20,15 @@ public:
     void displayBoard(Board board);
     ~MainWindow();
 
+private slots:
+
+
+    void on_nextTurn_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    Board board;
     QPixmap snail = QPixmap("graphics/snail.png");
     QPixmap empty = QPixmap("graphics/empty.png");
     QPixmap cabbage = QPixmap("graphics/cabbage.png");

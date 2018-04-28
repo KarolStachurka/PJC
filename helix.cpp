@@ -1,24 +1,23 @@
 #include "helix.h"
 
-Helix::Helix(position start)
+Helix::Helix()
 {
     type = "Helix";
-    snailPosition = start;
     age = 0;
     energy = 10;
     speed = 1;
     lastReproduction = 0;
     hunger = 2;
 }
-void Helix::eat()
+void Snail::eat()
 {
 
 }
-void Helix::move()
+void Snail::move()
 {
 
 }
-void Helix::reproduce()
+void Snail::reproduce()
 {
 
 }

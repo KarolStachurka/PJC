@@ -6,9 +6,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    Board board(100, 100, 200, 200);
+    this->setWindowState(Qt::WindowMaximized);
+    Board board(10, 10, 10, 1);
+    this->board = board;
+    QString turnNumber = QString::number(board.getTurn());
+    ui->turnNumberDisplay->setText(turnNumber);
     displayBoard(board);
-
 }
 void MainWindow::displayBoard(Board board)
 {
@@ -36,7 +39,17 @@ void MainWindow::displayBoard(Board board)
     }
 }
 
+
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_nextTurn_clicked()
+{
+    board.nextTurn();
+    displayBoard(board);
+    QString turnNumber = QString::number(board.getTurn());
+    ui->turnNumberDisplay->setText(turnNumber);
 }

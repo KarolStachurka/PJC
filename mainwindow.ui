@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>629</width>
-    <height>506</height>
-   </rect>
-  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
@@ -41,14 +33,32 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="turnNumber">
+            <property name="text">
+             <string>Obecna tura:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="turnNumberDisplay">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="nextTurn">
           <property name="text">
            <string>Następna tura</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="automaticMode">
           <property name="text">
            <string>Tryb automatyczny</string>
           </property>
@@ -62,7 +72,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="plainTextEdit">
+         <widget class="QPlainTextEdit" name="logDisplay">
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -79,7 +89,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>629</width>
+     <width>650</width>
      <height>25</height>
     </rect>
    </property>

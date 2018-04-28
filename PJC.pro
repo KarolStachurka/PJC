@@ -17,12 +17,18 @@ SOURCES += main.cpp\
     field.cpp \
     board.cpp \
     snail.cpp \
-    helix.cpp
+    helix.cpp \
+    square.cpp \
+    plant.cpp \
+    lettuce.cpp
 
 HEADERS  += mainwindow.h \
     field.h \
     board.h \
     snail.h \
-    helix.h
+    helix.h \
+    square.h \
+    plant.h \
+    lettuce.h
 
 FORMS    += mainwindow.ui

@@ -1,8 +1,9 @@
 #ifndef FIELD_H
 #define FIELD_H
 #include "snail.h"
+#include "square.h"
 
-class Field
+class Field:public Square
 {
 private:
     bool snailExistence = false;

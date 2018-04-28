@@ -2,14 +2,10 @@
 #define SNAIL_H
 
 #include <iostream>
-
+#include "square.h"
 using namespace std;
-struct position{
-    int x;
-    int y;
-};
 
-class Snail
+class Snail:public Square
 {
 public:
     Snail();
@@ -18,7 +14,6 @@ public:
     void reproduce();
 protected:
     string type;
-    position snailPosition;
     int hunger;
     int energy;
     int age;
