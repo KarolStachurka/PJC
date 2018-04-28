@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
-    Board board(50, 50, 10, 20);
+    Board board(50, 50, 20, 20);
     this->board = board;
     QString turnNumber = QString::number(board.getTurn());
     ui->turnNumberDisplay->setText(turnNumber);

@@ -11,6 +11,7 @@ private:
 
 public:
     Field();
+    void setCoordinates(int x, int y);
     void setSnailExistence(bool existence);
     void setPlantExistence(bool existence);
     bool getSnailExistence();

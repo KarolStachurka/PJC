@@ -13,14 +13,18 @@ void Snail::eat()
 {
 
 }
-void Snail::move()
-{
-
-}
 void Snail::reproduce()
 {
 
 }
+void Snail::move(int x, int y)
+{
+    this->setX(x);
+    this->setY(y);
+    energy--;
+    age++;
+}
+
 void Helix::test()
 {
     std::cout << this->energy;

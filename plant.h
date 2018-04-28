@@ -16,6 +16,7 @@ public:
     int getAge();
     bool getReproduction();
     bool isDead();
+    bool isEaten();
     void resetReproducion();
 protected:
     string type;
@@ -25,6 +26,8 @@ protected:
     int lastReproduction;
     bool reproduction;
     bool dead;
+    bool eaten;
+
 };
 
 #endif // PLANT_H

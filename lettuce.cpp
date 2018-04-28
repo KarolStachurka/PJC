@@ -9,6 +9,7 @@ Lettuce::Lettuce()
     lastReproduction = 0;
     dead = false;
     reproduction = false;
+    eaten = false;
 }
 void Plant::reproduce()
 {
@@ -17,18 +18,24 @@ void Plant::reproduce()
 void Plant::grow()
 {
     age++;
-    if(energy < 10)
+    if(energy < 10 && !eaten)
         energy = energy + 2;
-    if(age > 2 && lastReproduction > 2)
+    if(size > 3 && lastReproduction > 3 && energy > 2)
     {
         reproduction = true;
     }
-    if(age > 6 || energy < 0)
+    if(age > 8 || energy < 1)
         dead = true;
     size = 1 + age/2;
     lastReproduction++;
 
 }
+void Plant::beEaten()
+{
+    energy = energy - 5;
+    eaten = true;
+}
+
 bool Plant::isDead()
 {
     return dead;

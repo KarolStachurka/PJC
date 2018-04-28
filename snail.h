@@ -9,7 +9,7 @@ class Snail:public Square
 {
 public:
     Snail();
-    void move();
+    void move(int x, int y);
     void eat();
     void reproduce();
 protected:
