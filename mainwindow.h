@@ -8,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include "board.h"
+#include "simulationthread.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,8 +21,14 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void displayBoard(Board board);
+    SimulationThread *secondThread;
     ~MainWindow();
-
+signals:
+    void startSimulation(bool);
+    void endSecondThread(bool);
+    void sendPrevBoard(Board);
+public slots:
+    void getNextBoard(Board board);
 private slots:
 
 
@@ -33,7 +40,7 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     Board board;
-    bool started = false;
+    bool simStarted = false;
     QPixmap snail = QPixmap("graphics/snail.png");
     QPixmap empty = QPixmap("graphics/empty.png");
     QPixmap cabbage = QPixmap("graphics/cabbage.png");

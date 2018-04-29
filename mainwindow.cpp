@@ -7,6 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
+    secondThread = new SimulationThread(this);
+    connect(this, SIGNAL(startSimulation(bool)),secondThread,SLOT(onSimStarted(bool)));
+    connect(this,SIGNAL(endSecondThread(bool)),secondThread,SLOT(endThread(bool)));
+    connect(this,SIGNAL(sendPrevBoard(Board)),secondThread,SLOT(getPrevBoard(Board));
+    secondThread->start();
     Board board(50, 50, 100, 1000);
     this->board = board;
     QString turnNumber = QString::number(board.getTurn());
@@ -42,6 +47,8 @@ void MainWindow::displayBoard(Board board)
 
 MainWindow::~MainWindow()
 {
+    emit endSecondThread(true);
+    delete secondThread;
     delete ui;
 }
 
@@ -62,17 +69,19 @@ void MainWindow::on_automaticMode_clicked()
 {
     QString text1 = "Start";
     QString text2 = "Pause";
-    if(!started)
+    if(!simStarted)
     {
         ui->automaticMode->setText(text2);
         ui->nextTurn->setEnabled(false);
-        started = true;
+        simStarted = true;
+        emit startSimulation(simStarted);
     }
     else
     {
         ui->automaticMode->setText(text1);
         ui->nextTurn->setEnabled(true);
-        started = false;
+        simStarted = false;
+        emit startSimulation(simStarted);
     }
 
 }

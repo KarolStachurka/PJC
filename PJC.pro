@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     helix.cpp \
     square.cpp \
     plant.cpp \
-    lettuce.cpp
+    lettuce.cpp \
+    simulationthread.cpp
 
 HEADERS  += mainwindow.h \
     field.h \
@@ -29,6 +30,7 @@ HEADERS  += mainwindow.h \
     helix.h \
     square.h \
     plant.h \
-    lettuce.h
+    lettuce.h \
+    simulationthread.h
 
 FORMS    += mainwindow.ui
