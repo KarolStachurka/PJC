@@ -9,6 +9,7 @@ public:
     Square(int x, int y);
     void setX(int x);
     void setY(int y);
+    void setCoordinates(int x, int y);
     int getX();
     int getY();
 

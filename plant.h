@@ -13,6 +13,7 @@ public:
     void grow();
     void beEaten();
     void reproduce();
+    void die();
     int getAge();
     bool getReproduction();
     bool isDead();

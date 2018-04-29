@@ -12,6 +12,11 @@ public:
     void move(int x, int y);
     void eat();
     void reproduce();
+    bool isReproduced();
+    bool isDead();
+    void die();
+    void grow();
+    void setReproduction(bool reproduction);
 protected:
     string type;
     int hunger;
@@ -19,6 +24,8 @@ protected:
     int age;
     int speed;
     int lastReproduction;
+    bool reproduction;
+    bool dead;
 };
 
 #endif // SNAIL_H

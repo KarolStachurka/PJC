@@ -24,8 +24,6 @@ void Plant::grow()
     {
         reproduction = true;
     }
-    if(age > 8 || energy < 1)
-        dead = true;
     size = 1 + age/2;
     lastReproduction++;
 

@@ -16,3 +16,8 @@ int Plant::getAge()
 {
     return age;
 }
+void Plant::die()
+{
+    if(age > 8 || energy < 1)
+        dead = true;
+}

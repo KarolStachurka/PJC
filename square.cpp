@@ -24,3 +24,8 @@ void Square::setY(int y)
 {
     this->coordinateY = y;
 }
+void Square::setCoordinates(int x, int y)
+{
+    this->coordinateX = x;
+    this->coordinateY = y;
+}

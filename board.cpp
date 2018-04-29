@@ -118,11 +118,13 @@ void Board::plantsNextTurn()
        if(current.getSnailExistence())
            i.beEaten();
        i.grow();
+       i.die();
        if(i.isDead())
-       {           current.setPlantExistence(false);
-           board[boardColumnsNumber*(i.getX()) + i.getY()] = current;
+       {
+           current.setPlantExistence(false);
+           board[boardColumnsNumber*(current.getX()) + current.getY()] = current;
        }
-       if(i.getReproduction())
+       if(i.getReproduction() && !i.isDead())
        {
           int direction = rand()%4;
           if(direction == 0 && i.getX() > 0)
@@ -194,54 +196,114 @@ void Board::snailsNextTurn()
         Field current = board[boardColumnsNumber*(i.getX()) + i.getY()];
         Field next;
         int direction = rand()%4;
-        if(direction == 0 && i.getX() > 0)
+        i.die();
+        if(i.isDead())
         {
-            next = board[boardColumnsNumber*(i.getX() - 1) + i.getY()];
-            if(!next.getSnailExistence())
+            current.setSnailExistence(false);
+            board[boardColumnsNumber*(current.getX()) + current.getY()] = current;
+        }
+        if(current.getPlantExistence())
+        {
+            i.eat();
+        }
+        else if(!i.isDead())
+        {
+            if(direction == 0 && i.getX() > 0)
             {
-                next.setSnailExistence(true);
-                i.move(next.getX(),next.getY());
+                next = board[boardColumnsNumber*(i.getX() - 1) + i.getY()];
+                if(!next.getSnailExistence())
+                {
+                    next.setSnailExistence(true);
+                    i.move(next.getX(),next.getY());
+                    if(i.isReproduced())
+                    {
+                        Helix newHelix;
+                        newHelix.setX(current.getX());
+                        newHelix.setY(current.getY());
+                        snailVector.push_back(newHelix);
+                        i.setReproduction(false);
+                    }
+                    else
+                        current.setSnailExistence(false);
+                    board[boardColumnsNumber*i.getX() + i.getY()] = next;
+                }
+                else
+                    i.grow();
+            }
+            else if(direction == 1 && i.getY() > 0)
+            {
+                next = board[boardColumnsNumber*(i.getX()) + i.getY() - 1];
+                if(!next.getSnailExistence())
+                {
+                    next.setSnailExistence(true);
+                    i.move(next.getX() ,next.getY());
+                    if(i.isReproduced())
+                    {
+                        Helix newHelix;
+                        newHelix.setX(current.getX());
+                        newHelix.setY(current.getY());
+                        snailVector.push_back(newHelix);
+                        i.setReproduction(false);
 
-                current.setSnailExistence(false);
-                board[boardColumnsNumber*i.getX() + i.getY()] = next;
+                    }
+                    else
+                        current.setSnailExistence(false);
+                    board[boardColumnsNumber*i.getX() + i.getY()] = next;
+                }
+                else
+                    i.grow();
             }
-        }
-        else if(direction == 1 && i.getY() > 0)
-        {
-            next = board[boardColumnsNumber*(i.getX()) + i.getY() - 1];
-            if(!next.getSnailExistence())
+            else if(direction == 2 && i.getX() < boardColumnsNumber - 1)
             {
-                next.setSnailExistence(true);
-                current.setSnailExistence(false);
-                i.move(next.getX() ,next.getY());
-                board[boardColumnsNumber*i.getX() + i.getY()] = next;
+                next = board[boardColumnsNumber*(i.getX() + 1) + i.getY()];
+                if(!next.getSnailExistence())
+                {
+                    next.setSnailExistence(true);
+                    i.move(next.getX() ,next.getY());
+                    if(i.isReproduced())
+                    {
+                        Helix newHelix;
+                        newHelix.setX(current.getX());
+                        newHelix.setY(current.getY());
+                        snailVector.push_back(newHelix);
+                        i.setReproduction(false);
+
+                    }
+                    else
+                        current.setSnailExistence(false);
+                    board[boardColumnsNumber*i.getX() + i.getY()] = next;
+                }
+                else
+                    i.grow();
             }
-        }
-        else if(direction == 2 && i.getX() < boardColumnsNumber - 1)
-        {
-            next = board[boardColumnsNumber*(i.getX() + 1) + i.getY()];
-            if(!next.getSnailExistence())
+            else if(direction == 3 && i.getY() < boardRowsNumber - 1)
             {
-                next.setSnailExistence(true);
-                current.setSnailExistence(false);
-                i.move(next.getX() ,next.getY());
-                board[boardColumnsNumber*i.getX() + i.getY()] = next;
+                next = board[boardColumnsNumber*(i.getX()) + i.getY() + 1];
+                if(!next.getSnailExistence())
+                {
+                    next.setSnailExistence(true);
+                    i.move(next.getX() ,next.getY());
+                    if(i.isReproduced())
+                    {
+                        Helix newHelix;
+                        newHelix.setX(current.getX());
+                        newHelix.setY(current.getY());
+                        snailVector.push_back(newHelix);
+                        i.setReproduction(false);
+
+                    }
+                    else
+                        current.setSnailExistence(false);
+                    board[boardColumnsNumber*i.getX() + i.getY()] = next;
+                }
+                else
+                    i.grow();
             }
+            board[boardColumnsNumber*(current.getX()) + current.getY()] = current;
         }
-        else if(direction == 3 && i.getY() < boardRowsNumber - 1)
-        {
-            next = board[boardColumnsNumber*(i.getX()) + i.getY() + 1];
-            if(!next.getSnailExistence())
-            {
-                next.setSnailExistence(true);
-                current.setSnailExistence(false);
-                i.move(next.getX() ,next.getY());
-                board[boardColumnsNumber*i.getX() + i.getY()] = next;
-            }
-        }
-        board[boardColumnsNumber*(current.getX()) + current.getY()] = current;
 
     }
+    snailVector.erase(std::remove_if(snailVector.begin(), snailVector.end(),[](Snail &i){return i.isDead();}), snailVector.end());
 }
 
 void Board::nextTurn()
