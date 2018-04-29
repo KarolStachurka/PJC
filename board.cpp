@@ -2,10 +2,10 @@
 
 Board::Board()
 {
-    vector<Field> vec;
-    vec.resize(boardRowsNumber*boardColumnsNumber);
-    this->board = vec;
-    setStartingPosition(200, 200);
+//    vector<Field> vec;
+//    vec.resize(boardRowsNumber*boardColumnsNumber);
+//    this->board = vec;
+//    setStartingPosition(200, 200);
 }
 Board::Board(int rows, int columns, int snails, int plants)
 {
