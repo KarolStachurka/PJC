@@ -12,7 +12,7 @@ class Plant:public Square
 public:
     Plant();
     void grow();
-    void beEaten();
+    void beEaten(int energyLoss);
     void reproduce();
     void die();
     int getAge();

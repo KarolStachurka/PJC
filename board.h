@@ -28,6 +28,9 @@ public:
     Board(int rows, int columns, int snails, int plants);
     void addSnail(int x, int y);
     void addPlant(int x, int y);
+    vector<Field> findNearSnails(int range);
+    vector<Field> findNearPlants(int range);
+    vector<Field> findNearNoPlants(int range);
     void setBoardRowsNumber(int rows);
     void setBoardColumnsNumber(int columns);
     void setStartingPosition(int numberOfSnails, int numberOfPlants);

@@ -16,7 +16,7 @@ Board::Board(int rows, int columns, int snails, int plants)
     int it = 0;
     for(auto &i:vec)
     {
-        i.setCoordinates(it/boardRowsNumber,it%boardColumnsNumber);
+        i.setCoordinates(it%boardRowsNumber, it/boardColumnsNumber);
         it++;
     }
     this->board = vec;
@@ -116,7 +116,7 @@ void Board::plantsNextTurn()
     {
        Field current = board[boardColumnsNumber*(i.getX()) + i.getY()];
        if(current.getSnailExistence())
-           i.beEaten();
+           i.beEaten(2);
        i.grow();
        i.die();
        if(i.isDead())
@@ -293,7 +293,7 @@ void Board::snailsNextTurn()
         }
 
     }
-    snailVector.erase(std::remove_if(snailVector.begin(), snailVector.end(),[](Snail &i){return i.isDead();}), snailVector.end());
+    snailVector.erase(std::remove_if(snailVector.begin(), snailVector.end(),[](Snail &i){return !i.isDead();}), snailVector.end());
 }
 
 void Board::nextTurn()

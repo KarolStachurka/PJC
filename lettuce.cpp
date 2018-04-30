@@ -28,7 +28,7 @@ void Plant::grow()
     lastReproduction++;
 
 }
-void Plant::beEaten()
+void Plant::beEaten(int energyLoss)
 {
     energy = energy - 5;
     eaten = true;

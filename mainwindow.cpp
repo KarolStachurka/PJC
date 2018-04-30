@@ -17,9 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(secondThread,SIGNAL(sendNextBoard(Board)),this,SLOT(getNextBoard(Board)));
     secondThread->start();
 
-    Board board(50, 50, 10, 100);
-    this->board = board;
-    displayBoard(board);
+    this->board = Board(50, 50, 50, 100);
 }
 void MainWindow::displayBoard(Board board)
 {
@@ -76,6 +74,12 @@ void MainWindow::on_automaticMode_clicked()
 {
     QString text1 = "Start";
     QString text2 = "Pause";
+    if(ui->mapHuge->isChecked() && board.getTurn() < 1)
+        this->board = Board(75, 75, 100, 1000);
+    else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
+        this->board = Board(50, 50, 50, 100);
+    else if(board.getTurn() < 1)
+        this->board = Board(30, 30, 10, 100);
     if(!simStarted)
     {
         ui->automaticMode->setText(text2);
@@ -109,13 +113,17 @@ void MainWindow::getNextBoard(Board board)
 
 void MainWindow::on_resetButton_clicked()
 {
-    Board board(50, 50, 10, 100);
-    this->board = board;
+    if(ui->mapHuge->isChecked())
+        this->board = Board(75, 75, 100, 1000);
+    else if(ui->mapMedium->isChecked())
+        this->board = Board(50, 50, 50, 100);
+    else
+        this->board = Board(30, 30, 10, 100);
     displayBoard(board);
 }
 void MainWindow::getMouseCoords(int x, int y)
 {
-    if(!simStarted && board.getTurn() > 0)
+    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
     {
         board.addSnail(x/15,y/15);
         displayBoard(board);
@@ -126,4 +134,13 @@ void MainWindow::getMouseCoords(int x, int y)
         ui->plantNumberDisplay->setText(plantNumber);
         ui->snailNumberDisplay->setText(snailNumber);
     }
+    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 0)
+    {
+         vector <Field> currentBoard = board.getBoard();
+         Field current = currentBoard[(x/15) * board.getBoardColumnsNumber() + (y/15)];
+         QString info = QString::fromStdString(current.getFieldInfo());
+         ui->plainTextEdit->clear();
+         ui->plainTextEdit->appendPlainText(info);
+    }
+
 }
