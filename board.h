@@ -26,6 +26,8 @@ private:
 public:
     Board();
     Board(int rows, int columns, int snails, int plants);
+    void addSnail(int x, int y);
+    void addPlant(int x, int y);
     void setBoardRowsNumber(int rows);
     void setBoardColumnsNumber(int columns);
     void setStartingPosition(int numberOfSnails, int numberOfPlants);

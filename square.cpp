@@ -17,7 +17,8 @@ int Square::getY()
 {
     return coordinateY;
 }
-void Square::setX(int x){
+void Square::setX(int x)
+{
     this->coordinateX = x;
 }
 void Square::setY(int y)

@@ -14,13 +14,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(sendPrevBoard(Board)),secondThread,SLOT(getPrevBoard(Board)));
     connect(secondThread,SIGNAL(sendNextBoard(Board)),this,SLOT(getNextBoard(Board)));
     secondThread->start();
-    Board board(50, 50, 100, 1000);
+
+    Board board(50, 50, 10, 100);
     this->board = board;
     displayBoard(board);
 }
 void MainWindow::displayBoard(Board board)
 {
-    scene = new QGraphicsScene(this);
+    scene = new myQGraphicsscene(this);
+    scene->installEventFilter(this);
+    connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
     ui->qBoard->setScene(scene);
     vector <Field> currentBoard = board.getBoard();
     int boardRows = board.getBoardRowsNumber();
@@ -75,6 +78,7 @@ void MainWindow::on_automaticMode_clicked()
     {
         ui->automaticMode->setText(text2);
         ui->nextTurn->setEnabled(false);
+        ui->resetButton->setEnabled(false);
         simStarted = true;
         emit startSimulation(simStarted);
         emit sendPrevBoard(this->board);
@@ -83,6 +87,7 @@ void MainWindow::on_automaticMode_clicked()
     {
         ui->automaticMode->setText(text1);
         ui->nextTurn->setEnabled(true);
+        ui->resetButton->setEnabled(true);
         simStarted = false;
         emit startSimulation(simStarted);
     }
@@ -91,6 +96,24 @@ void MainWindow::on_automaticMode_clicked()
 void MainWindow::getNextBoard(Board board)
 {
     this->board = board;
+    displayBoard(board);
+    QString turnNumber = QString::number(board.getTurn());
+    QString plantNumber = QString::number(board.getPlantNumber());
+    QString snailNumber = QString::number(board.getSnailNumber());
+    ui->turnNumberDisplay->setText(turnNumber);
+    ui->plantNumberDisplay->setText(plantNumber);
+    ui->snailNumberDisplay->setText(snailNumber);
+}
+
+void MainWindow::on_resetButton_clicked()
+{
+    Board board(50, 50, 10, 100);
+    this->board = board;
+    displayBoard(board);
+}
+void MainWindow::getMouseCoords(int x, int y)
+{
+    board.addSnail(x/15,y/15);
     displayBoard(board);
     QString turnNumber = QString::number(board.getTurn());
     QString plantNumber = QString::number(board.getPlantNumber());

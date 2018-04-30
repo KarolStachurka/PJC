@@ -55,9 +55,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="resetButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>Reset</string>
           </property>
          </widget>
         </item>
@@ -139,8 +139,6 @@
              </item>
             </layout>
            </widget>
-           <zorder></zorder>
-           <zorder>verticalLayoutWidget</zorder>
           </widget>
           <widget class="QWidget" name="tab_3">
            <attribute name="title">

@@ -4,7 +4,7 @@ Plant::Plant()
 {
 
 }
-bool Plant::getReproduction()
+bool Plant::isReproduction()
 {
     return reproduction;
 }

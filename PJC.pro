@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     square.cpp \
     plant.cpp \
     lettuce.cpp \
-    simulationthread.cpp
+    simulationthread.cpp \
+    myqgraphicsscene.cpp
 
 HEADERS  += mainwindow.h \
     field.h \
@@ -31,6 +32,7 @@ HEADERS  += mainwindow.h \
     square.h \
     plant.h \
     lettuce.h \
-    simulationthread.h
+    simulationthread.h \
+    myqgraphicsscene.h
 
 FORMS    += mainwindow.ui

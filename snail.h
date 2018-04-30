@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "square.h"
+#include "field.h"
 using namespace std;
 
 class Snail:public Square
@@ -12,13 +13,14 @@ public:
     void move(int x, int y);
     void eat();
     void reproduce();
-    bool isReproduced();
-    bool isDead();
     void die();
     void grow();
+    bool isReproduced();
+    bool isDead();
     void setReproduction(bool reproduction);
 protected:
     string type;
+    Field *position;
     int hunger;
     int energy;
     int age;

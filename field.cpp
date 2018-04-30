@@ -22,8 +22,3 @@ bool Field::getPlantExistence()
 {
     return plantExistence;
 }
-void Field::setCoordinates(int x, int y)
-{
-    this->setX(x);
-    this->setY(y);
-}

@@ -9,6 +9,8 @@
 #include <thread>
 #include "board.h"
 #include "simulationthread.h"
+#include "myqgraphicsview.h"
+#include "myqgraphicsscene.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,20 +27,27 @@ public:
     ~MainWindow();
 signals:
     void startSimulation(bool);
+
     void endSecondThread(bool);
+
     void sendPrevBoard(Board);
+
 public slots:
     void getNextBoard(Board board);
-private slots:
 
+    void getMouseCoords(int x, int y);
+
+private slots:
 
     void on_nextTurn_clicked();
 
     void on_automaticMode_clicked();
 
+    void on_resetButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene;
+    myQGraphicsscene *scene;
     Board board;
     bool simStarted = false;
     QPixmap snail = QPixmap("graphics/snail.png");

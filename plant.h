@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "square.h"
+#include "field.h"
 using namespace std;
 
 
@@ -15,7 +16,7 @@ public:
     void reproduce();
     void die();
     int getAge();
-    bool getReproduction();
+    bool isReproduction();
     bool isDead();
     bool isEaten();
     void resetReproducion();
@@ -28,6 +29,7 @@ protected:
     bool reproduction;
     bool dead;
     bool eaten;
+    Field *position;
 
 };
 

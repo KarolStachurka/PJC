@@ -1,6 +1,6 @@
 #ifndef FIELD_H
 #define FIELD_H
-#include "snail.h"
+
 #include "square.h"
 
 class Field:public Square
@@ -11,7 +11,6 @@ private:
 
 public:
     Field();
-    void setCoordinates(int x, int y);
     void setSnailExistence(bool existence);
     void setPlantExistence(bool existence);
     bool getSnailExistence();
