@@ -9,7 +9,6 @@
 #include <thread>
 #include "board.h"
 #include "simulationthread.h"
-#include "myqgraphicsview.h"
 #include "myqgraphicsscene.h"
 
 namespace Ui {

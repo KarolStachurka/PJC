@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
+    ui->helixPicture->setPixmap(snail.scaled(30,30));
+    //thread do obsługi symulacji
     secondThread = new SimulationThread(this);
     qRegisterMetaType <Board>("Board");
     connect(this, SIGNAL(startSimulation(bool)),secondThread,SLOT(onSimStarted(bool)));
@@ -113,12 +115,15 @@ void MainWindow::on_resetButton_clicked()
 }
 void MainWindow::getMouseCoords(int x, int y)
 {
-    board.addSnail(x/15,y/15);
-    displayBoard(board);
-    QString turnNumber = QString::number(board.getTurn());
-    QString plantNumber = QString::number(board.getPlantNumber());
-    QString snailNumber = QString::number(board.getSnailNumber());
-    ui->turnNumberDisplay->setText(turnNumber);
-    ui->plantNumberDisplay->setText(plantNumber);
-    ui->snailNumberDisplay->setText(snailNumber);
+    if(!simStarted && board.getTurn() > 0)
+    {
+        board.addSnail(x/15,y/15);
+        displayBoard(board);
+        QString turnNumber = QString::number(board.getTurn());
+        QString plantNumber = QString::number(board.getPlantNumber());
+        QString snailNumber = QString::number(board.getSnailNumber());
+        ui->turnNumberDisplay->setText(turnNumber);
+        ui->plantNumberDisplay->setText(plantNumber);
+        ui->snailNumberDisplay->setText(snailNumber);
+    }
 }
