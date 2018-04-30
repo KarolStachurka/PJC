@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QtAlgorithms>
 #include <QtGui>
 #include <chrono>
 #include <thread>

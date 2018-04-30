@@ -11,15 +11,13 @@ Board::Board(int rows, int columns, int snails, int plants)
 {
     setBoardColumnsNumber(columns);
     setBoardRowsNumber(rows);
-    vector<Field> vec;
-    vec.resize(boardRowsNumber*boardColumnsNumber);
+    board.resize(boardRowsNumber*boardColumnsNumber);
     int it = 0;
-    for(auto &i:vec)
+    for(auto &i:board)
     {
-        i.setCoordinates(it%boardRowsNumber, it/boardColumnsNumber);
+        i.setCoordinates(it/boardRowsNumber, it%boardColumnsNumber);
         it++;
     }
-    this->board = vec;
     if(columns*rows < snails || columns*rows < plants)
         setStartingPosition(1,1);
     else
@@ -82,7 +80,7 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
     while(snailCounter < numberOfSnails)
     {
         int fieldNumber = rand()%board.size();
-        Field current = board[fieldNumber];
+        Field current = board.at(fieldNumber);
         if(!current.getSnailExistence())
         {
             current.setSnailExistence(true);
@@ -90,14 +88,14 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
             helix.setX(current.getX());
             helix.setY(current.getY());
             snailVector.push_back(helix);
-            board[fieldNumber] = current;
+            board.at(fieldNumber) = current;
             snailCounter++;
         }
     }
     while(plantCounter < numberOfPlants)
     {
         int fieldNumber = rand()%board.size();
-        Field current = board[fieldNumber];
+        Field current = board.at(fieldNumber);
         if(!current.getPlantExistence())
         {
             current.setPlantExistence(true);
@@ -105,16 +103,19 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
             lettuce.setX(current.getX());
             lettuce.setY(current.getY());
             plantVector.push_back(lettuce);
-            board[fieldNumber] = current;
+            board.at(fieldNumber) = current;
             plantCounter++;
         }
     }
 }
 void Board::plantsNextTurn()
 {
+    vector<Field> boardState = this->board;
+    this->board.clear();
     for(auto &i :plantVector)
     {
-       Field current = board[boardColumnsNumber*(i.getX()) + i.getY()];
+       Field current = boardState[boardColumnsNumber*(i.getX()) + i.getY()];
+       current.setPlantExistence(true);
        if(current.getSnailExistence())
            i.beEaten(2);
        i.grow();
@@ -122,14 +123,14 @@ void Board::plantsNextTurn()
        if(i.isDead())
        {
            current.setPlantExistence(false);
-           board[boardColumnsNumber*(current.getX()) + current.getY()] = current;
+           boardState[boardColumnsNumber*(current.getX()) + current.getY()] = current;
        }
        if(i.isReproduction() && !i.isDead())
        {
           int direction = rand()%4;
           if(direction == 0 && i.getX() > 0)
           {
-              current = board[boardColumnsNumber*(i.getX() - 1) + i.getY()];
+              current = boardState[boardColumnsNumber*(i.getX() - 1) + i.getY()];
               if(!current.getPlantExistence())
               {
                   Lettuce lettuce;
@@ -137,13 +138,13 @@ void Board::plantsNextTurn()
                   lettuce.setY(i.getY());
                   current.setPlantExistence(true);
                   i.resetReproducion();
-                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
                   plantVector.push_back(lettuce);
               }
           }
           else if(direction == 1 && i.getY() > 0)
           {
-              current = board[boardColumnsNumber*(i.getX()) + i.getY() - 1];
+              current = boardState[boardColumnsNumber*(i.getX()) + i.getY() - 1];
               if(!current.getPlantExistence())
               {
                   Lettuce lettuce;
@@ -151,13 +152,13 @@ void Board::plantsNextTurn()
                   lettuce.setY(i.getY() - 1);
                   current.setPlantExistence(true);
                   i.resetReproducion();
-                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
                   plantVector.push_back(lettuce);
               }
           }
           else if(direction == 2 && i.getX() < boardColumnsNumber - 1)
           {
-              current = board[boardColumnsNumber*(i.getX() + 1) + i.getY()];
+              current = boardState[boardColumnsNumber*(i.getX() + 1) + i.getY()];
               if(!current.getPlantExistence())
               {
                   Lettuce lettuce;
@@ -165,13 +166,13 @@ void Board::plantsNextTurn()
                   lettuce.setY(i.getY());
                   current.setPlantExistence(true);
                   i.resetReproducion();
-                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
                   plantVector.push_back(lettuce);
               }
           }
           else if(direction == 3 && i.getY() < boardRowsNumber - 1)
           {
-              current = board[boardColumnsNumber*(i.getX()) + i.getY() + 1];
+              current = boardState[boardColumnsNumber*(i.getX()) + i.getY() + 1];
               if(!current.getPlantExistence())
               {
                   Lettuce lettuce;
@@ -179,21 +180,25 @@ void Board::plantsNextTurn()
                   lettuce.setY(i.getY() + 1);
                   current.setPlantExistence(true);
                   i.resetReproducion();
-                  board[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
+                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
                   plantVector.push_back(lettuce);
               }
           }
 
        }
+        boardState[boardColumnsNumber*(current.getX()) + current.getY()] = current;
 
     }
     plantVector.erase(std::remove_if(plantVector.begin(), plantVector.end(),[](Plant &i){return i.isDead();}), plantVector.end());
+    this->board.clear();
+    this->board = boardState;
 }
 void Board::snailsNextTurn()
 {
     for(auto &i :snailVector)
     {
         Field current = board[boardColumnsNumber*(i.getX()) + i.getY()];
+        current.setSnailExistence(true);
         Field next;
         int direction = rand()%4;
         i.grow();
@@ -216,6 +221,7 @@ void Board::snailsNextTurn()
                 {
                     next.setSnailExistence(true);
                     i.move(next.getX(),next.getY());
+                    current.setSnailExistence(false);
                     if(i.isReproduced())
                     {
                         Helix newHelix;
@@ -223,9 +229,8 @@ void Board::snailsNextTurn()
                         newHelix.setY(current.getY());
                         snailVector.push_back(newHelix);
                         i.setReproduction(false);
+                        current.setSnailExistence(true);
                     }
-                    else
-                        current.setSnailExistence(false);
                     board[boardColumnsNumber*next.getX() + next.getY()] = next;
                 }
             }
@@ -236,6 +241,7 @@ void Board::snailsNextTurn()
                 {
                     next.setSnailExistence(true);
                     i.move(next.getX(),next.getY());
+                    current.setSnailExistence(false);
                     if(i.isReproduced())
                     {
                         Helix newHelix;
@@ -243,9 +249,8 @@ void Board::snailsNextTurn()
                         newHelix.setY(current.getY());
                         snailVector.push_back(newHelix);
                         i.setReproduction(false);
+                        current.setSnailExistence(true);
                     }
-                    else
-                        current.setSnailExistence(false);
                     board[boardColumnsNumber*next.getX() + next.getY()] = next;
                 }
             }
@@ -256,6 +261,7 @@ void Board::snailsNextTurn()
                 {
                     next.setSnailExistence(true);
                     i.move(next.getX(),next.getY());
+                    current.setSnailExistence(false);
                     if(i.isReproduced())
                     {
                         Helix newHelix;
@@ -263,9 +269,8 @@ void Board::snailsNextTurn()
                         newHelix.setY(current.getY());
                         snailVector.push_back(newHelix);
                         i.setReproduction(false);
+                        current.setSnailExistence(true);
                     }
-                    else
-                        current.setSnailExistence(false);
                     board[boardColumnsNumber*next.getX() + next.getY()] = next;
                 }
             }
@@ -276,6 +281,7 @@ void Board::snailsNextTurn()
                 {
                     next.setSnailExistence(true);
                     i.move(next.getX(),next.getY());
+                    current.setSnailExistence(false);
                     if(i.isReproduced())
                     {
                         Helix newHelix;
@@ -283,9 +289,8 @@ void Board::snailsNextTurn()
                         newHelix.setY(current.getY());
                         snailVector.push_back(newHelix);
                         i.setReproduction(false);
+                        current.setSnailExistence(true);
                     }
-                    else
-                        current.setSnailExistence(false);
                     board[boardColumnsNumber*next.getX() + next.getY()] = next;
                 }
             }
@@ -293,7 +298,7 @@ void Board::snailsNextTurn()
         }
 
     }
-    snailVector.erase(std::remove_if(snailVector.begin(), snailVector.end(),[](Snail &i){return !i.isDead();}), snailVector.end());
+    snailVector.erase(std::remove_if(snailVector.begin(), snailVector.end(),[](Snail &i){return i.isDead();}), snailVector.end());
 }
 
 void Board::nextTurn()

@@ -2,22 +2,13 @@
 
 SimulationThread::SimulationThread(QObject *parent) : QThread(parent)
 {
-
+    QTimer *timer = new QTimer();
+    connect(timer,SIGNAL(timeout()),this,SLOT(iteration()));
+    timer->start(500);
 }
 void SimulationThread::run()
 {
-    while(true)
-    {
-        if(started)
-        {
-            board.nextTurn();
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            emit sendNextBoard(board);
-        }
-        if(end)
-            break;
 
-    }
 }
 void SimulationThread::onSimStarted(bool started)
 {
@@ -30,4 +21,12 @@ void SimulationThread::endThread(bool end)
 void SimulationThread::getPrevBoard(Board board)
 {
     this->board = board;
+}
+void SimulationThread::iteration()
+{
+    if(started)
+    {
+        board.nextTurn();
+        emit sendNextBoard(board);
+    }
 }

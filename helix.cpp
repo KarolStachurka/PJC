@@ -9,13 +9,11 @@ Helix::Helix()
     lastReproduction = 0;
     hunger = 2;
     dead = false;
+    reproduction = false;
 }
 void Snail::eat()
 {
     energy = energy + 4;
-    lastReproduction++;
-    if(lastReproduction > 4 && energy > 6)
-        reproduce();
 }
 void Snail::reproduce()
 {
@@ -26,7 +24,6 @@ void Snail::move(int x, int y)
 {
     this->setX(x);
     this->setY(y);
-    lastReproduction++;
 }
 void Snail::die()
 {
@@ -42,4 +39,7 @@ void Snail::grow()
 {
     age++;
     energy--;
+    lastReproduction++;
+    if(lastReproduction > 4 && energy > 6)
+        reproduce();
 }

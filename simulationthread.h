@@ -2,9 +2,7 @@
 #define SIMULATIONTHREAD_H
 #include <QtCore>
 #include <QThread>
-#include <chrono>
-#include <thread>
-#include <iostream>
+#include <QTimer>
 #include "board.h"
 
 class SimulationThread: public QThread
@@ -17,6 +15,7 @@ public slots:
     void onSimStarted(bool started);
     void endThread(bool end);
     void getPrevBoard(Board board);
+    void iteration();
 signals:
     void sendNextBoard(Board board);
 private:

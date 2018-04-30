@@ -29,7 +29,6 @@ protected:
     bool reproduction;
     bool dead;
     bool eaten;
-    Field *position;
 
 };
 

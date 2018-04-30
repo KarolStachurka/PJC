@@ -8,7 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
     ui->helixPicture->setPixmap(snail.scaled(30,30));
-    //thread do obsługi symulacji
+    scene = new myQGraphicsscene(this);
+    scene->installEventFilter(this);
+    connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
+
+    //thread to maintaining simulation
     secondThread = new SimulationThread(this);
     qRegisterMetaType <Board>("Board");
     connect(this, SIGNAL(startSimulation(bool)),secondThread,SLOT(onSimStarted(bool)));
@@ -21,17 +25,26 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 void MainWindow::displayBoard(Board board)
 {
+    for (unsigned int i = 0; i< boardObjects.size();i++)
+    {
+        delete (boardObjects.at(i));
+    }
+    boardObjects.clear();
+    qDeleteAll(ui->qBoard->items());
+    scene->clear();
+    delete scene;
     scene = new myQGraphicsscene(this);
     scene->installEventFilter(this);
     connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
-    ui->qBoard->setScene(scene);
+
     vector <Field> currentBoard = board.getBoard();
     int boardRows = board.getBoardRowsNumber();
     int boardColumns = board.getBoardColumnsNumber();
+    QGraphicsPixmapItem *item;
     for (int row = 0; row < boardRows; row++) {
         for (int col = 0; col < boardColumns; col++)
         {
-            QGraphicsPixmapItem *item = new QGraphicsPixmapItem;
+            item = new QGraphicsPixmapItem;
             Field current = currentBoard[row * boardColumns + col];
             if(current.getSnailExistence() && current.getPlantExistence())
                 item = scene->addPixmap(snailCabbage);
@@ -43,8 +56,11 @@ void MainWindow::displayBoard(Board board)
                 item = scene->addPixmap(empty);
             item->moveBy(15*row, 15*col);
             boardObjects.push_back(item);
+
         }
     }
+    currentBoard.clear();
+    ui->qBoard->setScene(scene);
 }
 
 
@@ -53,6 +69,8 @@ MainWindow::~MainWindow()
 
     emit endSecondThread(true);
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    scene->clear();
+    delete scene;
     delete secondThread;
     delete ui;
 }
@@ -102,6 +120,7 @@ void MainWindow::on_automaticMode_clicked()
 void MainWindow::getNextBoard(Board board)
 {
     this->board = board;
+    ui->qBoard->items().clear();
     displayBoard(board);
     QString turnNumber = QString::number(board.getTurn());
     QString plantNumber = QString::number(board.getPlantNumber());

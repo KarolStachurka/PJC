@@ -25,7 +25,6 @@ public:
     void setReproduction(bool reproduction);
 protected:
     string type;
-    Field *position;
     int hunger;
     int energy;
     int age;
