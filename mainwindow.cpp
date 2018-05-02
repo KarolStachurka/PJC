@@ -23,46 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->board = Board(50, 50, 50, 100);
 }
-void MainWindow::displayBoard(Board board)
-{
-    for (unsigned int i = 0; i< boardObjects.size();i++)
-    {
-        delete (boardObjects.at(i));
-    }
-    boardObjects.clear();
-    qDeleteAll(ui->qBoard->items());
-    scene->clear();
-    delete scene;
-    scene = new myQGraphicsscene(this);
-    scene->installEventFilter(this);
-    connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
-
-    vector <Field> currentBoard = board.getBoard();
-    int boardRows = board.getBoardRowsNumber();
-    int boardColumns = board.getBoardColumnsNumber();
-    QGraphicsPixmapItem *item;
-    for (int row = 0; row < boardRows; row++) {
-        for (int col = 0; col < boardColumns; col++)
-        {
-            item = new QGraphicsPixmapItem;
-            Field current = currentBoard[row * boardColumns + col];
-            if(current.getSnailExistence() && current.getPlantExistence())
-                item = scene->addPixmap(snailCabbage);
-            else if (current.getSnailExistence())
-                item = scene->addPixmap(snail);
-            else if(current.getPlantExistence())
-                item = scene->addPixmap(cabbage);
-            else
-                item = scene->addPixmap(empty);
-            item->moveBy(15*row, 15*col);
-            boardObjects.push_back(item);
-
-        }
-    }
-    currentBoard.clear();
-    ui->qBoard->setScene(scene);
-}
-
 
 MainWindow::~MainWindow()
 {
@@ -74,7 +34,45 @@ MainWindow::~MainWindow()
     delete secondThread;
     delete ui;
 }
+void MainWindow::displayBoard(Board board)
+{
+    for (unsigned int i = 0; i< boardObjects.size();i++)
+    {
+        delete (boardObjects.at(i));
+    }
+    boardObjects.clear();
+    boardObjects.resize(board.getBoardColumnsNumber()*board.getBoardRowsNumber());
+    qDeleteAll(ui->qBoard->items());
+    scene->clear();
+    delete scene;
+    scene = new myQGraphicsscene(this);
+    scene->installEventFilter(this);
+    connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
 
+    vector <Field> currentBoard = board.getBoard();
+    int boardRows = board.getBoardRowsNumber();
+    int boardColumns = board.getBoardColumnsNumber();
+    QGraphicsPixmapItem *item = new QGraphicsPixmapItem;
+    for (int row = 0; row < boardRows; row++) {
+        for (int col = 0; col < boardColumns; col++)
+        {
+            Field current = currentBoard[row * boardColumns + col];
+            if(current.getSnailExistence() && current.getPlantExistence())
+                item = scene->addPixmap(snailCabbage);
+            else if (current.getSnailExistence())
+                item = scene->addPixmap(snail);
+            else if(current.getPlantExistence())
+                item = scene->addPixmap(cabbage);
+            else
+                item = scene->addPixmap(empty);
+            item->moveBy(15*row, 15*col);
+            boardObjects.at(row*boardColumns + col) =  item;
+            item = NULL;
+        }
+    }
+    currentBoard.clear();
+    ui->qBoard->setScene(scene);
+}
 
 void MainWindow::on_nextTurn_clicked()
 {
