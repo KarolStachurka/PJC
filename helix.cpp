@@ -31,11 +31,6 @@ void Snail::die()
     if(energy < 1 || age > 10)
         dead = true;
 }
-
-void Helix::test()
-{
-    std::cout << this->energy;
-}
 void Snail::grow()
 {
     age++;
@@ -56,8 +51,4 @@ bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
         return true;
     }
     return false;
-}
-bool Snail::isDead()
-{
-    return dead;
 }

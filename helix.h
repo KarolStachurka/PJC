@@ -7,7 +7,6 @@ class Helix:public Snail
 {
 public:
     Helix();
-    void test();
 };
 
 #endif // HELIX_H

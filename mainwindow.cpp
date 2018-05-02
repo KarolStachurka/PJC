@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
-    ui->helixPicture->setPixmap(snail.scaled(30,30));
+    ui->helixPicture->setPixmap(snail.scaled(30, 30));
+    ui->lettucePicture->setPixmap(cabbage.scaled(30, 30));
     scene = new myQGraphicsscene(this);
     scene->installEventFilter(this);
     connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
@@ -72,6 +73,8 @@ void MainWindow::displayBoard(Board board)
     }
     currentBoard.clear();
     ui->qBoard->setScene(scene);
+    ui->qBoard->setMaximumHeight(boardColumns*15);
+    ui->qBoard->setMaximumWidth(boardRows*15);
 }
 
 void MainWindow::on_nextTurn_clicked()
@@ -95,7 +98,7 @@ void MainWindow::on_automaticMode_clicked()
     else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
         this->board = Board(50, 50, 50, 100);
     else if(board.getTurn() < 1)
-        this->board = Board(10, 10, 10, 10);
+        this->board = Board(30, 30, 20, 100);
     if(!simStarted)
     {
         ui->automaticMode->setText(text2);
@@ -118,8 +121,9 @@ void MainWindow::on_automaticMode_clicked()
 void MainWindow::getNextBoard(Board board)
 {
     this->board = board;
-    ui->qBoard->items().clear();
+    QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
     displayBoard(board);
+    ui->qBoard->centerOn(center);
     QString turnNumber = QString::number(board.getTurn());
     QString plantNumber = QString::number(board.getPlantNumber());
     QString snailNumber = QString::number(board.getSnailNumber());
@@ -135,7 +139,7 @@ void MainWindow::on_resetButton_clicked()
     else if(ui->mapMedium->isChecked())
         this->board = Board(50, 50, 50, 100);
     else
-        this->board = Board(30, 30, 10, 100);
+        this->board = Board(30, 30, 1, 100);
     board.nextTurn();
     displayBoard(board);
 }
@@ -143,7 +147,18 @@ void MainWindow::getMouseCoords(int x, int y)
 {
     if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
     {
-        board.addSnail(x/15,y/15);
+        board.addSnail(x/15, y/15);
+        displayBoard(board);
+        QString turnNumber = QString::number(board.getTurn());
+        QString plantNumber = QString::number(board.getPlantNumber());
+        QString snailNumber = QString::number(board.getSnailNumber());
+        ui->turnNumberDisplay->setText(turnNumber);
+        ui->plantNumberDisplay->setText(plantNumber);
+        ui->snailNumberDisplay->setText(snailNumber);
+    }
+    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 1)
+    {
+        board.addPlant(x/15, y/15);
         displayBoard(board);
         QString turnNumber = QString::number(board.getTurn());
         QString plantNumber = QString::number(board.getPlantNumber());

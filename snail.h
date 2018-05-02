@@ -24,6 +24,7 @@ public:
     bool isDead();
     int getHunger();
     int getSpeed();
+    int getAge();
 
     void setReproduction(bool reproduction);
     bool getNewPosition(int &x, int &y, int maxX, int maxY);

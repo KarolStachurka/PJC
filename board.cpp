@@ -12,16 +12,19 @@ Board::Board(int rows, int columns, int snails, int plants)
     setBoardColumnsNumber(columns);
     setBoardRowsNumber(rows);
     board.resize(boardRowsNumber*boardColumnsNumber);
+    srand(time(0));
     int it = 0;
-    for(auto &i:board)
+    for(auto &i: board)
     {
         i.setCoordinates(it/boardRowsNumber, it%boardColumnsNumber);
         it++;
     }
+
     if(columns*rows < snails || columns*rows < plants)
         setStartingPosition(1,1);
+
     else
-    setStartingPosition(snails, plants);
+        setStartingPosition(snails, plants);
 }
 void Board::setBoardColumnsNumber(int columns)
 {
@@ -76,7 +79,6 @@ string Board::testBoard()
 void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
 {
     int snailCounter = 0, plantCounter = 0;
-    srand(time(0));
     while(snailCounter < numberOfSnails)
     {
         int fieldNumber = rand()%board.size();
@@ -146,10 +148,9 @@ void Board::plantsNextTurn()
 }
 void Board::snailsNextTurn()
 {
-    for(auto &i :board)
-    {
+    for(auto &i : board)
         i.setSnailExistence(false);
-    }
+
     for(auto &i :snailVector)
     {
         Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
@@ -184,7 +185,7 @@ void Board::snailsNextTurn()
                 board.at(boardColumnsNumber*newX + newY) = next;
             }
         }
-        else if(!i.isDead())
+        else if(!i.isDead() && i.getAge() > 2)
         {
             int newX = i.getX();
             int newY = i.getY();
@@ -214,7 +215,8 @@ void Board::nextTurn()
     snailsNextTurn();
     turn++;
 }
-void Board::addSnail(int x, int y){
+void Board::addSnail(int x, int y)
+{
     Field current = board[boardColumnsNumber*(x) + y];
     current.setSnailExistence(true);
     board[boardColumnsNumber*(x) + y] = current;
@@ -222,4 +224,14 @@ void Board::addSnail(int x, int y){
     newHelix.setX(current.getX());
     newHelix.setY(current.getY());
     snailVector.push_back(newHelix);
+}
+void Board::addPlant(int x, int y)
+{
+    Field current = board[boardColumnsNumber*(x) + y];
+    current.setPlantExistence(true);
+    board[boardColumnsNumber*(x) + y] = current;
+    Lettuce newLettuce;
+    newLettuce.setX(current.getX());
+    newLettuce.setY(current.getY());
+    plantVector.push_back(newLettuce);
 }
