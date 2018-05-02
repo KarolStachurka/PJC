@@ -8,7 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
     ui->helixPicture->setPixmap(snail.scaled(30, 30));
-    ui->lettucePicture->setPixmap(cabbage.scaled(30, 30));
+    ui->slugPicture->setPixmap(slug.scaled(30, 30));
+    ui->wormPicture->setPixmap(worm.scaled(30, 30));
+    ui->lettucePicture->setPixmap(lettuce.scaled(30, 30));
+    ui->cabbagePicture->setPixmap(cabbage.scaled(30, 30));
+    ui->grassPicture->setPixmap(grass.scaled(30, 30));
+
     scene = new myQGraphicsscene(this);
     scene->installEventFilter(this);
     connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
@@ -22,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(secondThread,SIGNAL(sendNextBoard(Board)),this,SLOT(getNextBoard(Board)));
     secondThread->start();
 
-    this->board = Board(50, 50, 50, 100);
+    this->board = Board(50, 50, 0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -59,11 +64,11 @@ void MainWindow::displayBoard(Board board)
         {
             Field current = currentBoard[row * boardColumns + col];
             if(current.getSnailExistence() && current.getPlantExistence())
-                item = scene->addPixmap(snailCabbage);
+                item = scene->addPixmap(snailWithPlant );
             else if (current.getSnailExistence())
                 item = scene->addPixmap(snail);
             else if(current.getPlantExistence())
-                item = scene->addPixmap(cabbage);
+                item = scene->addPixmap(grass);
             else
                 item = scene->addPixmap(empty);
             item->moveBy(15*row, 15*col);
@@ -80,7 +85,9 @@ void MainWindow::displayBoard(Board board)
 void MainWindow::on_nextTurn_clicked()
 {
     board.nextTurn();
+    QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
     displayBoard(board);
+    ui->qBoard->centerOn(center);
     QString turnNumber = QString::number(board.getTurn());
     QString plantNumber = QString::number(board.getPlantNumber());
     QString snailNumber = QString::number(board.getSnailNumber());
@@ -94,11 +101,11 @@ void MainWindow::on_automaticMode_clicked()
     QString text1 = "Start";
     QString text2 = "Pause";
     if(ui->mapHuge->isChecked() && board.getTurn() < 1)
-        this->board = Board(75, 75, 100, 1000);
+        this->board = Board(75, 75, 0, 0);
     else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
-        this->board = Board(50, 50, 50, 100);
+        this->board = Board(50, 50, 0, 0);
     else if(board.getTurn() < 1)
-        this->board = Board(30, 30, 20, 100);
+        this->board = Board(30, 30, 0, 0);
     if(!simStarted)
     {
         ui->automaticMode->setText(text2);
@@ -135,11 +142,11 @@ void MainWindow::getNextBoard(Board board)
 void MainWindow::on_resetButton_clicked()
 {
     if(ui->mapHuge->isChecked())
-        this->board = Board(75, 75, 100, 1000);
+        this->board = Board(75, 75, 0, 0);
     else if(ui->mapMedium->isChecked())
-        this->board = Board(50, 50, 50, 100);
+        this->board = Board(50, 50, 0, 0);
     else
-        this->board = Board(30, 30, 1, 100);
+        this->board = Board(30, 30, 0, 0);
     board.nextTurn();
     displayBoard(board);
 }

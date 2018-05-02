@@ -166,7 +166,7 @@
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="infoTab">
            <property name="maximumSize">
@@ -273,16 +273,22 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QLabel" name="label">
+              <widget class="QLabel" name="cabbagePicture">
                <property name="text">
                 <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QLabel" name="label_5">
+              <widget class="QLabel" name="grassPicture">
                <property name="text">
                 <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -297,16 +303,16 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QRadioButton" name="radioButton_4">
+              <widget class="QRadioButton" name="addCabbageRadioButton">
                <property name="text">
-                <string>RadioButton</string>
+                <string>Kapusta</string>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QRadioButton" name="radioButton_5">
+              <widget class="QRadioButton" name="addGrassRadioButton">
                <property name="text">
-                <string>RadioButton</string>
+                <string>Trawa</string>
                </property>
               </widget>
              </item>
@@ -328,16 +334,16 @@
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <item row="1" column="1">
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QRadioButton" name="addSlugRadioButton">
                <property name="text">
-                <string>RadioButton</string>
+                <string>Ślimak stawowy</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QRadioButton" name="addHelixRadioButton">
                <property name="text">
-                <string>Winniczek</string>
+                <string>Ślimak winniczek</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -345,9 +351,9 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QRadioButton" name="radioButton_3">
+              <widget class="QRadioButton" name="addWormRadioButton">
                <property name="text">
-                <string>RadioButton</string>
+                <string>Ślimak nagi</string>
                </property>
               </widget>
              </item>
@@ -365,22 +371,28 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="slugPicture">
                <property name="layoutDirection">
                 <enum>Qt::RightToLeft</enum>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QLabel" name="label_3">
+              <widget class="QLabel" name="wormPicture">
                <property name="layoutDirection">
                 <enum>Qt::RightToLeft</enum>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>

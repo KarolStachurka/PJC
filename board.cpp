@@ -185,7 +185,7 @@ void Board::snailsNextTurn()
                 board.at(boardColumnsNumber*newX + newY) = next;
             }
         }
-        else if(!i.isDead() && i.getAge() > 2)
+        else if(!i.isDead())
         {
             int newX = i.getX();
             int newY = i.getY();

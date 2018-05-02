@@ -53,7 +53,13 @@ private:
     QPixmap snail = QPixmap("graphics/snail.png");
     QPixmap empty = QPixmap("graphics/empty.png");
     QPixmap cabbage = QPixmap("graphics/cabbage.png");
-    QPixmap snailCabbage = QPixmap("graphics/snailWithCabbage.png");
+    QPixmap lettuce = QPixmap("graphics/lettuce.png");
+    QPixmap grass = QPixmap("graphics/grass.png");
+    QPixmap snailWithPlant = QPixmap("graphics/snailWithPlant.png");
+    QPixmap slug = QPixmap("graphics/slug.png");
+    QPixmap slugWithPlant = QPixmap("graphics/slugWithPlant.png");
+    QPixmap worm = QPixmap("graphics/worm.png");
+    QPixmap wormWithPlant = QPixmap("graphics/wormWithPlant.png");
     vector <QGraphicsPixmapItem *> boardObjects;
 };
 
