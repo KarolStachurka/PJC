@@ -110,12 +110,9 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
 }
 void Board::plantsNextTurn()
 {
-    vector<Field> boardState = this->board;
-    this->board.clear();
     for(auto &i :plantVector)
     {
-       Field current = boardState[boardColumnsNumber*(i.getX()) + i.getY()];
-       current.setPlantExistence(true);
+       Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
        if(current.getSnailExistence())
            i.beEaten(2);
        i.grow();
@@ -123,75 +120,29 @@ void Board::plantsNextTurn()
        if(i.isDead())
        {
            current.setPlantExistence(false);
-           boardState[boardColumnsNumber*(current.getX()) + current.getY()] = current;
        }
        if(i.isReproduction() && !i.isDead())
        {
-          int direction = rand()%4;
-          if(direction == 0 && i.getX() > 0)
-          {
-              current = boardState[boardColumnsNumber*(i.getX() - 1) + i.getY()];
-              if(!current.getPlantExistence())
-              {
-                  Lettuce lettuce;
-                  lettuce.setX(i.getX() - 1);
-                  lettuce.setY(i.getY());
-                  current.setPlantExistence(true);
-                  i.resetReproducion();
-                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
-                  plantVector.push_back(lettuce);
-              }
-          }
-          else if(direction == 1 && i.getY() > 0)
-          {
-              current = boardState[boardColumnsNumber*(i.getX()) + i.getY() - 1];
-              if(!current.getPlantExistence())
-              {
-                  Lettuce lettuce;
-                  lettuce.setX(i.getX());
-                  lettuce.setY(i.getY() - 1);
-                  current.setPlantExistence(true);
-                  i.resetReproducion();
-                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
-                  plantVector.push_back(lettuce);
-              }
-          }
-          else if(direction == 2 && i.getX() < boardColumnsNumber - 1)
-          {
-              current = boardState[boardColumnsNumber*(i.getX() + 1) + i.getY()];
-              if(!current.getPlantExistence())
-              {
-                  Lettuce lettuce;
-                  lettuce.setX(i.getX() + 1);
-                  lettuce.setY(i.getY());
-                  current.setPlantExistence(true);
-                  i.resetReproducion();
-                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
-                  plantVector.push_back(lettuce);
-              }
-          }
-          else if(direction == 3 && i.getY() < boardRowsNumber - 1)
-          {
-              current = boardState[boardColumnsNumber*(i.getX()) + i.getY() + 1];
-              if(!current.getPlantExistence())
-              {
-                  Lettuce lettuce;
-                  lettuce.setX(i.getX());
-                  lettuce.setY(i.getY() + 1);
-                  current.setPlantExistence(true);
-                  i.resetReproducion();
-                  boardState[boardColumnsNumber*lettuce.getX()+lettuce.getY()] = current;
-                  plantVector.push_back(lettuce);
-              }
-          }
-
+           int newX = i.getX();
+           int newY = i.getY();
+           bool isReady = i.getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
+           if(isReady)
+           {
+               Field next = board.at(boardColumnsNumber*newX + newY);
+               if(!next.getPlantExistence())
+               {
+                   next.setPlantExistence(true);
+                   Lettuce lettuce;
+                   lettuce.setCoordinates(next.getX(), next.getY());
+                   plantVector.push_back(lettuce);
+               }
+               board.at(boardColumnsNumber*newX + newY) = next;
+           }
        }
-        boardState[boardColumnsNumber*(current.getX()) + current.getY()] = current;
+       board.at(boardColumnsNumber*current.getX() + current.getY()) = current;
 
     }
     plantVector.erase(std::remove_if(plantVector.begin(), plantVector.end(),[](Plant &i){return i.isDead();}), plantVector.end());
-    this->board.clear();
-    this->board = boardState;
 }
 void Board::snailsNextTurn()
 {

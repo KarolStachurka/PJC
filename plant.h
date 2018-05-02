@@ -2,12 +2,15 @@
 #define PLANT_H
 
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
+
 #include "square.h"
 #include "field.h"
 using namespace std;
 
 
-class Plant:public Square
+class Plant: public Square
 {
 public:
     Plant();
@@ -20,11 +23,14 @@ public:
     bool isDead();
     bool isEaten();
     void resetReproducion();
+    bool getNewPosition(int &x, int &y, int maxX, int maxY);
+    string getPlantType();
 protected:
     string type;
     int size;
     int energy;
     int age;
+    int range;
     int lastReproduction;
     bool reproduction;
     bool dead;

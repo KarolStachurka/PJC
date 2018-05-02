@@ -95,7 +95,7 @@ void MainWindow::on_automaticMode_clicked()
     else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
         this->board = Board(50, 50, 50, 100);
     else if(board.getTurn() < 1)
-        this->board = Board(30, 30, 10, 100);
+        this->board = Board(10, 10, 0, 10);
     if(!simStarted)
     {
         ui->automaticMode->setText(text2);
