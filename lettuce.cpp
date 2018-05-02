@@ -20,7 +20,6 @@ void Plant::reproduce()
 
 bool Plant::getNewPosition(int &x, int &y, int maxX, int maxY)
 {
-    srand(time(0));
     int rangeInt = 1 + 2*range;
     int randomX = (-1)*range + rand()% rangeInt;
     int randomY = (-1)*range + rand()% rangeInt;

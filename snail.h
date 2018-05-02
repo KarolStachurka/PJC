@@ -2,6 +2,9 @@
 #define SNAIL_H
 
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
+
 #include "square.h"
 #include "field.h"
 using namespace std;
@@ -23,6 +26,8 @@ public:
     int getSpeed();
 
     void setReproduction(bool reproduction);
+    bool getNewPosition(int &x, int &y, int maxX, int maxY);
+    string getSnailType();
 protected:
     string type;
     int hunger;

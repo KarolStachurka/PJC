@@ -18,11 +18,12 @@ public:
     void beEaten(int energyLoss);
     void reproduce();
     void die();
+    void resetReproducion();
+
     int getAge();
     bool isReproduction();
     bool isDead();
     bool isEaten();
-    void resetReproducion();
     bool getNewPosition(int &x, int &y, int maxX, int maxY);
     string getPlantType();
 protected:

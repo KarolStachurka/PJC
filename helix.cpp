@@ -10,6 +10,7 @@ Helix::Helix()
     hunger = 2;
     dead = false;
     reproduction = false;
+
 }
 void Snail::eat()
 {
@@ -42,4 +43,21 @@ void Snail::grow()
     lastReproduction++;
     if(lastReproduction > 4 && energy > 6)
         reproduce();
+}
+bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
+{
+    int rangeInt = 1 + 2*speed;
+    int randomX = (-1)*speed + rand()% rangeInt;
+    int randomY = (-1)*speed + rand()% rangeInt;
+    if(x + randomX >= 0 && y + randomY >= 0 && x + randomX < maxX && y + randomY < maxY)
+    {
+        x = x + randomX;
+        y = y + randomY;
+        return true;
+    }
+    return false;
+}
+bool Snail::isDead()
+{
+    return dead;
 }
