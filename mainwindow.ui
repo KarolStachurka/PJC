@@ -49,6 +49,9 @@
           <height>700</height>
          </size>
         </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
        </widget>
       </item>
       <item>
@@ -136,7 +139,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -144,7 +147,13 @@
           <property name="minimumSize">
            <size>
             <width>300</width>
-            <height>300</height>
+            <height>250</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>40000</height>
            </size>
           </property>
           <property name="baseSize">
@@ -153,8 +162,11 @@
             <height>300</height>
            </size>
           </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="infoTab">
            <property name="maximumSize">
