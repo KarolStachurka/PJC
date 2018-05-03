@@ -9,8 +9,12 @@
 
 #include "field.h"
 #include "lettuce.h"
+#include "cabbage.h"
 #include "grass.h"
+
 #include "helix.h"
+#include "slug.h"
+#include "worm.h"
 
 using namespace std;
 
@@ -33,18 +37,20 @@ public:
     vector<Field> findNearSnails(int range);
     vector<Field> findNearPlants(int range);
     vector<Field> findNearNoPlants(int range);
+    void nextTurn();
+    void plantsNextTurn();
+    void snailsNextTurn();
+
     void setBoardRowsNumber(int rows);
     void setBoardColumnsNumber(int columns);
     void setStartingPosition(int numberOfSnails, int numberOfPlants);
-    void plantsNextTurn();
-    void snailsNextTurn();
+
     int getBoardRowsNumber();
     int getBoardColumnsNumber();
     int getTurn();
     int getSnailNumber();
     int getPlantNumber();
     vector<Field> getBoard();
-    void nextTurn();
 };
 
 #endif // BOARD_H

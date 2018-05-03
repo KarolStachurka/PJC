@@ -178,20 +178,29 @@ void Board::plantsNextTurn()
                         switch (temp->getPlantType()) {
                         case 1:
                         {
-                            Lettuce *plant = new Lettuce;
-                            plant->setCoordinates(next.getX(), next.getY());
-                            next.plant = plant;
-                            plant = NULL;
-                            delete plant;
+                            Lettuce *lettuce = new Lettuce;
+                            lettuce->setCoordinates(next.getX(), next.getY());
+                            next.plant = lettuce;
+                            lettuce = NULL;
+                            delete lettuce;
+                            break;
+                        }
+                        case 2:
+                        {
+                            Cabbage *cabbage = new Cabbage;
+                            cabbage->setCoordinates(next.getX(), next.getY());
+                            next.plant = cabbage;
+                            cabbage = NULL;
+                            delete cabbage;
                             break;
                         }
                         case 3:
                         {
-                            Grass *plant = new Grass;
-                            plant->setCoordinates(next.getX(), next.getY());
-                            next.plant = plant;
-                            plant = NULL;
-                            delete plant;
+                            Grass *grass = new Grass;
+                            grass->setCoordinates(next.getX(), next.getY());
+                            next.plant = grass;
+                            grass = NULL;
+                            delete grass;
                             break;
                         }
                         default:

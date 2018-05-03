@@ -24,7 +24,10 @@ SOURCES += main.cpp\
     simulationthread.cpp \
     myqgraphicsscene.cpp \
     grass.cpp \
-    organism.cpp
+    organism.cpp \
+    slug.cpp \
+    cabbage.cpp \
+    worm.cpp
 
 HEADERS  += mainwindow.h \
     field.h \
@@ -37,6 +40,9 @@ HEADERS  += mainwindow.h \
     simulationthread.h \
     myqgraphicsscene.h \
     grass.h \
-    organism.h
+    organism.h \
+    slug.h \
+    cabbage.h \
+    worm.h
 
 FORMS    += mainwindow.ui
