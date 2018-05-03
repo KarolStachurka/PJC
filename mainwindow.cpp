@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(secondThread,SIGNAL(sendNextBoard(Board)),this,SLOT(getNextBoard(Board)));
     secondThread->start();
 
-    this->board = Board(50, 50, 0, 0);
+    this->board = Board(10, 10, 0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -144,29 +144,36 @@ void MainWindow::on_automaticMode_clicked()
 {
     QString text1 = "Start";
     QString text2 = "Pause";
+    int lettuce = ui->lettuceNumberEdit->value();
+    int cabbage = ui->cabbageNumberEdit->value();
+    int grass = ui->grassNumberEdit->value();
+    int helix = ui->helixNumberEdit->value();
+    int slug = ui->slugNumberEdit->value();
+    int worm = ui->wormNumberEdit->value();
     if(ui->mapHuge->isChecked() && board.getTurn() < 1)
     {
         if(ui->randomStartCheckBox->isChecked())
-            this->board = Board(75, 75, 100, 1000);
+            this->board = Board(75, 75, lettuce, cabbage, grass, helix, slug ,worm);
         else
             this->board = Board(75, 75, 0, 0);
     }
     else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
     {
         if(ui->randomStartCheckBox->isChecked())
-            this->board = Board(50, 50, 55, 300);
+            this->board = Board(50, 50, lettuce, cabbage, grass, helix, slug ,worm);
         else
             this->board = Board(50, 50, 0, 0);
     }
     else if(board.getTurn() < 1)
     {
         if(ui->randomStartCheckBox->isChecked())
-            this->board = Board(30, 30, 20, 100);
+            this->board = Board(30, 30, lettuce, cabbage, grass, helix, slug ,worm);
         else
             this->board = Board(30, 30, 0, 0);
     }
     if(!simStarted)
     {
+        ui->tabWidget->setCurrentIndex(1);
         ui->automaticMode->setText(text2);
         ui->nextTurn->setEnabled(false);
         ui->resetButton->setEnabled(false);
@@ -200,24 +207,30 @@ void MainWindow::getNextBoard(Board board)
 
 void MainWindow::on_resetButton_clicked()
 {
+    int lettuce = ui->lettuceNumberEdit->value();
+    int cabbage = ui->cabbageNumberEdit->value();
+    int grass = ui->grassNumberEdit->value();
+    int helix = ui->helixNumberEdit->value();
+    int slug = ui->slugNumberEdit->value();
+    int worm = ui->wormNumberEdit->value();
     if(ui->mapHuge->isChecked())
     {
         if(ui->randomStartCheckBox->isChecked())
-            this->board = Board(75, 75, 100, 1000);
+            this->board = Board(75, 75, lettuce, cabbage, grass, helix, slug ,worm);
         else
             this->board = Board(75, 75, 0, 0);
     }
     else if(ui->mapMedium->isChecked())
     {
         if(ui->randomStartCheckBox->isChecked())
-            this->board = Board(50, 50, 55, 300);
+            this->board = Board(50, 50, lettuce, cabbage, grass, helix, slug ,worm);
         else
             this->board = Board(50, 50, 0, 0);
     }
     else
     {
         if(ui->randomStartCheckBox->isChecked())
-            this->board = Board(30, 30, 20, 100);
+            this->board = Board(30, 30, lettuce, cabbage, grass, helix, slug ,worm);
         else
             this->board = Board(30, 30, 0, 0);
     }
@@ -226,7 +239,7 @@ void MainWindow::on_resetButton_clicked()
 }
 void MainWindow::getMouseCoords(int x, int y)
 {
-    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
+    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 3)
     {
         int type = 0;
         if(ui->addHelixRadioButton->isChecked())
@@ -243,7 +256,7 @@ void MainWindow::getMouseCoords(int x, int y)
         ui->plantNumberDisplay->setText(plantNumber);
         ui->snailNumberDisplay->setText(snailNumber);
     }
-    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 1)
+    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
     {
         int type = 0;
         if(ui->addLettuceRadioButton->isChecked())
@@ -260,7 +273,7 @@ void MainWindow::getMouseCoords(int x, int y)
         ui->plantNumberDisplay->setText(plantNumber);
         ui->snailNumberDisplay->setText(snailNumber);
     }
-    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 0)
+    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 1)
     {
          vector <Field> currentBoard = board.getBoard();
          Field current = currentBoard[(x/15) * board.getBoardColumnsNumber() + (y/15)];

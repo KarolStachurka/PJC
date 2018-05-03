@@ -23,7 +23,7 @@ void Helix::grow()
     age++;
     energy--;
     lastReproduction++;
-    if(lastReproduction > 6 && energy > 5)
+    if(lastReproduction > 5 && energy > 5)
         reproduction = true;
 }
 

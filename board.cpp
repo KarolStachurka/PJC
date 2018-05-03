@@ -22,6 +22,28 @@ Board::Board(int rows, int columns, int snails, int plants)
     else
         setStartingPosition(snails, plants);
 }
+Board::Board(int rows, int columns, int lettuce, int cabbage, int grass, int helix, int slug, int worm)
+{
+    setBoardColumnsNumber(columns);
+    setBoardRowsNumber(rows);
+    board.resize(boardRowsNumber*boardColumnsNumber);
+    srand(time(0));
+    int it = 0;
+    for(auto &i: board)
+    {
+        i.setCoordinates(it/boardRowsNumber, it%boardColumnsNumber);
+        it++;
+    }
+
+    if(columns*rows < lettuce + cabbage + grass || columns*rows < slug + helix + worm)
+        setStartingPosition(1,1);
+
+    else
+    {
+        setPlantStartingPosition(lettuce, cabbage, grass);
+        setSnailStartingPosition(helix, slug, worm);
+    }
+}
 Board::~Board()
 {
     board.clear();
@@ -58,6 +80,94 @@ int Board::getPlantNumber(){
 int Board::getSnailNumber(){
     return 0;
 }
+void Board::setSnailStartingPosition(int helix, int slug, int worm)
+{
+    int helixCounter =0, slugCounter = 0, wormCounter = 0;
+    while(helixCounter < helix)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board.at(fieldNumber);
+        if(!current.snail)
+        {
+            Helix *helix = new Helix;
+            helix->setCoordinates(current.getX(), current.getY());
+            current.snail = helix;
+            helix = NULL;
+            delete helix;
+            board.at(fieldNumber) = current;
+            helixCounter++;
+        }
+    }
+    while(slugCounter < slug)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board.at(fieldNumber);
+        if(!current.snail)
+        {
+            Slug *slug = new Slug;
+            slug->setCoordinates(current.getX(), current.getY());
+            current.snail = slug;
+            slug = NULL;
+            delete slug;
+            board.at(fieldNumber) = current;
+            slugCounter++;
+        }
+    }
+    while(wormCounter < worm)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board.at(fieldNumber);
+        Worm *worm = new Worm;
+        worm->setCoordinates(current.getX(), current.getY());
+        current.snail = worm;
+        worm = NULL;
+        delete worm;
+        board.at(fieldNumber) = current;
+        wormCounter++;
+
+    }
+}
+void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
+{
+    int lettuceCounter = 0, cabbageCounter = 0, grassCounter = 0;
+    while(lettuceCounter < lettuce)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board.at(fieldNumber);
+        Lettuce *lettuce = new Lettuce;
+        lettuce->setCoordinates(current.getX(), current.getY());
+        current.plant = lettuce;
+        lettuce = NULL;
+        delete lettuce;
+        board.at(fieldNumber) = current;
+        lettuceCounter++;
+    }
+    while(cabbageCounter < cabbage)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board.at(fieldNumber);
+        Cabbage *cabbage = new Cabbage;
+        cabbage->setCoordinates(current.getX(), current.getY());
+        current.plant = cabbage;
+        cabbage = NULL;
+        delete cabbage;
+        board.at(fieldNumber) = current;
+        cabbageCounter++;
+    }
+    while(grassCounter < grass)
+    {
+        int fieldNumber = rand()%board.size();
+        Field current = board.at(fieldNumber);
+        Grass *grass = new Grass;
+        grass->setCoordinates(current.getX(), current.getY());
+        current.plant = grass;
+        grass = NULL;
+        delete grass;
+        board.at(fieldNumber) = current;
+        grassCounter++;
+    }
+}
+
 void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
 {
     int snailCounter = 0, plantCounter = 0;
@@ -311,72 +421,78 @@ void Board::nextTurn()
 void Board::addSnail(int x, int y, int index)
 {
     Field current = board[boardColumnsNumber*(x) + y];
-    switch (index) {
-    case 1:
+    if(!current.snail)
     {
-        Helix *helix = new Helix;
-        helix->setCoordinates(current.getX(), current.getY());
-        current.snail = helix;
-        helix = NULL;
-        delete helix;
-        break;
-    }
-    case 2:
-    {
-        Slug *slug = new Slug;
-        slug->setCoordinates(current.getX(), current.getY());
-        current.snail = slug;
-        slug = NULL;
-        delete slug;
-        break;
-    }
-    case 3:
-    {
-        Worm *worm = new Worm;
-        worm->setCoordinates(current.getX(), current.getY());
-        current.snail = worm;
-        worm = NULL;
-        delete worm;
-        break;
-    }
-    default:
-        break;
+        switch (index) {
+        case 1:
+        {
+            Helix *helix = new Helix;
+            helix->setCoordinates(current.getX(), current.getY());
+            current.snail = helix;
+            helix = NULL;
+            delete helix;
+            break;
+        }
+        case 2:
+        {
+            Slug *slug = new Slug;
+            slug->setCoordinates(current.getX(), current.getY());
+            current.snail = slug;
+            slug = NULL;
+            delete slug;
+            break;
+        }
+        case 3:
+        {
+            Worm *worm = new Worm;
+            worm->setCoordinates(current.getX(), current.getY());
+            current.snail = worm;
+            worm = NULL;
+            delete worm;
+            break;
+        }
+        default:
+            break;
+        }
     }
     board[boardColumnsNumber*(x) + y] = current;
 }
 void Board::addPlant(int x, int y, int index)
 {
     Field current = board[boardColumnsNumber*(x) + y];
-    switch (index) {
-    case 1:
+    if(!current.plant)
     {
-        Lettuce *lettuce = new Lettuce;
-        lettuce->setCoordinates(current.getX(), current.getY());
-        current.plant = lettuce;
-        lettuce = NULL;
-        delete lettuce;
-        break;
-    }
-    case 2:
-    {
-        Cabbage *cabbage = new Cabbage;
-        cabbage->setCoordinates(current.getX(), current.getY());
-        current.plant = cabbage;
-        cabbage = NULL;
-        delete cabbage;
-        break;
-    }
-    case 3:
-    {
-        Grass *grass = new Grass;
-        grass->setCoordinates(current.getX(), current.getY());
-        current.plant = grass;
-        grass = NULL;
-        delete grass;
-        break;
-    }
-    default:
-        break;
+        switch (index) {
+        case 1:
+        {
+            Lettuce *lettuce = new Lettuce;
+            lettuce->setCoordinates(current.getX(), current.getY());
+            current.plant = lettuce;
+            lettuce = NULL;
+            delete lettuce;
+            break;
+        }
+        case 2:
+        {
+            Cabbage *cabbage = new Cabbage;
+            cabbage->setCoordinates(current.getX(), current.getY());
+            current.plant = cabbage;
+            cabbage = NULL;
+            delete cabbage;
+            break;
+        }
+        case 3:
+        {
+            Grass *grass = new Grass;
+            grass->setCoordinates(current.getX(), current.getY());
+            current.plant = grass;
+            grass = NULL;
+            delete grass;
+            break;
+        }
+        default:
+            break;
+        }
     }
     board[boardColumnsNumber*(x) + y] = current;
 }
