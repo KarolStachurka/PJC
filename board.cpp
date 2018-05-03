@@ -2,10 +2,6 @@
 
 Board::Board()
 {
-//    vector<Field> vec;
-//    vec.resize(boardRowsNumber*boardColumnsNumber);
-//    this->board = vec;
-//    setStartingPosition(200, 200);
 }
 Board::Board(int rows, int columns, int snails, int plants)
 {
@@ -57,10 +53,10 @@ int Board::getTurn()
     return turn;
 }
 int Board::getPlantNumber(){
-    return plantVector.size();
+    return 0;
 }
 int Board::getSnailNumber(){
-    return snailVector.size();
+    return 0;
 }
 void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
 {
@@ -165,7 +161,7 @@ void Board::plantsNextTurn()
                 delete current.plant;
                 current.plant = NULL;
             }
-            if(temp->isReproduction() && !temp->isDead())
+            if(temp->isReproduced() && !temp->isDead())
             {
                 int newX = temp->getX();
                 int newY = temp->getY();
@@ -175,7 +171,7 @@ void Board::plantsNextTurn()
                     Field next = board.at(boardColumnsNumber*newX + newY);
                     if(!next.plant)
                     {
-                        switch (temp->getPlantType()) {
+                        switch (temp->getType()) {
                         case 1:
                         {
                             Lettuce *lettuce = new Lettuce;
@@ -235,7 +231,7 @@ void Board::snailsNextTurn()
             }
             if(current.plant)
                 temp->eat();
-            else if(temp->isReproduced() && !temp->isDead())
+            if(temp->isReproduced() && !temp->isDead())
             {
                 int newX = temp->getX();
                 int newY = temp->getY();
@@ -245,7 +241,7 @@ void Board::snailsNextTurn()
                     Field next = board.at(boardColumnsNumber*newX + newY);
                     if(!next.snail)
                     {
-                        switch (temp->getSnailType()) {
+                        switch (temp->getType()) {
                         case 1:
                         {
                             Helix *helix = new Helix;

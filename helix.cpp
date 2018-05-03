@@ -2,6 +2,7 @@
 
 Helix::Helix()
 {
+    name = "Ślimak Winniczek";
     type = 1;
     age = 0;
     energy = 12;

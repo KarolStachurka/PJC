@@ -2,6 +2,7 @@
 
 Cabbage::Cabbage()
 {
+    name = "Kapusta";
     type = 2;
     age = 0;
     energy = 50;

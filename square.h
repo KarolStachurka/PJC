@@ -1,7 +1,9 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
+#include <string>
 
+using namespace std;
 class Square
 {
 public:
@@ -12,6 +14,7 @@ public:
     void setCoordinates(int x, int y);
     int getX();
     int getY();
+
 
 protected:
     int coordinateX;

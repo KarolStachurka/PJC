@@ -25,8 +25,6 @@ private:
     int boardColumnsNumber = 100;
     int turn = 0;
     vector<Field> board;
-    vector<Snail> snailVector;
-    vector<Plant> plantVector;
 
 public:
     Board();
@@ -34,17 +32,16 @@ public:
     Board(int rows, int columns, int snails, int plants);
     void addSnail(int x, int y, int index);
     void addPlant(int x, int y, int index);
-    vector<Field> findNearSnails(int range);
-    vector<Field> findNearPlants(int range);
-    vector<Field> findNearNoPlants(int range);
     void nextTurn();
     void plantsNextTurn();
     void snailsNextTurn();
 
+    //setters
     void setBoardRowsNumber(int rows);
     void setBoardColumnsNumber(int columns);
     void setStartingPosition(int numberOfSnails, int numberOfPlants);
 
+    //getters
     int getBoardRowsNumber();
     int getBoardColumnsNumber();
     int getTurn();

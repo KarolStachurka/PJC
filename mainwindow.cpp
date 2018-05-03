@@ -64,7 +64,7 @@ void MainWindow::displayBoard(Board board)
         {
             Field current = currentBoard[row * boardColumns + col];
             if(current.snail && current.plant)
-                switch (current.snail->getSnailType()) {
+                switch (current.snail->getType()) {
                 case 1:
                     item = scene->addPixmap(snailWithPlant);
                     break;
@@ -79,7 +79,7 @@ void MainWindow::displayBoard(Board board)
                     break;
                 }
             else if (current.snail)
-                switch (current.snail->getSnailType()) {
+                switch (current.snail->getType()) {
                 case 1:
                     item = scene->addPixmap(helix);
                     break;
@@ -95,7 +95,7 @@ void MainWindow::displayBoard(Board board)
                 }
             else if(current.plant)
             {
-                switch (current.plant->getPlantType()) {
+                switch (current.plant->getType()) {
                 case 1:
                     item = scene->addPixmap(lettuce);
                     break;
@@ -266,9 +266,9 @@ void MainWindow::getMouseCoords(int x, int y)
          Field current = currentBoard[(x/15) * board.getBoardColumnsNumber() + (y/15)];
          QString info = "";
          if(current.plant != NULL)
-            info = info + QString::fromStdString(std::to_string(current.plant->getPlantType()));
+            info += QString::fromStdString(current.plant->getPlantInfo());
          if(current.snail != NULL)
-            info = info + QString::fromStdString(std::to_string(current.snail->getSnailType()));
+            info += QString::fromStdString(current.snail->getSnailInfo());
          ui->plainTextEdit->clear();
          ui->plainTextEdit->appendPlainText(info);
     }

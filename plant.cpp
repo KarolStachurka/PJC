@@ -1,17 +1,7 @@
 #include "plant.h"
 
-Plant::Plant()
-{
-
-}
-bool Plant::isReproduction()
-{
-    return reproduction;
-}
-void Plant::resetReproducion()
-{
-    lastReproduction = 0;
-}
+Plant::Plant() {}
+Plant::~Plant() {}
 void Plant::grow()
 {
     age++;
@@ -21,10 +11,6 @@ void Plant::die()
     dead = true;
 }
 
-int Plant::getAge()
-{
-    return age;
-}
 bool Plant::getNewPosition(int &x, int &y, int maxX, int maxY)
 {
     int rangeInt = 1 + 2*range;
@@ -38,16 +24,19 @@ bool Plant::getNewPosition(int &x, int &y, int maxX, int maxY)
     }
     return false;
 }
-bool Plant::isDead()
-{
-    return dead;
-}
-int Plant::getPlantType()
-{
-    return type;
-}
 void Plant::beEaten(int energyLoss)
 {
     energy = energy - energyLoss;
     eaten = true;
+}
+string Plant::getPlantInfo()
+{
+    string info = "";
+    info += "---------------------\n";
+    info +=("Typ: " + name + "\n");
+    info += ("Wiek: " + to_string(age) + "\n");
+    info += ("Rozmiar: " + to_string(size) + "\n");
+    info += ("Zdrowie: " + to_string(energy) + "\n");
+    info += ("Ostatnio rozmnożył się: " + to_string(lastReproduction) + " tur temu." + "\n");
+    return info;
 }

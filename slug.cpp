@@ -2,6 +2,7 @@
 
 Slug::Slug()
 {
+    name = "Ślimak stawowy";
     type = 2;
     age = 0;
     energy = 25;

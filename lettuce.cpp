@@ -2,6 +2,7 @@
 
 Lettuce::Lettuce()
 {
+    name = "Sałata";
     type = 1;
     age = 0;
     energy = 20;

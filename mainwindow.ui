@@ -157,7 +157,7 @@
           <property name="minimumSize">
            <size>
             <width>300</width>
-            <height>250</height>
+            <height>300</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -176,7 +176,7 @@
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="infoTab">
            <property name="maximumSize">
@@ -194,7 +194,7 @@
               <x>10</x>
               <y>10</y>
               <width>271</width>
-              <height>241</height>
+              <height>403</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -253,7 +253,14 @@
               </layout>
              </item>
              <item>
-              <widget class="QPlainTextEdit" name="plainTextEdit"/>
+              <widget class="QPlainTextEdit" name="plainTextEdit">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>300</height>
+                </size>
+               </property>
+              </widget>
              </item>
              <item>
               <spacer name="horizontalSpacer">

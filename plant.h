@@ -1,28 +1,27 @@
 #ifndef PLANT_H
 #define PLANT_H
 
-#include <iostream>
 #include <ctime>
 #include <cstdlib>
 
 #include "organism.h"
-using namespace std;
 
 
 class Plant: public Organism
 {
 public:
     Plant();
+    ~Plant();
+
     void beEaten(int energyLoss);
-    void resetReproducion();
+    bool getNewPosition(int &x, int &y, int maxX, int maxY);
     void grow();
     void die();
-    int getAge();
-    bool isReproduction();
-    bool isDead();
+
+    //getters
     bool isEaten();
-    bool getNewPosition(int &x, int &y, int maxX, int maxY);
-    int getPlantType();
+    int getSize();
+    string getPlantInfo();
 
 protected:
 

@@ -4,23 +4,12 @@ Snail::Snail()
 {
 
 }
-bool Snail::isReproduced()
-{
-    return reproduction;
-}
-int Snail::getAge()
-{
-    return age;
-}
+Snail::~Snail(){}
 int Snail::getHunger()
 {
     return hunger;
 }
 
-int Snail::getSnailType()
-{
-    return type;
-}
 void Snail::grow(){}
 void Snail::die(){}
 bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
@@ -39,4 +28,15 @@ bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
 void Snail::eat()
 {
     energy = energy + hunger;
+}
+string Snail::getSnailInfo()
+{
+    string info = "";
+    info += "---------------------\n";
+    info +=("Typ: " + name + "\n");
+    info += ("Wiek: " + to_string(age) + "\n");
+    info += ("Żarłoczność: " + to_string(hunger) + "\n");
+    info += ("Zdrowie: " + to_string(energy) + "\n");
+    info += ("Ostatnio rozmnożył się: " + to_string(lastReproduction) + " tur temu." + "\n");
+    return info;
 }
