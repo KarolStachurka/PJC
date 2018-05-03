@@ -28,9 +28,9 @@ public:
 
     void setReproduction(bool reproduction);
     bool getNewPosition(int &x, int &y, int maxX, int maxY);
-    string getSnailType();
+    int getSnailType();
 protected:
-    string type;
+    int type;
     int hunger;
     int energy;
     int age;

@@ -50,7 +50,7 @@ private:
     myQGraphicsscene *scene;
     Board board;
     bool simStarted = false;
-    QPixmap snail = QPixmap("graphics/snail.png");
+    QPixmap helix = QPixmap("graphics/snail.png");
     QPixmap empty = QPixmap("graphics/empty.png");
     QPixmap cabbage = QPixmap("graphics/cabbage.png");
     QPixmap lettuce = QPixmap("graphics/lettuce.png");

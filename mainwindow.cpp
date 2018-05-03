@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowState(Qt::WindowMaximized);
-    ui->helixPicture->setPixmap(snail.scaled(30, 30));
+    ui->helixPicture->setPixmap(helix.scaled(30, 30));
     ui->slugPicture->setPixmap(slug.scaled(30, 30));
     ui->wormPicture->setPixmap(worm.scaled(30, 30));
     ui->lettucePicture->setPixmap(lettuce.scaled(30, 30));
@@ -63,11 +63,37 @@ void MainWindow::displayBoard(Board board)
         for (int col = 0; col < boardColumns; col++)
         {
             Field current = currentBoard[row * boardColumns + col];
-            if(current.getSnailExistence() && current.getPlantExistence())
-                item = scene->addPixmap(snailWithPlant );
-            else if (current.getSnailExistence())
-                item = scene->addPixmap(snail);
-            else if(current.plant != NULL)
+            if(current.snail && current.plant)
+                switch (current.snail->getSnailType()) {
+                case 1:
+                    item = scene->addPixmap(snailWithPlant);
+                    break;
+                case 2:
+                    item = scene->addPixmap(slugWithPlant);
+                    break;
+                case 3:
+                    item = scene->addPixmap(wormWithPlant);
+                    break;
+                default:
+                    item = scene->addPixmap(empty);
+                    break;
+                }
+            else if (current.snail)
+                switch (current.snail->getSnailType()) {
+                case 1:
+                    item = scene->addPixmap(helix);
+                    break;
+                case 2:
+                    item = scene->addPixmap(slug);
+                    break;
+                case 3:
+                    item = scene->addPixmap(worm);
+                    break;
+                default:
+                    item = scene->addPixmap(empty);
+                    break;
+                }
+            else if(current.plant)
             {
                 switch (current.plant->getPlantType()) {
                 case 1:
@@ -202,6 +228,13 @@ void MainWindow::getMouseCoords(int x, int y)
 {
     if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
     {
+        int type = 0;
+        if(ui->addHelixRadioButton->isChecked())
+            type = 1;
+        if(ui->addSlugRadioButton->isChecked())
+            type = 2;
+        if(ui->addWormRadioButton->isChecked())
+            type = 3;
         board.addSnail(x/15, y/15);
         displayBoard(board);
         QString turnNumber = QString::number(board.getTurn());

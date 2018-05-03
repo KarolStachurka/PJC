@@ -2,7 +2,7 @@
 
 Helix::Helix()
 {
-    type = "Helix";
+    type = 1;
     age = 0;
     energy = 10;
     speed = 1;

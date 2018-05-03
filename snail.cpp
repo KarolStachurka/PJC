@@ -25,6 +25,10 @@ void Snail::move(int x, int y)
     this->setX(x);
     this->setY(y);
 }
+int Snail::getSnailType()
+{
+    return type;
+}
 bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
 {
     int rangeInt = 1 + 2*speed;

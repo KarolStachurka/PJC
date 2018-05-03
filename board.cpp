@@ -69,13 +69,39 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.getSnailExistence())
+        if(!current.snail)
         {
-            current.setSnailExistence(true);
-            Helix helix;
-            helix.setX(current.getX());
-            helix.setY(current.getY());
-            snailVector.push_back(helix);
+            switch (rand()%3) {
+            case 0:
+            {
+                Helix *helix = new Helix;
+                helix->setCoordinates(current.getX(), current.getY());
+                current.snail = helix;
+                helix = NULL;
+                delete helix;
+                break;
+            }
+            case 1:
+            {
+                Helix *helix = new Helix;
+                helix->setCoordinates(current.getX(), current.getY());
+                current.snail = helix;
+                helix = NULL;
+                delete helix;
+                break;
+            }
+            case 2:
+            {
+                Helix *helix = new Helix;
+                helix->setCoordinates(current.getX(), current.getY());
+                current.snail = helix;
+                helix = NULL;
+                delete helix;
+                break;
+            }
+            default:
+                break;
+            }
             board.at(fieldNumber) = current;
             snailCounter++;
         }
@@ -127,10 +153,10 @@ void Board::plantsNextTurn()
     for(auto &i: board)
     {
         Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
-        if(current.plant != NULL)
+        if(current.plant)
         {
             Plant *temp = current.plant;
-            if(current.getSnailExistence())
+            if(current.snail)
                 temp->beEaten(2);
             temp->grow();
             temp->die();
@@ -147,7 +173,7 @@ void Board::plantsNextTurn()
                 if(isReady)
                 {
                     Field next = board.at(boardColumnsNumber*newX + newY);
-                    if(next.plant == NULL)
+                    if(!next.plant)
                     {
                         switch (temp->getPlantType()) {
                         case 1:
@@ -180,68 +206,107 @@ void Board::plantsNextTurn()
         }
         board.at(boardColumnsNumber*current.getX() + current.getY()) = current;
     }
+    //                    Field next = board.at(boardColumnsNumber*newX + newY);
+    //                    if(!next.plant)
+    //                    {
+    //                        switch (temp->getPlantType()) {
+    //                        case 1:
+    //                        {
+    //                            Lettuce *plant = new Lettuce;
+    //                            plant->setCoordinates(next.getX(), next.getY());
+    //                            next.plant = plant;
+    //                            plant = NULL;
+    //                            delete plant;
+    //                            break;
+    //                        }
+    //                        case 3:
+    //                        {
+    //                            Grass *plant = new Grass;
+    //                            plant->setCoordinates(next.getX(), next.getY());
+    //                            next.plant = plant;
+    //                            plant = NULL;
+    //                            delete plant;
+    //                            break;
+    //                        }
+    //                        default:
+    //                            break;
+    //                        }
 }
 void Board::snailsNextTurn()
 {
-    for(auto &i : board)
-        i.setSnailExistence(false);
-
-    for(auto &i :snailVector)
+    for(auto &i: board)
     {
         Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
-        current.setSnailExistence(true);
-        Field next;
-        i.grow();
-        i.die();
-        if(i.isDead())
+        if(current.snail)
         {
-            current.setSnailExistence(false);
-        }
-        if(current.getPlantExistence() && !i.isDead())
-        {
-            i.eat();
-        }
-        else if(!i.isDead() && i.isReproduced())
-        {
-            int newX = i.getX();
-            int newY = i.getY();
-            bool isReady = i.getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
-            if(isReady)
+            Snail *temp = current.snail;
+            temp->grow();
+            temp->die();
+            if(temp->isDead())
             {
-                next = board.at(boardColumnsNumber*newX + newY);
-                if(!next.getSnailExistence())
-                {
-                    next.setSnailExistence(true);
-                    Helix helix;
-                    helix.setCoordinates(newX, newY);
-                    snailVector.push_back(helix);
-                    i.setReproduction(false);
-                }
-                board.at(boardColumnsNumber*newX + newY) = next;
+                delete current.snail;
+                current.snail = NULL;
             }
-        }
-        else if(!i.isDead())
-        {
-            int newX = i.getX();
-            int newY = i.getY();
-            bool isReady = i.getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
-            if(isReady)
+            if(current.plant)
+                temp->eat();
+            else if(temp->isReproduced() && !temp->isDead())
             {
-                next = board.at(boardColumnsNumber*newX + newY);
-                if(!next.getSnailExistence())
+                int newX = temp->getX();
+                int newY = temp->getY();
+                bool isReady = temp->getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
+                if(isReady)
                 {
-                    next.setSnailExistence(true);
-                    current.setSnailExistence(false);
-                    i.move(newX, newY);
-
+                    Field next = board.at(boardColumnsNumber*newX + newY);
+                    if(!next.snail)
+                    {
+                        switch (temp->getSnailType()) {
+                        case 1:
+                        {
+                            Helix *helix = new Helix;
+                            helix->setCoordinates(next.getX(), next.getY());
+                            next.snail = helix;
+                            helix = NULL;
+                            delete helix;
+                            break;
+                        }
+                        case 3:
+                        {
+                            Helix *helix = new Helix;
+                            helix->setCoordinates(next.getX(), next.getY());
+                            next.snail = helix;
+                            helix = NULL;
+                            delete helix;
+                            break;
+                        }
+                        default:
+                            break;
+                        }
+                    }
+                    board.at(boardColumnsNumber*newX + newY) = next;
                 }
-                board.at(boardColumnsNumber*newX + newY) = next;
             }
+            else if(!temp->isDead())
+            {
+                int newX = temp->getX();
+                int newY = temp->getY();
+                bool isReady = temp->getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
+                if(isReady)
+                {
+                    Field next = board.at(boardColumnsNumber*newX + newY);
+                    if(!next.snail)
+                    {
+                        next.snail = temp;
+                        temp->setCoordinates(next.getX(),next.getY());
+                        current.snail = NULL;
+                    }
+                    board.at(boardColumnsNumber*newX + newY) = next;
+                }
+            }
+            temp = NULL;
+            delete temp;
         }
-        board.at(boardColumnsNumber*(current.getX()) + current.getY()) = current;
-
+        board.at(boardColumnsNumber*current.getX() + current.getY()) = current;
     }
-    snailVector.erase(std::remove_if(snailVector.begin(), snailVector.end(),[](Snail &i){return i.isDead();}), snailVector.end());
 }
 
 void Board::nextTurn()
