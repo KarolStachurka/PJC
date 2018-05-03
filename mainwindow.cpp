@@ -84,16 +84,19 @@ void MainWindow::displayBoard(Board board)
 
 void MainWindow::on_nextTurn_clicked()
 {
-    board.nextTurn();
-    QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
-    displayBoard(board);
-    ui->qBoard->centerOn(center);
-    QString turnNumber = QString::number(board.getTurn());
-    QString plantNumber = QString::number(board.getPlantNumber());
-    QString snailNumber = QString::number(board.getSnailNumber());
-    ui->turnNumberDisplay->setText(turnNumber);
-    ui->plantNumberDisplay->setText(plantNumber);
-    ui->snailNumberDisplay->setText(snailNumber);
+    if(this->board.getTurn() > 0)
+    {
+        board.nextTurn();
+        QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
+        displayBoard(board);
+        ui->qBoard->centerOn(center);
+        QString turnNumber = QString::number(board.getTurn());
+        QString plantNumber = QString::number(board.getPlantNumber());
+        QString snailNumber = QString::number(board.getSnailNumber());
+        ui->turnNumberDisplay->setText(turnNumber);
+        ui->plantNumberDisplay->setText(plantNumber);
+        ui->snailNumberDisplay->setText(snailNumber);
+    }
 }
 
 void MainWindow::on_automaticMode_clicked()
@@ -101,11 +104,26 @@ void MainWindow::on_automaticMode_clicked()
     QString text1 = "Start";
     QString text2 = "Pause";
     if(ui->mapHuge->isChecked() && board.getTurn() < 1)
-        this->board = Board(75, 75, 0, 0);
+    {
+        if(ui->randomStartCheckBox->isChecked())
+            this->board = Board(75, 75, 100, 1000);
+        else
+            this->board = Board(75, 75, 0, 0);
+    }
     else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
-        this->board = Board(50, 50, 0, 0);
+    {
+        if(ui->randomStartCheckBox->isChecked())
+            this->board = Board(50, 50, 55, 300);
+        else
+            this->board = Board(50, 50, 0, 0);
+    }
     else if(board.getTurn() < 1)
-        this->board = Board(30, 30, 0, 0);
+    {
+        if(ui->randomStartCheckBox->isChecked())
+            this->board = Board(30, 30, 20, 100);
+        else
+            this->board = Board(30, 30, 0, 0);
+    }
     if(!simStarted)
     {
         ui->automaticMode->setText(text2);
@@ -142,11 +160,26 @@ void MainWindow::getNextBoard(Board board)
 void MainWindow::on_resetButton_clicked()
 {
     if(ui->mapHuge->isChecked())
-        this->board = Board(75, 75, 0, 0);
+    {
+        if(ui->randomStartCheckBox->isChecked())
+            this->board = Board(75, 75, 100, 1000);
+        else
+            this->board = Board(75, 75, 0, 0);
+    }
     else if(ui->mapMedium->isChecked())
-        this->board = Board(50, 50, 0, 0);
+    {
+        if(ui->randomStartCheckBox->isChecked())
+            this->board = Board(50, 50, 55, 300);
+        else
+            this->board = Board(50, 50, 0, 0);
+    }
     else
-        this->board = Board(30, 30, 0, 0);
+    {
+        if(ui->randomStartCheckBox->isChecked())
+            this->board = Board(30, 30, 20, 100);
+        else
+            this->board = Board(30, 30, 0, 0);
+    }
     board.nextTurn();
     displayBoard(board);
 }

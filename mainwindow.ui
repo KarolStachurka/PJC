@@ -113,6 +113,13 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="randomStartCheckBox">
+            <property name="text">
+             <string>Rozmieść losowo rośliny i ślimaki</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -166,7 +173,7 @@
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="infoTab">
            <property name="maximumSize">
