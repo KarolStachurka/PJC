@@ -6,6 +6,13 @@ Field::Field()
     plantExistence = false;
     snailType = "";
     plantType = "";
+    snail = NULL;
+    plant = NULL;
+}
+Field::~Field()
+{
+    snail = NULL;
+    plant = NULL;
 }
 
 void Field::setSnailExistence(bool existence)
@@ -33,13 +40,13 @@ string Field::getPlantType()
 {
     return plantType;
 }
-void Field::setPlantType(string plant)
+void Field::setPlantType(string plantType)
 {
-    this->plantType = plant;
+    this->plantType = plantType;
 }
-void Field::setSnailType(string snail)
+void Field::setSnailType(string snailType)
 {
-    this->snailType = snail;
+    this->snailType = snailType;
 }
 
 string Field::getFieldInfo()

@@ -1,11 +1,11 @@
-#include "lettuce.h"
+#include "grass.h"
 
-Lettuce::Lettuce()
+Grass::Grass()
 {
-    type = 1;
+    type = 3;
     age = 0;
     energy = 10;
-    range = 1;
+    range = 5;
     size = 1;
     lastReproduction = 0;
     dead = false;
@@ -13,12 +13,13 @@ Lettuce::Lettuce()
     eaten = false;
 }
 
-void Lettuce::grow()
+
+void Grass::grow()
 {
     age++;
     if(energy < 10 && !eaten)
-        energy = energy + 2;
-    if(size > 3 && lastReproduction > 5 && energy > 4)
+        energy = energy + 1;
+    if(size > 5 && lastReproduction > 5 && energy > 4)
     {
         reproduction = true;
     }
@@ -26,8 +27,10 @@ void Lettuce::grow()
     lastReproduction++;
 
 }
-void Lettuce::die()
+
+void Grass::die()
 {
-    if(age > 15 || energy < 1)
+    if(age > 30 || energy < 1)
         dead = true;
 }
+

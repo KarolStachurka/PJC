@@ -4,7 +4,7 @@ SimulationThread::SimulationThread(QObject *parent) : QThread(parent)
 {
     QTimer *timer = new QTimer();
     connect(timer,SIGNAL(timeout()),this,SLOT(iteration()));
-    timer->start(500);
+    timer->start(250);
 }
 void SimulationThread::run()
 {

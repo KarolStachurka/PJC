@@ -5,29 +5,28 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "square.h"
-#include "field.h"
+#include "organism.h"
 using namespace std;
 
 
-class Plant: public Square
+class Plant: public Organism
 {
 public:
     Plant();
-    void grow();
     void beEaten(int energyLoss);
-    void reproduce();
-    void die();
     void resetReproducion();
-
+    void grow();
+    void die();
     int getAge();
     bool isReproduction();
     bool isDead();
     bool isEaten();
     bool getNewPosition(int &x, int &y, int maxX, int maxY);
-    string getPlantType();
+    int getPlantType();
+
 protected:
-    string type;
+    int type;
+    string typeName;
     int size;
     int energy;
     int age;

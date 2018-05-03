@@ -9,6 +9,7 @@
 
 #include "field.h"
 #include "lettuce.h"
+#include "grass.h"
 #include "helix.h"
 
 using namespace std;
@@ -25,9 +26,10 @@ private:
 
 public:
     Board();
+    ~Board();
     Board(int rows, int columns, int snails, int plants);
     void addSnail(int x, int y);
-    void addPlant(int x, int y);
+    void addPlant(int x, int y, int index);
     vector<Field> findNearSnails(int range);
     vector<Field> findNearPlants(int range);
     vector<Field> findNearNoPlants(int range);
@@ -42,7 +44,6 @@ public:
     int getSnailNumber();
     int getPlantNumber();
     vector<Field> getBoard();
-    string testBoard();
     void nextTurn();
 };
 

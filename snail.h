@@ -6,10 +6,10 @@
 #include <cstdlib>
 
 #include "square.h"
-#include "field.h"
+
 using namespace std;
 
-class Snail:public Square
+class Snail: public Square
 {
 public:
     Snail();

@@ -67,8 +67,23 @@ void MainWindow::displayBoard(Board board)
                 item = scene->addPixmap(snailWithPlant );
             else if (current.getSnailExistence())
                 item = scene->addPixmap(snail);
-            else if(current.getPlantExistence())
-                item = scene->addPixmap(grass);
+            else if(current.plant != NULL)
+            {
+                switch (current.plant->getPlantType()) {
+                case 1:
+                    item = scene->addPixmap(lettuce);
+                    break;
+                case 2:
+                    item = scene->addPixmap(cabbage);
+                    break;
+                case 3:
+                    item = scene->addPixmap(grass);
+                    break;
+                default:
+                    item = scene->addPixmap(empty);
+                    break;
+                }
+            }
             else
                 item = scene->addPixmap(empty);
             item->moveBy(15*row, 15*col);
@@ -198,7 +213,14 @@ void MainWindow::getMouseCoords(int x, int y)
     }
     if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 1)
     {
-        board.addPlant(x/15, y/15);
+        int type = 0;
+        if(ui->addLettuceRadioButton->isChecked())
+            type = 1;
+        if(ui->addCabbageRadioButton->isChecked())
+            type = 2;
+        if(ui->addGrassRadioButton->isChecked())
+            type = 3;
+        board.addPlant(x/15, y/15,type);
         displayBoard(board);
         QString turnNumber = QString::number(board.getTurn());
         QString plantNumber = QString::number(board.getPlantNumber());
@@ -211,7 +233,9 @@ void MainWindow::getMouseCoords(int x, int y)
     {
          vector <Field> currentBoard = board.getBoard();
          Field current = currentBoard[(x/15) * board.getBoardColumnsNumber() + (y/15)];
-         QString info = QString::fromStdString(current.getFieldInfo());
+         QString info = "";
+         if(current.plant != NULL)
+            info = QString::fromStdString(std::to_string(current.plant->getPlantType()));
          ui->plainTextEdit->clear();
          ui->plainTextEdit->appendPlainText(info);
     }

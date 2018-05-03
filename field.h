@@ -3,6 +3,8 @@
 
 #include <string>
 #include "square.h"
+#include "plant.h"
+#include "snail.h"
 
 using namespace std;
 
@@ -14,13 +16,17 @@ private:
     string snailType;
     string plantType;
 
+
 public:
     Field();
+    ~Field();
+    Plant* plant;
+    Snail* snail;
     //setters
     void setSnailExistence(bool existence);
     void setPlantExistence(bool existence);
-    void setSnailType(string snail);
-    void setPlantType(string plant);
+    void setSnailType(string snailType);
+    void setPlantType(string plantType);
     //getters
     bool getSnailExistence();
     bool getPlantExistence();

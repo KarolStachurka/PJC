@@ -3,10 +3,12 @@
 
 #include "plant.h"
 
-class Lettuce:public Plant
+class Lettuce: public Plant
 {
 public:
     Lettuce();
+    void grow();
+    void die();
 };
 
 #endif // LETTUCE_H

@@ -26,6 +26,11 @@ Board::Board(int rows, int columns, int snails, int plants)
     else
         setStartingPosition(snails, plants);
 }
+Board::~Board()
+{
+    board.clear();
+}
+
 void Board::setBoardColumnsNumber(int columns)
 {
     this->boardColumnsNumber = columns;
@@ -57,25 +62,6 @@ int Board::getPlantNumber(){
 int Board::getSnailNumber(){
     return snailVector.size();
 }
-string Board::testBoard()
-{
-    string helper = "";
-    for (int row = 0; row < boardRowsNumber; row++) {
-        for (int col = 0; col < boardColumnsNumber; col++) {
-            Field current = board[row * boardColumnsNumber + col];
-            if(current.getSnailExistence() && current.getPlantExistence())
-                helper += "F";
-            else if (current.getSnailExistence())
-                helper += "@";
-            else if(current.getPlantExistence())
-                helper+= "0";
-            else
-                helper += "x";
-        }
-        helper +="\n";
-    }
-    return helper;
-}
 void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
 {
     int snailCounter = 0, plantCounter = 0;
@@ -98,13 +84,39 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.getPlantExistence())
+        if(!current.plant)
         {
-            current.setPlantExistence(true);
-            Lettuce lettuce;
-            lettuce.setX(current.getX());
-            lettuce.setY(current.getY());
-            plantVector.push_back(lettuce);
+            switch (rand()%3) {
+            case 0:
+            {
+                Lettuce *plant = new Lettuce;
+                plant->setCoordinates(current.getX(), current.getY());
+                current.plant = plant;
+                plant = NULL;
+                delete plant;
+                break;
+            }
+            case 1:
+            {
+                Grass *plant = new Grass;
+                plant->setCoordinates(current.getX(), current.getY());
+                current.plant = plant;
+                plant = NULL;
+                delete plant;
+                break;
+            }
+            case 2:
+            {
+                Grass *plant = new Grass;
+                plant->setCoordinates(current.getX(), current.getY());
+                current.plant = plant;
+                plant = NULL;
+                delete plant;
+                break;
+            }
+            default:
+                break;
+            }
             board.at(fieldNumber) = current;
             plantCounter++;
         }
@@ -112,39 +124,62 @@ void Board::setStartingPosition(int numberOfSnails, int numberOfPlants)
 }
 void Board::plantsNextTurn()
 {
-    for(auto &i :plantVector)
+    for(auto &i: board)
     {
-       Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
-       if(current.getSnailExistence())
-           i.beEaten(2);
-       i.grow();
-       i.die();
-       if(i.isDead())
-       {
-           current.setPlantExistence(false);
-       }
-       if(i.isReproduction() && !i.isDead())
-       {
-           int newX = i.getX();
-           int newY = i.getY();
-           bool isReady = i.getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
-           if(isReady)
-           {
-               Field next = board.at(boardColumnsNumber*newX + newY);
-               if(!next.getPlantExistence())
-               {
-                   next.setPlantExistence(true);
-                   Lettuce lettuce;
-                   lettuce.setCoordinates(next.getX(), next.getY());
-                   plantVector.push_back(lettuce);
-               }
-               board.at(boardColumnsNumber*newX + newY) = next;
-           }
-       }
-       board.at(boardColumnsNumber*current.getX() + current.getY()) = current;
-
+        Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
+        if(current.plant != NULL)
+        {
+            Plant *temp = current.plant;
+            if(current.getSnailExistence())
+                temp->beEaten(2);
+            temp->grow();
+            temp->die();
+            if(temp->isDead())
+            {
+                delete current.plant;
+                current.plant = NULL;
+            }
+            if(temp->isReproduction() && !temp->isDead())
+            {
+                int newX = temp->getX();
+                int newY = temp->getY();
+                bool isReady = temp->getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
+                if(isReady)
+                {
+                    Field next = board.at(boardColumnsNumber*newX + newY);
+                    if(next.plant == NULL)
+                    {
+                        switch (temp->getPlantType()) {
+                        case 1:
+                        {
+                            Lettuce *plant = new Lettuce;
+                            plant->setCoordinates(next.getX(), next.getY());
+                            next.plant = plant;
+                            plant = NULL;
+                            delete plant;
+                            break;
+                        }
+                        case 3:
+                        {
+                            Grass *plant = new Grass;
+                            plant->setCoordinates(next.getX(), next.getY());
+                            next.plant = plant;
+                            plant = NULL;
+                            delete plant;
+                            break;
+                        }
+                        default:
+                            break;
+                        }
+                    }
+                    board.at(boardColumnsNumber*newX + newY) = next;
+                }
+            }
+            temp = NULL;
+            delete temp;
+        }
+        board.at(boardColumnsNumber*current.getX() + current.getY()) = current;
     }
-    plantVector.erase(std::remove_if(plantVector.begin(), plantVector.end(),[](Plant &i){return i.isDead();}), plantVector.end());
 }
 void Board::snailsNextTurn()
 {
@@ -225,13 +260,26 @@ void Board::addSnail(int x, int y)
     newHelix.setY(current.getY());
     snailVector.push_back(newHelix);
 }
-void Board::addPlant(int x, int y)
+void Board::addPlant(int x, int y, int index)
 {
     Field current = board[boardColumnsNumber*(x) + y];
-    current.setPlantExistence(true);
+    switch (index) {
+    case 1:
+    {
+        Lettuce *plant = new Lettuce;
+        plant->setCoordinates(current.getX(), current.getY());
+        current.plant = plant;
+        break;
+    }
+    case 3:
+    {
+        Grass *plant = new Grass;
+        plant->setCoordinates(current.getX(), current.getY());
+        current.plant = plant;
+        break;
+    }
+    default:
+        break;
+    }
     board[boardColumnsNumber*(x) + y] = current;
-    Lettuce newLettuce;
-    newLettuce.setX(current.getX());
-    newLettuce.setY(current.getY());
-    plantVector.push_back(newLettuce);
 }
