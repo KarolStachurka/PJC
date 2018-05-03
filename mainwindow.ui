@@ -60,70 +60,7 @@
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <item>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="mapSmall">
-            <property name="text">
-             <string>Mała</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QRadioButton" name="mapMedium">
-            <property name="text">
-             <string>Średnia</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QRadioButton" name="mapHuge">
-            <property name="text">
-             <string>Duża</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="3">
-           <widget class="QLabel" name="titleLabel1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string>Rozmiar mapy</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QCheckBox" name="randomStartCheckBox">
-            <property name="text">
-             <string>Rozmieść losowo rośliny i ślimaki</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QGridLayout" name="gridLayout_2"/>
         </item>
         <item>
          <widget class="QPushButton" name="automaticMode">
@@ -185,21 +122,141 @@
            <widget class="QWidget" name="gridLayoutWidget_3">
             <property name="geometry">
              <rect>
-              <x>9</x>
-              <y>9</y>
-              <width>301</width>
-              <height>243</height>
+              <x>4</x>
+              <y>10</y>
+              <width>321</width>
+              <height>350</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_4">
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_5">
+             <item row="1" column="0">
+              <widget class="QRadioButton" name="mapSmall">
                <property name="text">
-                <string>Ślimaki stawowe</string>
+                <string>Mała</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
-             <item row="4" column="0" colspan="2">
+             <item row="1" column="1">
+              <widget class="QRadioButton" name="mapMedium">
+               <property name="text">
+                <string>Średnia</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QRadioButton" name="mapHuge">
+               <property name="text">
+                <string>Duża</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="titleLabel1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string>Rozmiar mapy</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="3">
+              <widget class="QCheckBox" name="randomStartCheckBox">
+               <property name="text">
+                <string>Rozmieść losowo rośliny i ślimaki</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>  Kapusta</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>  Trawa</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0" colspan="3">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Podaj warunki początkowe:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>  Sałata</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QSpinBox" name="lettuceNumberEdit">
+               <property name="maximum">
+                <number>999</number>
+               </property>
+               <property name="value">
+                <number>75</number>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QSpinBox" name="cabbageNumberEdit">
+               <property name="maximum">
+                <number>999</number>
+               </property>
+               <property name="value">
+                <number>25</number>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QSpinBox" name="grassNumberEdit">
+               <property name="maximum">
+                <number>999</number>
+               </property>
+               <property name="value">
+                <number>50</number>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>  Winniczki</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0" colspan="3">
               <spacer name="horizontalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -212,79 +269,7 @@
                </property>
               </spacer>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Sałata</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Kapusta</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>Trawa</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Winniczki</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>Ślimaki łyse</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Podaj warunki początkowe:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QSpinBox" name="lettuceNumberEdit">
-               <property name="maximum">
-                <number>999</number>
-               </property>
-               <property name="value">
-                <number>75</number>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QSpinBox" name="cabbageNumberEdit">
-               <property name="maximum">
-                <number>999</number>
-               </property>
-               <property name="value">
-                <number>25</number>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QSpinBox" name="grassNumberEdit">
-               <property name="maximum">
-                <number>999</number>
-               </property>
-               <property name="value">
-                <number>50</number>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
+             <item row="11" column="1">
               <widget class="QSpinBox" name="helixNumberEdit">
                <property name="maximum">
                 <number>999</number>
@@ -294,7 +279,14 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="1">
+             <item row="12" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>  Ślimaki stawowe</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
               <widget class="QSpinBox" name="slugNumberEdit">
                <property name="maximum">
                 <number>999</number>
@@ -304,13 +296,62 @@
                </property>
               </widget>
              </item>
-             <item row="7" column="1">
+             <item row="13" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>  Ślimaki łyse</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1">
               <widget class="QSpinBox" name="wormNumberEdit">
                <property name="maximum">
                 <number>999</number>
                </property>
                <property name="value">
                 <number>20</number>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QLabel" name="lettucePicture1">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="2">
+              <widget class="QLabel" name="cabbagePicture1">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="2">
+              <widget class="QLabel" name="grassPicture1">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="2">
+              <widget class="QLabel" name="helixPicture1">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="2">
+              <widget class="QLabel" name="slugPicture1">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="2">
+              <widget class="QLabel" name="wormPicture1">
+               <property name="text">
+                <string/>
                </property>
               </widget>
              </item>

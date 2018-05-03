@@ -13,6 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lettucePicture->setPixmap(lettuce.scaled(30, 30));
     ui->cabbagePicture->setPixmap(cabbage.scaled(30, 30));
     ui->grassPicture->setPixmap(grass.scaled(30, 30));
+    ui->helixPicture1->setPixmap(helix.scaled(30, 30));
+    ui->slugPicture1->setPixmap(slug.scaled(30, 30));
+    ui->wormPicture1->setPixmap(worm.scaled(30, 30));
+    ui->lettucePicture1->setPixmap(lettuce.scaled(30, 30));
+    ui->cabbagePicture1->setPixmap(cabbage.scaled(30, 30));
+    ui->grassPicture1->setPixmap(grass.scaled(30, 30));
 
     scene = new myQGraphicsscene(this);
     scene->installEventFilter(this);
