@@ -4,7 +4,7 @@ Grass::Grass()
 {
     type = 3;
     age = 0;
-    energy = 10;
+    energy = 100;
     range = 5;
     size = 1;
     lastReproduction = 0;
@@ -19,7 +19,7 @@ void Grass::grow()
     age++;
     if(energy < 10 && !eaten)
         energy = energy + 1;
-    if(size > 5 && lastReproduction > 5 && energy > 4)
+    if(size > 5 && lastReproduction > 2 && energy > 4)
     {
         reproduction = true;
     }

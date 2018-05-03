@@ -157,7 +157,7 @@ void Board::plantsNextTurn()
         {
             Plant *temp = current.plant;
             if(current.snail)
-                temp->beEaten(2);
+                temp->beEaten(current.snail->getHunger());
             temp->grow();
             temp->die();
             if(temp->isDead())
@@ -207,6 +207,7 @@ void Board::plantsNextTurn()
                             break;
                         }
                     }
+                    temp->reproduce();
                     board.at(boardColumnsNumber*newX + newY) = next;
                 }
             }
@@ -277,6 +278,7 @@ void Board::snailsNextTurn()
                             break;
                         }
                     }
+                    temp->reproduce();
                     board.at(boardColumnsNumber*newX + newY) = next;
                 }
             }

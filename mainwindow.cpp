@@ -236,7 +236,6 @@ void MainWindow::getMouseCoords(int x, int y)
         if(ui->addWormRadioButton->isChecked())
             type = 3;
         board.addSnail(x/15, y/15, type);
-        displayBoard(board);
         QString turnNumber = QString::number(board.getTurn());
         QString plantNumber = QString::number(board.getPlantNumber());
         QString snailNumber = QString::number(board.getSnailNumber());
@@ -254,7 +253,6 @@ void MainWindow::getMouseCoords(int x, int y)
         if(ui->addGrassRadioButton->isChecked())
             type = 3;
         board.addPlant(x/15, y/15,type);
-        displayBoard(board);
         QString turnNumber = QString::number(board.getTurn());
         QString plantNumber = QString::number(board.getPlantNumber());
         QString snailNumber = QString::number(board.getSnailNumber());
@@ -274,5 +272,7 @@ void MainWindow::getMouseCoords(int x, int y)
          ui->plainTextEdit->clear();
          ui->plainTextEdit->appendPlainText(info);
     }
-
+    QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
+    displayBoard(board);
+    ui->qBoard->centerOn(center);
 }

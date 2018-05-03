@@ -25,15 +25,10 @@ public:
     int getPlantType();
 
 protected:
-    int type;
-    string typeName;
+
     int size;
-    int energy;
-    int age;
     int range;
-    int lastReproduction;
-    bool reproduction;
-    bool dead;
+
     bool eaten;
 
 };

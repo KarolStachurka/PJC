@@ -8,31 +8,18 @@ bool Snail::isReproduced()
 {
     return reproduction;
 }
-void Snail::setReproduction(bool reproduction)
-{
-    this->reproduction = reproduction;
-}
 int Snail::getAge()
 {
     return age;
 }
-bool Snail::isDead()
+int Snail::getHunger()
 {
-    return dead;
+    return hunger;
 }
-void Snail::move(int x, int y)
-{
-    this->setX(x);
-    this->setY(y);
-}
+
 int Snail::getSnailType()
 {
     return type;
-}
-void Snail::reproduce()
-{
-    reproduction = true;
-    lastReproduction = 0;
 }
 void Snail::grow(){}
 void Snail::die(){}

@@ -4,8 +4,8 @@ Helix::Helix()
 {
     type = 1;
     age = 0;
-    energy = 10;
-    speed = 1;
+    energy = 12;
+    speed = 2;
     lastReproduction = 0;
     hunger = 2;
     dead = false;
@@ -14,7 +14,7 @@ Helix::Helix()
 }
 void Helix::die()
 {
-    if(energy < 1 || age > 10)
+    if(energy < 1 || age > 20)
         dead = true;
 }
 void Helix::grow()
@@ -22,7 +22,7 @@ void Helix::grow()
     age++;
     energy--;
     lastReproduction++;
-    if(lastReproduction > 4 && energy > 6)
-        reproduce();
+    if(lastReproduction > 6 && energy > 5)
+        reproduction = true;
 }
 
