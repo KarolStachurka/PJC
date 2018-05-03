@@ -1,11 +1,13 @@
 #ifndef SLUG_H
 #define SLUG_H
 
-
-class Slug
+#include "snail.h"
+class Slug: public Snail
 {
 public:
     Slug();
+    void grow();
+    void die();
 };
 
 #endif // SLUG_H

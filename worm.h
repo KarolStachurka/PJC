@@ -1,11 +1,13 @@
 #ifndef WORM_H
 #define WORM_H
 
-
-class Worm
+#include "snail.h"
+class Worm: public Snail
 {
 public:
     Worm();
+    void grow();
+    void die();
 };
 
 #endif // WORM_H

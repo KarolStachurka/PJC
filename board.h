@@ -32,7 +32,7 @@ public:
     Board();
     ~Board();
     Board(int rows, int columns, int snails, int plants);
-    void addSnail(int x, int y);
+    void addSnail(int x, int y, int index);
     void addPlant(int x, int y, int index);
     vector<Field> findNearSnails(int range);
     vector<Field> findNearPlants(int range);

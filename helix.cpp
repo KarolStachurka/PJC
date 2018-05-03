@@ -12,17 +12,12 @@ Helix::Helix()
     reproduction = false;
 
 }
-void Snail::reproduce()
-{
-    reproduction = true;
-    lastReproduction = 0;
-}
-void Snail::die()
+void Helix::die()
 {
     if(energy < 1 || age > 10)
         dead = true;
 }
-void Snail::grow()
+void Helix::grow()
 {
     age++;
     energy--;

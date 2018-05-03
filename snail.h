@@ -6,10 +6,11 @@
 #include <cstdlib>
 
 #include "square.h"
+#include "organism.h"
 
 using namespace std;
 
-class Snail: public Square
+class Snail: public Organism
 {
 public:
     Snail();

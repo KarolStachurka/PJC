@@ -235,7 +235,7 @@ void MainWindow::getMouseCoords(int x, int y)
             type = 2;
         if(ui->addWormRadioButton->isChecked())
             type = 3;
-        board.addSnail(x/15, y/15);
+        board.addSnail(x/15, y/15, type);
         displayBoard(board);
         QString turnNumber = QString::number(board.getTurn());
         QString plantNumber = QString::number(board.getPlantNumber());
@@ -268,7 +268,9 @@ void MainWindow::getMouseCoords(int x, int y)
          Field current = currentBoard[(x/15) * board.getBoardColumnsNumber() + (y/15)];
          QString info = "";
          if(current.plant != NULL)
-            info = QString::fromStdString(std::to_string(current.plant->getPlantType()));
+            info = info + QString::fromStdString(std::to_string(current.plant->getPlantType()));
+         if(current.snail != NULL)
+            info = info + QString::fromStdString(std::to_string(current.snail->getSnailType()));
          ui->plainTextEdit->clear();
          ui->plainTextEdit->appendPlainText(info);
     }

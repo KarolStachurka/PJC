@@ -29,6 +29,13 @@ int Snail::getSnailType()
 {
     return type;
 }
+void Snail::reproduce()
+{
+    reproduction = true;
+    lastReproduction = 0;
+}
+void Snail::grow(){}
+void Snail::die(){}
 bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
 {
     int rangeInt = 1 + 2*speed;
