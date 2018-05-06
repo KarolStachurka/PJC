@@ -1,7 +1,11 @@
 #include "cabbage.h"
 
+int Plant::cabbageNumber = 0;
+
 Cabbage::Cabbage()
 {
+    cabbageNumber++;
+
     name = "Kapusta";
     type = 2;
     age = 0;
@@ -14,6 +18,11 @@ Cabbage::Cabbage()
     eaten = false;
 
 }
+Cabbage::~Cabbage()
+{
+    cabbageNumber--;
+}
+
 void Cabbage::grow()
 {
     age++;

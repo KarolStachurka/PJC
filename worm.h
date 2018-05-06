@@ -6,6 +6,7 @@ class Worm: public Snail
 {
 public:
     Worm();
+    ~Worm();
     void grow();
     void die();
 };

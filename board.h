@@ -48,8 +48,8 @@ public:
     int getBoardRowsNumber();
     int getBoardColumnsNumber();
     int getTurn();
-    int getSnailNumber();
-    int getPlantNumber();
+    void getSnailNumber(int& helix, int& slug, int& worm);
+    void getPlantNumber(int& lettuce, int& cabbage, int& grass);
     vector<Field> getBoard();
 };
 

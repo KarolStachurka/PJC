@@ -34,7 +34,15 @@ Board::Board(int rows, int columns, int lettuce, int cabbage, int grass, int hel
         i.setCoordinates(it/boardRowsNumber, it%boardColumnsNumber);
         it++;
     }
-
+    for(auto &i: board)
+    {
+        i.plant->cabbageNumber = 0;
+        i.plant->lettuceNumber = 0;
+        i.plant->grassNumber = 0;
+        i.snail->helixNumber = 0;
+        i.snail->slugNumber = 0;
+        i.snail->wormNumber = 0;
+    }
     if(columns*rows < lettuce + cabbage + grass || columns*rows < slug + helix + worm)
         setStartingPosition(1,1);
 
@@ -46,6 +54,11 @@ Board::Board(int rows, int columns, int lettuce, int cabbage, int grass, int hel
 }
 Board::~Board()
 {
+    for(auto &i: board)
+    {
+        i.plant = NULL;
+        i.snail = NULL;
+    }
     board.clear();
 }
 
@@ -74,11 +87,49 @@ int Board::getTurn()
 {
     return turn;
 }
-int Board::getPlantNumber(){
-    return 0;
+void Board::getPlantNumber(int &lettuce, int &cabbage, int &grass)
+{
+    for(auto &i: board)
+    {
+        if(i.plant)
+        {
+            Plant *temp = i.plant;
+            if(temp->getType() == 1)
+            {
+                lettuce = temp->lettuceNumber;
+            }
+            if(temp->getType() == 2)
+            {
+                cabbage = temp->cabbageNumber;
+            }
+            if(temp->getType() == 3)
+            {
+                grass = temp->grassNumber;
+            }
+        }
+    }
 }
-int Board::getSnailNumber(){
-    return 0;
+
+void Board::getSnailNumber(int& helix, int& slug, int& worm){
+    for(auto &i: board)
+    {
+        if(i.snail)
+        {
+            Snail *temp = i.snail;
+            if(temp->getType() == 1)
+            {
+               helix = temp->helixNumber;
+            }
+            if(temp->getType() == 2)
+            {
+                slug = temp->slugNumber;
+            }
+            if(temp->getType() == 3)
+            {
+                worm = temp->wormNumber;
+            }
+        }
+    }
 }
 void Board::setSnailStartingPosition(int helix, int slug, int worm)
 {
@@ -414,8 +465,11 @@ void Board::snailsNextTurn()
 
 void Board::nextTurn()
 {
-    plantsNextTurn();
-    snailsNextTurn();
+    if(turn > 0)
+    {
+        plantsNextTurn();
+        snailsNextTurn();
+    }
     turn++;
 }
 void Board::addSnail(int x, int y, int index)

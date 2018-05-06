@@ -27,10 +27,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //thread to maintaining simulation
     secondThread = new SimulationThread(this);
     qRegisterMetaType <Board>("Board");
-    connect(this, SIGNAL(startSimulation(bool)),secondThread,SLOT(onSimStarted(bool)));
-    connect(this,SIGNAL(endSecondThread(bool)),secondThread,SLOT(endThread(bool)));
-    connect(this,SIGNAL(sendPrevBoard(Board)),secondThread,SLOT(getPrevBoard(Board)));
-    connect(secondThread,SIGNAL(sendNextBoard(Board)),this,SLOT(getNextBoard(Board)));
+    connect(this, SIGNAL(startSimulation(bool)), secondThread, SLOT(onSimStarted(bool)));
+    connect(this, SIGNAL(endSecondThread(bool)), secondThread, SLOT(endThread(bool)));
+    connect(this, SIGNAL(sendPrevBoard(Board)), secondThread, SLOT(getPrevBoard(Board)));
+    connect(secondThread, SIGNAL(sendNextBoard(Board)), this, SLOT(getNextBoard(Board)));
     secondThread->start();
 
     this->board = Board(10, 10, 0, 0);
@@ -59,7 +59,7 @@ void MainWindow::displayBoard(Board board)
     delete scene;
     scene = new myQGraphicsscene(this);
     scene->installEventFilter(this);
-    connect(scene,SIGNAL(sendCoords(int,int)),this,SLOT(getMouseCoords(int,int)));
+    connect(scene, SIGNAL(sendCoords(int,int)), this, SLOT(getMouseCoords(int,int)));
 
     vector <Field> currentBoard = board.getBoard();
     int boardRows = board.getBoardRowsNumber();
@@ -138,11 +138,7 @@ void MainWindow::on_nextTurn_clicked()
         displayBoard(board);
         ui->qBoard->centerOn(center);
         QString turnNumber = QString::number(board.getTurn());
-        QString plantNumber = QString::number(board.getPlantNumber());
-        QString snailNumber = QString::number(board.getSnailNumber());
         ui->turnNumberDisplay->setText(turnNumber);
-        ui->plantNumberDisplay->setText(plantNumber);
-        ui->snailNumberDisplay->setText(snailNumber);
     }
 }
 
@@ -204,11 +200,22 @@ void MainWindow::getNextBoard(Board board)
     displayBoard(board);
     ui->qBoard->centerOn(center);
     QString turnNumber = QString::number(board.getTurn());
-    QString plantNumber = QString::number(board.getPlantNumber());
-    QString snailNumber = QString::number(board.getSnailNumber());
+    int lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
+    board.getPlantNumber(lettuce, cabbage, grass);
+    board.getSnailNumber(helix, slug, worm);
+    QString lettuceNumber = QString::number(lettuce);
+    QString cabbageNumber = QString::number(cabbage);
+    QString grassNumber = QString::number(grass);
+    QString helixNumber = QString::number(helix);
+    QString slugNumber = QString::number(slug);
+    QString wormNumber = QString::number(worm);
     ui->turnNumberDisplay->setText(turnNumber);
-    ui->plantNumberDisplay->setText(plantNumber);
-    ui->snailNumberDisplay->setText(snailNumber);
+    ui->lettuceNumber->setText(lettuceNumber);
+    ui->cabbageNumber->setText(cabbageNumber);
+    ui->grassNumber->setText(grassNumber);
+    ui->helixNumber->setText(helixNumber);
+    ui->slugNumber->setText(slugNumber);
+    ui->wormNumber->setText(wormNumber);
 }
 
 void MainWindow::on_resetButton_clicked()
@@ -242,6 +249,24 @@ void MainWindow::on_resetButton_clicked()
     }
     board.nextTurn();
     displayBoard(board);
+    QString turnNumber = QString::number(board.getTurn());
+    ui->turnNumberDisplay->setText(turnNumber);
+    lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
+    board.getPlantNumber(lettuce, cabbage, grass);
+    board.getSnailNumber(helix, slug, worm);
+    QString lettuceNumber = QString::number(lettuce);
+    QString cabbageNumber = QString::number(cabbage);
+    QString grassNumber = QString::number(grass);
+    QString helixNumber = QString::number(helix);
+    QString slugNumber = QString::number(slug);
+    QString wormNumber = QString::number(worm);
+    ui->turnNumberDisplay->setText(turnNumber);
+    ui->lettuceNumber->setText(lettuceNumber);
+    ui->cabbageNumber->setText(cabbageNumber);
+    ui->grassNumber->setText(grassNumber);
+    ui->helixNumber->setText(helixNumber);
+    ui->slugNumber->setText(slugNumber);
+    ui->wormNumber->setText(wormNumber);
 }
 void MainWindow::getMouseCoords(int x, int y)
 {
@@ -256,11 +281,23 @@ void MainWindow::getMouseCoords(int x, int y)
             type = 3;
         board.addSnail(x/15, y/15, type);
         QString turnNumber = QString::number(board.getTurn());
-        QString plantNumber = QString::number(board.getPlantNumber());
-        QString snailNumber = QString::number(board.getSnailNumber());
         ui->turnNumberDisplay->setText(turnNumber);
-        ui->plantNumberDisplay->setText(plantNumber);
-        ui->snailNumberDisplay->setText(snailNumber);
+        int lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
+        board.getPlantNumber(lettuce, cabbage, grass);
+        board.getSnailNumber(helix, slug, worm);
+        QString lettuceNumber = QString::number(lettuce);
+        QString cabbageNumber = QString::number(cabbage);
+        QString grassNumber = QString::number(grass);
+        QString helixNumber = QString::number(helix);
+        QString slugNumber = QString::number(slug);
+        QString wormNumber = QString::number(worm);
+        ui->turnNumberDisplay->setText(turnNumber);
+        ui->lettuceNumber->setText(lettuceNumber);
+        ui->cabbageNumber->setText(cabbageNumber);
+        ui->grassNumber->setText(grassNumber);
+        ui->helixNumber->setText(helixNumber);
+        ui->slugNumber->setText(slugNumber);
+        ui->wormNumber->setText(wormNumber);
     }
     if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
     {
@@ -273,11 +310,23 @@ void MainWindow::getMouseCoords(int x, int y)
             type = 3;
         board.addPlant(x/15, y/15,type);
         QString turnNumber = QString::number(board.getTurn());
-        QString plantNumber = QString::number(board.getPlantNumber());
-        QString snailNumber = QString::number(board.getSnailNumber());
         ui->turnNumberDisplay->setText(turnNumber);
-        ui->plantNumberDisplay->setText(plantNumber);
-        ui->snailNumberDisplay->setText(snailNumber);
+        int lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
+        board.getPlantNumber(lettuce, cabbage, grass);
+        board.getSnailNumber(helix, slug, worm);
+        QString lettuceNumber = QString::number(lettuce);
+        QString cabbageNumber = QString::number(cabbage);
+        QString grassNumber = QString::number(grass);
+        QString helixNumber = QString::number(helix);
+        QString slugNumber = QString::number(slug);
+        QString wormNumber = QString::number(worm);
+        ui->turnNumberDisplay->setText(turnNumber);
+        ui->lettuceNumber->setText(lettuceNumber);
+        ui->cabbageNumber->setText(cabbageNumber);
+        ui->grassNumber->setText(grassNumber);
+        ui->helixNumber->setText(helixNumber);
+        ui->slugNumber->setText(slugNumber);
+        ui->wormNumber->setText(wormNumber);
     }
     if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 1)
     {
@@ -290,6 +339,7 @@ void MainWindow::getMouseCoords(int x, int y)
             info += QString::fromStdString(current.snail->getSnailInfo());
          ui->plainTextEdit->clear();
          ui->plainTextEdit->appendPlainText(info);
+
     }
     QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
     displayBoard(board);

@@ -373,7 +373,7 @@
              <rect>
               <x>10</x>
               <y>10</y>
-              <width>271</width>
+              <width>290</width>
               <height>403</height>
              </rect>
             </property>
@@ -397,34 +397,86 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <item>
-                <widget class="QLabel" name="plantNumber">
+              <layout class="QGridLayout" name="gridLayout_5">
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_8">
                  <property name="text">
-                  <string>Liczba roślin</string>
+                  <string>Stawowe</string>
                  </property>
                 </widget>
                </item>
-               <item>
-                <widget class="QLabel" name="plantNumberDisplay">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>Winniczki</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Łyse</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="wormNumber">
                  <property name="text">
                   <string/>
                  </property>
                 </widget>
                </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="QLabel" name="snailNumber">
+               <item row="1" column="1">
+                <widget class="QLabel" name="slugNumber">
                  <property name="text">
-                  <string>Liczba ślimaków</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
-               <item>
-                <widget class="QLabel" name="snailNumberDisplay">
+               <item row="0" column="1">
+                <widget class="QLabel" name="helixNumber">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>Kapusta</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLabel" name="label_15">
+                 <property name="text">
+                  <string>Sałata</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLabel" name="label_16">
+                 <property name="text">
+                  <string>Trawa</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLabel" name="cabbageNumber">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLabel" name="lettuceNumber">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLabel" name="grassNumber">
                  <property name="text">
                   <string/>
                  </property>
@@ -441,19 +493,6 @@
                 </size>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </widget>

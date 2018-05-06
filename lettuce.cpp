@@ -1,7 +1,11 @@
 #include "lettuce.h"
 
+int Plant::lettuceNumber = 0;
+
 Lettuce::Lettuce()
 {
+    lettuceNumber++;
+
     name = "Sałata";
     type = 1;
     age = 0;
@@ -12,6 +16,10 @@ Lettuce::Lettuce()
     dead = false;
     reproduction = false;
     eaten = false;
+}
+Lettuce::~Lettuce()
+{
+    lettuceNumber--;
 }
 
 void Lettuce::grow()

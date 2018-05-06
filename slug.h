@@ -6,6 +6,7 @@ class Slug: public Snail
 {
 public:
     Slug();
+    ~Slug();
     void grow();
     void die();
 };

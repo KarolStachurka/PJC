@@ -7,6 +7,7 @@ class Lettuce: public Plant
 {
 public:
     Lettuce();
+    ~Lettuce();
     void grow();
     void die();
 };

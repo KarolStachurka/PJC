@@ -23,6 +23,10 @@ public:
     int getSize();
     string getPlantInfo();
 
+    static int cabbageNumber;
+    static int lettuceNumber;
+    static int grassNumber;
+
 protected:
 
     int size;

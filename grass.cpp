@@ -1,7 +1,11 @@
 #include "grass.h"
 
+int Plant::grassNumber = 0;
+
 Grass::Grass()
 {
+    grassNumber++;
+
     name = "trawa";
     type = 3;
     age = 0;
@@ -13,7 +17,10 @@ Grass::Grass()
     reproduction = false;
     eaten = false;
 }
-
+Grass::~Grass()
+{
+    grassNumber--;
+}
 
 void Grass::grow()
 {

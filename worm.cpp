@@ -1,7 +1,11 @@
 #include "worm.h"
 
+int Snail::wormNumber = 0;
+
 Worm::Worm()
 {
+    wormNumber++;
+
     name = "Ślimak nagi";
     type = 3;
     age = 0;
@@ -13,6 +17,11 @@ Worm::Worm()
     reproduction = false;
 
 }
+Worm::~Worm()
+{
+    wormNumber--;
+}
+
 void Worm::die()
 {
     if(energy < 1 || age > 20)

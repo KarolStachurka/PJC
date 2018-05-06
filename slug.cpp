@@ -1,7 +1,11 @@
 #include "slug.h"
 
+int Snail::slugNumber = 0;
+
 Slug::Slug()
 {
+    slugNumber++;
+
     name = "Ślimak stawowy";
     type = 2;
     age = 0;
@@ -13,6 +17,11 @@ Slug::Slug()
     reproduction = false;
 
 }
+Slug::~Slug()
+{
+    slugNumber--;
+}
+
 void Slug::die()
 {
     if(energy < 1 || age > 40)
