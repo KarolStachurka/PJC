@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     organism.cpp \
     slug.cpp \
     cabbage.cpp \
-    worm.cpp
+    worm.cpp \
+    game.cpp
 
 HEADERS  += mainwindow.h \
     field.h \
@@ -43,6 +44,7 @@ HEADERS  += mainwindow.h \
     organism.h \
     slug.h \
     cabbage.h \
-    worm.h
+    worm.h \
+    game.h
 
 FORMS    += mainwindow.ui

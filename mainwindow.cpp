@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(secondThread, SIGNAL(sendNextBoard(Board)), this, SLOT(getNextBoard(Board)));
     secondThread->start();
 
-    this->board = Board(10, 10, 0, 0);
+    this->board = Board(10, 10, 0, 0, 0, 0, 0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -137,8 +137,8 @@ void MainWindow::on_nextTurn_clicked()
         QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
         displayBoard(board);
         ui->qBoard->centerOn(center);
-        QString turnNumber = QString::number(board.getTurn());
-        ui->turnNumberDisplay->setText(turnNumber);
+        updateCounterValues();
+
     }
 }
 
@@ -154,24 +154,24 @@ void MainWindow::on_automaticMode_clicked()
     int worm = ui->wormNumberEdit->value();
     if(ui->mapHuge->isChecked() && board.getTurn() < 1)
     {
-        if(ui->randomStartCheckBox->isChecked())
+        if(!ui->emptyMapCheckBox->isChecked())
             this->board = Board(75, 75, lettuce, cabbage, grass, helix, slug ,worm);
         else
-            this->board = Board(75, 75, 0, 0);
+            this->board = Board(75, 75, 0, 0, 0, 0, 0, 0);
     }
     else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
     {
-        if(ui->randomStartCheckBox->isChecked())
+        if(!ui->emptyMapCheckBox->isChecked())
             this->board = Board(50, 50, lettuce, cabbage, grass, helix, slug ,worm);
         else
-            this->board = Board(50, 50, 0, 0);
+            this->board = Board(50, 50, 0, 0, 0, 0, 0, 0);
     }
     else if(board.getTurn() < 1)
     {
-        if(ui->randomStartCheckBox->isChecked())
+        if(!ui->emptyMapCheckBox->isChecked())
             this->board = Board(30, 30, lettuce, cabbage, grass, helix, slug ,worm);
         else
-            this->board = Board(30, 30, 0, 0);
+            this->board = Board(30, 30, 0, 0, 0, 0, 0, 0);
     }
     if(!simStarted)
     {
@@ -193,16 +193,12 @@ void MainWindow::on_automaticMode_clicked()
     }
 
 }
-void MainWindow::getNextBoard(Board board)
+void MainWindow::updateCounterValues()
 {
-    this->board = board;
-    QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
-    displayBoard(board);
-    ui->qBoard->centerOn(center);
-    QString turnNumber = QString::number(board.getTurn());
     int lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
     board.getPlantNumber(lettuce, cabbage, grass);
     board.getSnailNumber(helix, slug, worm);
+    QString turnNumber = QString::number(board.getTurn());
     QString lettuceNumber = QString::number(lettuce);
     QString cabbageNumber = QString::number(cabbage);
     QString grassNumber = QString::number(grass);
@@ -218,6 +214,15 @@ void MainWindow::getNextBoard(Board board)
     ui->wormNumber->setText(wormNumber);
 }
 
+void MainWindow::getNextBoard(Board board)
+{
+    this->board = board;
+    QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
+    displayBoard(board);
+    ui->qBoard->centerOn(center);
+    updateCounterValues();
+}
+
 void MainWindow::on_resetButton_clicked()
 {
     int lettuce = ui->lettuceNumberEdit->value();
@@ -228,45 +233,28 @@ void MainWindow::on_resetButton_clicked()
     int worm = ui->wormNumberEdit->value();
     if(ui->mapHuge->isChecked())
     {
-        if(ui->randomStartCheckBox->isChecked())
+        if(!ui->emptyMapCheckBox->isChecked())
             this->board = Board(75, 75, lettuce, cabbage, grass, helix, slug ,worm);
         else
-            this->board = Board(75, 75, 0, 0);
+            this->board = Board(75, 75, 0, 0, 0, 0, 0, 0);
     }
     else if(ui->mapMedium->isChecked())
     {
-        if(ui->randomStartCheckBox->isChecked())
+        if(!ui->emptyMapCheckBox->isChecked())
             this->board = Board(50, 50, lettuce, cabbage, grass, helix, slug ,worm);
         else
-            this->board = Board(50, 50, 0, 0);
+            this->board = Board(50, 50, 0, 0, 0, 0, 0, 0);
     }
     else
     {
-        if(ui->randomStartCheckBox->isChecked())
+        if(!ui->emptyMapCheckBox->isChecked())
             this->board = Board(30, 30, lettuce, cabbage, grass, helix, slug ,worm);
         else
-            this->board = Board(30, 30, 0, 0);
+            this->board = Board(30, 30, 0, 0, 0, 0, 0, 0);
     }
     board.nextTurn();
     displayBoard(board);
-    QString turnNumber = QString::number(board.getTurn());
-    ui->turnNumberDisplay->setText(turnNumber);
-    lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
-    board.getPlantNumber(lettuce, cabbage, grass);
-    board.getSnailNumber(helix, slug, worm);
-    QString lettuceNumber = QString::number(lettuce);
-    QString cabbageNumber = QString::number(cabbage);
-    QString grassNumber = QString::number(grass);
-    QString helixNumber = QString::number(helix);
-    QString slugNumber = QString::number(slug);
-    QString wormNumber = QString::number(worm);
-    ui->turnNumberDisplay->setText(turnNumber);
-    ui->lettuceNumber->setText(lettuceNumber);
-    ui->cabbageNumber->setText(cabbageNumber);
-    ui->grassNumber->setText(grassNumber);
-    ui->helixNumber->setText(helixNumber);
-    ui->slugNumber->setText(slugNumber);
-    ui->wormNumber->setText(wormNumber);
+    updateCounterValues();
 }
 void MainWindow::getMouseCoords(int x, int y)
 {
@@ -280,24 +268,7 @@ void MainWindow::getMouseCoords(int x, int y)
         if(ui->addWormRadioButton->isChecked())
             type = 3;
         board.addSnail(x/15, y/15, type);
-        QString turnNumber = QString::number(board.getTurn());
-        ui->turnNumberDisplay->setText(turnNumber);
-        int lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
-        board.getPlantNumber(lettuce, cabbage, grass);
-        board.getSnailNumber(helix, slug, worm);
-        QString lettuceNumber = QString::number(lettuce);
-        QString cabbageNumber = QString::number(cabbage);
-        QString grassNumber = QString::number(grass);
-        QString helixNumber = QString::number(helix);
-        QString slugNumber = QString::number(slug);
-        QString wormNumber = QString::number(worm);
-        ui->turnNumberDisplay->setText(turnNumber);
-        ui->lettuceNumber->setText(lettuceNumber);
-        ui->cabbageNumber->setText(cabbageNumber);
-        ui->grassNumber->setText(grassNumber);
-        ui->helixNumber->setText(helixNumber);
-        ui->slugNumber->setText(slugNumber);
-        ui->wormNumber->setText(wormNumber);
+        updateCounterValues();
     }
     if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
     {
@@ -309,24 +280,7 @@ void MainWindow::getMouseCoords(int x, int y)
         if(ui->addGrassRadioButton->isChecked())
             type = 3;
         board.addPlant(x/15, y/15,type);
-        QString turnNumber = QString::number(board.getTurn());
-        ui->turnNumberDisplay->setText(turnNumber);
-        int lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
-        board.getPlantNumber(lettuce, cabbage, grass);
-        board.getSnailNumber(helix, slug, worm);
-        QString lettuceNumber = QString::number(lettuce);
-        QString cabbageNumber = QString::number(cabbage);
-        QString grassNumber = QString::number(grass);
-        QString helixNumber = QString::number(helix);
-        QString slugNumber = QString::number(slug);
-        QString wormNumber = QString::number(worm);
-        ui->turnNumberDisplay->setText(turnNumber);
-        ui->lettuceNumber->setText(lettuceNumber);
-        ui->cabbageNumber->setText(cabbageNumber);
-        ui->grassNumber->setText(grassNumber);
-        ui->helixNumber->setText(helixNumber);
-        ui->slugNumber->setText(slugNumber);
-        ui->wormNumber->setText(wormNumber);
+        updateCounterValues();
     }
     if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 1)
     {

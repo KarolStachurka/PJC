@@ -29,7 +29,6 @@ private:
 public:
     Board();
     ~Board();
-    Board(int rows, int columns, int snails, int plants);
     Board(int rows, int columns, int lettuce, int cabbage, int grass, int helix, int slug, int worm);
     void addSnail(int x, int y, int index);
     void addPlant(int x, int y, int index);
@@ -42,7 +41,6 @@ public:
     void setBoardColumnsNumber(int columns);
     void setSnailStartingPosition(int helix, int slug, int worm);
     void setPlantStartingPosition(int lettuce, int cabbage, int grass);
-    void setStartingPosition(int numberOfSnails, int numberOfPlants);
 
     //getters
     int getBoardRowsNumber();

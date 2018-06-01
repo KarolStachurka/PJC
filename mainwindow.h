@@ -23,6 +23,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void displayBoard(Board board);
+    void updateCounterValues();
     SimulationThread *secondThread;
     ~MainWindow();
 signals:
