@@ -33,12 +33,10 @@ signals:
 
     void sendPrevBoard(Board);
 
-public slots:
+private slots:
     void getNextBoard(Board board);
 
     void getMouseCoords(int x, int y);
-
-private slots:
 
     void on_nextTurn_clicked();
 
@@ -51,6 +49,8 @@ private:
     myQGraphicsscene *scene;
     Board board;
     bool simStarted = false;
+    QString text1 = "Start";
+    QString text2 = "Pauza";
     QPixmap helix = QPixmap("graphics/snail.png");
     QPixmap empty = QPixmap("graphics/empty.png");
     QPixmap cabbage = QPixmap("graphics/cabbage.png");

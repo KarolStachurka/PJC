@@ -21,8 +21,8 @@ using namespace std;
 class Board
 {
 private:
-    int boardRowsNumber = 100;
-    int boardColumnsNumber = 100;
+    int boardRowsNumber;
+    int boardColumnsNumber;
     int turn = 0;
     vector<Field> board;
 

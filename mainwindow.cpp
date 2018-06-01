@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(secondThread, SIGNAL(sendNextBoard(Board)), this, SLOT(getNextBoard(Board)));
     secondThread->start();
 
-    this->board = Board(10, 10, 0, 0, 0, 0, 0, 0);
+    //this->board = Board(50, 50, 0, 0, 0, 0, 0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -144,8 +144,6 @@ void MainWindow::on_nextTurn_clicked()
 
 void MainWindow::on_automaticMode_clicked()
 {
-    QString text1 = "Start";
-    QString text2 = "Pause";
     int lettuce = ui->lettuceNumberEdit->value();
     int cabbage = ui->cabbageNumberEdit->value();
     int grass = ui->grassNumberEdit->value();
