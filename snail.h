@@ -4,7 +4,6 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "square.h"
 #include "organism.h"
 
 

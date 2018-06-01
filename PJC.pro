@@ -18,7 +18,6 @@ SOURCES += main.cpp\
     board.cpp \
     snail.cpp \
     helix.cpp \
-    square.cpp \
     plant.cpp \
     lettuce.cpp \
     simulationthread.cpp \
@@ -35,7 +34,6 @@ HEADERS  += mainwindow.h \
     board.h \
     snail.h \
     helix.h \
-    square.h \
     plant.h \
     lettuce.h \
     simulationthread.h \

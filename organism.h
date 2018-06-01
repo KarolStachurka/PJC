@@ -1,11 +1,11 @@
 #ifndef ORGANISM_H
 #define ORGANISM_H
 
-#include "square.h"
+#include <string>
 
 using namespace std;
 
-class Organism: public Square
+class Organism
 
 {
 public:

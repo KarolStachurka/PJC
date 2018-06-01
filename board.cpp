@@ -122,7 +122,6 @@ void Board::setSnailStartingPosition(int helix, int slug, int worm)
         if(!current.snail)
         {
             Helix *helix = new Helix;
-            helix->setCoordinates(current.getX(), current.getY());
             current.snail = helix;
             helix = NULL;
             delete helix;
@@ -137,7 +136,6 @@ void Board::setSnailStartingPosition(int helix, int slug, int worm)
         if(!current.snail)
         {
             Slug *slug = new Slug;
-            slug->setCoordinates(current.getX(), current.getY());
             current.snail = slug;
             slug = NULL;
             delete slug;
@@ -150,7 +148,6 @@ void Board::setSnailStartingPosition(int helix, int slug, int worm)
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
         Worm *worm = new Worm;
-        worm->setCoordinates(current.getX(), current.getY());
         current.snail = worm;
         worm = NULL;
         delete worm;
@@ -167,7 +164,6 @@ void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
         Lettuce *lettuce = new Lettuce;
-        lettuce->setCoordinates(current.getX(), current.getY());
         current.plant = lettuce;
         lettuce = NULL;
         delete lettuce;
@@ -179,7 +175,6 @@ void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
         Cabbage *cabbage = new Cabbage;
-        cabbage->setCoordinates(current.getX(), current.getY());
         current.plant = cabbage;
         cabbage = NULL;
         delete cabbage;
@@ -191,7 +186,6 @@ void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
         Grass *grass = new Grass;
-        grass->setCoordinates(current.getX(), current.getY());
         current.plant = grass;
         grass = NULL;
         delete grass;
@@ -218,8 +212,8 @@ void Board::plantsNextTurn()
             }
             if(temp->isReproduced() && !temp->isDead())
             {
-                int newX = temp->getX();
-                int newY = temp->getY();
+                int newX = i.getX();
+                int newY = i.getY();
                 bool isReady = temp->getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
                 if(isReady)
                 {
@@ -230,7 +224,6 @@ void Board::plantsNextTurn()
                         case 1:
                         {
                             Lettuce *lettuce = new Lettuce;
-                            lettuce->setCoordinates(next.getX(), next.getY());
                             next.plant = lettuce;
                             lettuce = NULL;
                             delete lettuce;
@@ -239,7 +232,6 @@ void Board::plantsNextTurn()
                         case 2:
                         {
                             Cabbage *cabbage = new Cabbage;
-                            cabbage->setCoordinates(next.getX(), next.getY());
                             next.plant = cabbage;
                             cabbage = NULL;
                             delete cabbage;
@@ -248,7 +240,6 @@ void Board::plantsNextTurn()
                         case 3:
                         {
                             Grass *grass = new Grass;
-                            grass->setCoordinates(next.getX(), next.getY());
                             next.plant = grass;
                             grass = NULL;
                             delete grass;
@@ -288,8 +279,8 @@ void Board::snailsNextTurn()
                 temp->eat();
             if(temp->isReproduced() && !temp->isDead())
             {
-                int newX = temp->getX();
-                int newY = temp->getY();
+                int newX = i.getX();
+                int newY = i.getY();
                 bool isReady = temp->getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
                 if(isReady)
                 {
@@ -300,7 +291,6 @@ void Board::snailsNextTurn()
                         case 1:
                         {
                             Helix *helix = new Helix;
-                            helix->setCoordinates(next.getX(), next.getY());
                             next.snail = helix;
                             helix = NULL;
                             delete helix;
@@ -309,7 +299,6 @@ void Board::snailsNextTurn()
                         case 2:
                         {
                             Slug *slug = new Slug;
-                            slug->setCoordinates(next.getX(), next.getY());
                             next.snail = slug;
                             slug = NULL;
                             delete slug;
@@ -319,7 +308,6 @@ void Board::snailsNextTurn()
                         case 3:
                         {
                             Worm *worm = new Worm;
-                            worm->setCoordinates(next.getX(), next.getY());
                             next.snail = worm;
                             worm = NULL;
                             delete worm;
@@ -335,8 +323,8 @@ void Board::snailsNextTurn()
             }
             else if(!temp->isDead())
             {
-                int newX = temp->getX();
-                int newY = temp->getY();
+                int newX = i.getX();
+                int newY = i.getY();
                 bool isReady = temp->getNewPosition(newX, newY, boardRowsNumber, boardColumnsNumber);
                 if(isReady)
                 {
@@ -344,7 +332,6 @@ void Board::snailsNextTurn()
                     if(!next.snail)
                     {
                         next.snail = temp;
-                        temp->setCoordinates(next.getX(),next.getY());
                         current.snail = NULL;
                     }
                     board.at(boardColumnsNumber*newX + newY) = next;
@@ -375,7 +362,6 @@ void Board::addSnail(int x, int y, int index)
         case 1:
         {
             Helix *helix = new Helix;
-            helix->setCoordinates(current.getX(), current.getY());
             current.snail = helix;
             helix = NULL;
             delete helix;
@@ -384,7 +370,6 @@ void Board::addSnail(int x, int y, int index)
         case 2:
         {
             Slug *slug = new Slug;
-            slug->setCoordinates(current.getX(), current.getY());
             current.snail = slug;
             slug = NULL;
             delete slug;
@@ -393,7 +378,6 @@ void Board::addSnail(int x, int y, int index)
         case 3:
         {
             Worm *worm = new Worm;
-            worm->setCoordinates(current.getX(), current.getY());
             current.snail = worm;
             worm = NULL;
             delete worm;
@@ -414,7 +398,6 @@ void Board::addPlant(int x, int y, int index)
         case 1:
         {
             Lettuce *lettuce = new Lettuce;
-            lettuce->setCoordinates(current.getX(), current.getY());
             current.plant = lettuce;
             lettuce = NULL;
             delete lettuce;
@@ -423,7 +406,6 @@ void Board::addPlant(int x, int y, int index)
         case 2:
         {
             Cabbage *cabbage = new Cabbage;
-            cabbage->setCoordinates(current.getX(), current.getY());
             current.plant = cabbage;
             cabbage = NULL;
             delete cabbage;
@@ -432,7 +414,6 @@ void Board::addPlant(int x, int y, int index)
         case 3:
         {
             Grass *grass = new Grass;
-            grass->setCoordinates(current.getX(), current.getY());
             current.plant = grass;
             grass = NULL;
             delete grass;

@@ -10,7 +10,7 @@ Helix::Helix()
     type = 1;
     age = 0;
     energy = 12;
-    speed = 2;
+    speed = 1;
     lastReproduction = 0;
     hunger = 2;
     dead = false;
