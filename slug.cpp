@@ -12,6 +12,7 @@ Slug::Slug()
     hunger = 3;
     dead = false;
     reproduction = false;
+    tiredness = true;
 
 }
 void Slug::die()

@@ -21,14 +21,25 @@ bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
     {
         x = x + randomX;
         y = y + randomY;
+        tiredness = true;
         return true;
     }
     return false;
 }
+bool Snail::isTired()
+{
+    return tiredness;
+}
+
 void Snail::eat()
 {
     energy = energy + hunger;
 }
+void Snail::setTired(bool tiredness)
+{
+    this->tiredness = tiredness;
+}
+
 string Snail::getSnailInfo()
 {
     string info = "";

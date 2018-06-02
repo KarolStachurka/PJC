@@ -11,6 +11,7 @@ Worm::Worm()
     hunger = 5;
     dead = false;
     reproduction = false;
+    tiredness = true;
 
 }
 void Worm::die()

@@ -20,11 +20,15 @@ public:
     //getters
     int getHunger();
     int getSpeed();
+    bool isTired();
     string getSnailInfo();
+
+    void setTired(bool tiredness);
 
 protected:
     int hunger;
     int speed;
+    bool tiredness;
 };
 
 #endif // SNAIL_H

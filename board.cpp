@@ -320,6 +320,12 @@ void Board::snailsNextTurn()
     {
         Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
         if(current.snail)
+            i.snail->setTired(false);
+    }
+    for(auto &i: board)
+    {
+        Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
+        if(current.snail && !current.snail->isTired())
         {
             Snail *temp = current.snail;
             temp->grow();

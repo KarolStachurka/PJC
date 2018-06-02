@@ -12,6 +12,7 @@ Helix::Helix()
     hunger = 2;
     dead = false;
     reproduction = false;
+    tiredness = true;
 
 }
 

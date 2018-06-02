@@ -275,6 +275,7 @@ void MainWindow::on_resetButton_clicked()
     game.nextTurn();
     displayBoard();
     updateCounterValues();
+    ui->tabWidget->setCurrentIndex(1);
 }
 void MainWindow::getMouseCoords(int x, int y)
 {
