@@ -6,7 +6,11 @@ Game::Game()
 }
 void Game::nextTurn()
 {
-    board.nextTurn();
+    if(turnNumber >0)
+    {
+        board.plantsNextTurn();
+        board.snailsNextTurn();
+    }
     turnNumber++;
 }
 void Game::newGame(int size, int lettuce, int cabbage, int grass, int helix, int slug, int worm)
@@ -30,6 +34,7 @@ void Game::newGame(int size, int lettuce, int cabbage, int grass, int helix, int
     default:
         break;
     }
+    turnNumber = 0;
 }
 void Game::addOrganism(int x, int y, int index, string type)
 {

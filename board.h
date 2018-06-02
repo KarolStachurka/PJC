@@ -23,7 +23,6 @@ class Board
 private:
     int boardRowsNumber;
     int boardColumnsNumber;
-    int turn = 0;
     vector<Field> board;
 
 public:
@@ -32,7 +31,6 @@ public:
     Board(int rows, int columns, int lettuce, int cabbage, int grass, int helix, int slug, int worm);
     void addSnail(int x, int y, int index);
     void addPlant(int x, int y, int index);
-    void nextTurn();
     void plantsNextTurn();
     void snailsNextTurn();
 
@@ -45,7 +43,6 @@ public:
     //getters
     int getBoardRowsNumber();
     int getBoardColumnsNumber();
-    int getTurn();
     void getSnailNumber(int& helix, int& slug, int& worm);
     void getPlantNumber(int& lettuce, int& cabbage, int& grass);
     string getFieldInfo(int x, int y);

@@ -64,10 +64,6 @@ int Board::getBoardColumnsNumber()
 {
     return boardColumnsNumber;
 }
-int Board::getTurn()
-{
-    return turn;
-}
 void Board::getPlantNumber(int &lettuce, int &cabbage, int &grass)
 {
     for(auto &i: board)
@@ -397,15 +393,6 @@ void Board::snailsNextTurn()
     }
 }
 
-void Board::nextTurn()
-{
-    if(turn > 0)
-    {
-        plantsNextTurn();
-        snailsNextTurn();
-    }
-    turn++;
-}
 void Board::addSnail(int x, int y, int index)
 {
     Field current = board[boardColumnsNumber*x + y];
