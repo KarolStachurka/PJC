@@ -13,15 +13,6 @@ Board::Board(int rows, int columns, int lettuce, int cabbage, int grass, int hel
         i.setCoordinates(it/boardRowsNumber, it%boardColumnsNumber);
         it++;
     }
-    for(auto &i: board)
-    {
-        i.plant->cabbageNumber = 0;
-        i.plant->lettuceNumber = 0;
-        i.plant->grassNumber = 0;
-        i.snail->helixNumber = 0;
-        i.snail->slugNumber = 0;
-        i.snail->wormNumber = 0;
-    }
     if(columns*rows < lettuce + cabbage + grass || columns*rows < slug + helix + worm)
     {
         setPlantStartingPosition(0, 0, 0);
@@ -66,6 +57,7 @@ int Board::getBoardColumnsNumber()
 }
 void Board::getPlantNumber(int &lettuce, int &cabbage, int &grass)
 {
+    lettuce = 0, cabbage = 0, grass = 0;
     for(auto &i: board)
     {
         if(i.plant)
@@ -73,15 +65,15 @@ void Board::getPlantNumber(int &lettuce, int &cabbage, int &grass)
             Plant *temp = i.plant;
             if(temp->getType() == 1)
             {
-                lettuce = temp->lettuceNumber;
+                lettuce++;
             }
             if(temp->getType() == 2)
             {
-                cabbage = temp->cabbageNumber;
+                cabbage++;
             }
             if(temp->getType() == 3)
             {
-                grass = temp->grassNumber;
+                grass++;
             }
         }
     }
@@ -141,6 +133,7 @@ vector<int> Board::getEncodedBoard()
 }
 
 void Board::getSnailNumber(int& helix, int& slug, int& worm){
+    helix = 0, slug = 0, worm = 0;
     for(auto &i: board)
     {
         if(i.snail)
@@ -148,15 +141,15 @@ void Board::getSnailNumber(int& helix, int& slug, int& worm){
             Snail *temp = i.snail;
             if(temp->getType() == 1)
             {
-               helix = temp->helixNumber;
+               helix++;
             }
             if(temp->getType() == 2)
             {
-                slug = temp->slugNumber;
+                slug++;
             }
             if(temp->getType() == 3)
             {
-                worm = temp->wormNumber;
+                worm++;
             }
         }
     }
@@ -196,12 +189,15 @@ void Board::setSnailStartingPosition(int helix, int slug, int worm)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        Worm *worm = new Worm;
-        current.snail = worm;
-        worm = NULL;
-        delete worm;
-        board.at(fieldNumber) = current;
-        wormCounter++;
+        if(!current.snail)
+        {
+            Worm *worm = new Worm;
+            current.snail = worm;
+            worm = NULL;
+            delete worm;
+            board.at(fieldNumber) = current;
+            wormCounter++;
+        }
 
     }
 }
@@ -212,34 +208,43 @@ void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        Lettuce *lettuce = new Lettuce;
-        current.plant = lettuce;
-        lettuce = NULL;
-        delete lettuce;
-        board.at(fieldNumber) = current;
-        lettuceCounter++;
+        if(!current.plant)
+        {
+            Lettuce *lettuce = new Lettuce;
+            current.plant = lettuce;
+            lettuce = NULL;
+            delete lettuce;
+            board.at(fieldNumber) = current;
+            lettuceCounter++;
+        }
     }
     while(cabbageCounter < cabbage)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        Cabbage *cabbage = new Cabbage;
-        current.plant = cabbage;
-        cabbage = NULL;
-        delete cabbage;
-        board.at(fieldNumber) = current;
-        cabbageCounter++;
+        if(!current.plant)
+        {
+            Cabbage *cabbage = new Cabbage;
+            current.plant = cabbage;
+            cabbage = NULL;
+            delete cabbage;
+            board.at(fieldNumber) = current;
+            cabbageCounter++;
+        }
     }
     while(grassCounter < grass)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        Grass *grass = new Grass;
-        current.plant = grass;
-        grass = NULL;
-        delete grass;
-        board.at(fieldNumber) = current;
-        grassCounter++;
+        if(!current.plant)
+        {
+            Grass *grass = new Grass;
+            current.plant = grass;
+            grass = NULL;
+            delete grass;
+            board.at(fieldNumber) = current;
+            grassCounter++;
+        }
     }
 }
 void Board::plantsNextTurn()

@@ -6,7 +6,7 @@ Game::Game()
 }
 void Game::nextTurn()
 {
-    if(turnNumber >0)
+    if(turnNumber > 0)
     {
         board.plantsNextTurn();
         board.snailsNextTurn();

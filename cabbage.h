@@ -7,7 +7,6 @@ class Cabbage: public Plant
 {
 public:
     Cabbage();
-    ~Cabbage();
     void grow();
     void die();
 

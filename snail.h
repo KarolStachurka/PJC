@@ -22,10 +22,6 @@ public:
     int getSpeed();
     string getSnailInfo();
 
-    static int helixNumber;
-    static int slugNumber;
-    static int wormNumber;
-
 protected:
     int hunger;
     int speed;

@@ -1,11 +1,8 @@
 #include "helix.h"
 
-int Snail::helixNumber = 0;
 
 Helix::Helix()
 {
-    helixNumber++;
-
     name = "Ślimak Winniczek";
     type = 1;
     age = 0;
@@ -16,10 +13,6 @@ Helix::Helix()
     dead = false;
     reproduction = false;
 
-}
-Helix::~Helix()
-{
-    helixNumber--;
 }
 
 void Helix::die()
