@@ -90,6 +90,59 @@ void Board::getPlantNumber(int &lettuce, int &cabbage, int &grass)
         }
     }
 }
+string Board::getFieldInfo(int x, int y)
+{
+    string output = "";
+    Field current = board.at(boardColumnsNumber*x + y);
+    if(current.plant)
+        output += current.plant->getPlantInfo();
+    if(current.snail)
+        output += current.snail->getSnailInfo();
+    return output;
+
+}
+vector<int> Board::getEncodedBoard()
+{
+    vector<int> encodedBoard;
+    for(auto &i: board)
+    {
+        int info = 0;
+        if(i.plant)
+        {
+            Plant *temp = i.plant;
+            if(temp->getType() == 1)
+            {
+                info += 1;
+            }
+            if(temp->getType() == 2)
+            {
+                info += 2;
+            }
+            if(temp->getType() == 3)
+            {
+                info += 3;
+            }
+        }
+        if(i.snail)
+        {
+            Snail *temp = i.snail;
+            if(temp->getType() == 1)
+            {
+               info += 10;
+            }
+            if(temp->getType() == 2)
+            {
+                info += 20;
+            }
+            if(temp->getType() == 3)
+            {
+                info += 30;
+            }
+        }
+        encodedBoard.push_back(info);
+    }
+    return encodedBoard;
+}
 
 void Board::getSnailNumber(int& helix, int& slug, int& worm){
     for(auto &i: board)

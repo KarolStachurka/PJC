@@ -4,6 +4,7 @@
 #include <QThread>
 #include <QTimer>
 #include "board.h"
+#include "game.h"
 
 class SimulationThread: public QThread
 {
@@ -14,14 +15,14 @@ public:
 public slots:
     void onSimStarted(bool started);
     void endThread(bool end);
-    void getPrevBoard(Board board);
+    void getCurrentGame(Game game);
     void iteration();
 signals:
-    void sendNextBoard(Board board);
+    void sendUpdatedGame(Game);
 private:
     bool started = false;
     bool end = false;
-    Board board;
+    Game game;
 };
 
 #endif // SIMULATIONTHREAD_H

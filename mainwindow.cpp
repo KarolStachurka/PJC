@@ -26,14 +26,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //thread to maintaining simulation
     secondThread = new SimulationThread(this);
-    qRegisterMetaType <Board>("Board");
+    qRegisterMetaType <Game>("Game");
     connect(this, SIGNAL(startSimulation(bool)), secondThread, SLOT(onSimStarted(bool)));
     connect(this, SIGNAL(endSecondThread(bool)), secondThread, SLOT(endThread(bool)));
-    connect(this, SIGNAL(sendPrevBoard(Board)), secondThread, SLOT(getPrevBoard(Board)));
-    connect(secondThread, SIGNAL(sendNextBoard(Board)), this, SLOT(getNextBoard(Board)));
+    connect(this, SIGNAL(sendCurrentGame(Game)), secondThread, SLOT(getCurrentGame(Game)));
+    connect(secondThread, SIGNAL(sendUpdatedGame(Game)), this, SLOT(getUpdatedGame(Game)));
     secondThread->start();
 
-    //this->board = Board(50, 50, 0, 0, 0, 0, 0, 0);
+    this->game = Game();
 }
 
 MainWindow::~MainWindow()
@@ -46,14 +46,17 @@ MainWindow::~MainWindow()
     delete secondThread;
     delete ui;
 }
-void MainWindow::displayBoard(Board board)
+void MainWindow::displayBoard()
 {
+    int boardRows, boardCols;
+    game.getBoardSize(boardRows, boardCols);
+    //cleaning memory and preparing new scene
     for (unsigned int i = 0; i< boardObjects.size();i++)
     {
         delete (boardObjects.at(i));
     }
     boardObjects.clear();
-    boardObjects.resize(board.getBoardColumnsNumber()*board.getBoardRowsNumber());
+    boardObjects.resize(boardRows*boardCols);
     qDeleteAll(ui->qBoard->items());
     scene->clear();
     delete scene;
@@ -61,81 +64,78 @@ void MainWindow::displayBoard(Board board)
     scene->installEventFilter(this);
     connect(scene, SIGNAL(sendCoords(int,int)), this, SLOT(getMouseCoords(int,int)));
 
-    vector <Field> currentBoard = board.getBoard();
-    int boardRows = board.getBoardRowsNumber();
-    int boardColumns = board.getBoardColumnsNumber();
+
+    vector<int> board = game.getEncodedBoard();
     QGraphicsPixmapItem *item = new QGraphicsPixmapItem;
     for (int row = 0; row < boardRows; row++) {
-        for (int col = 0; col < boardColumns; col++)
+        for (int col = 0; col < boardCols; col++)
         {
-            Field current = currentBoard[row * boardColumns + col];
-            if(current.snail && current.plant)
-                switch (current.snail->getType()) {
-                case 1:
-                    item = scene->addPixmap(snailWithPlant);
-                    break;
-                case 2:
-                    item = scene->addPixmap(slugWithPlant);
-                    break;
-                case 3:
-                    item = scene->addPixmap(wormWithPlant);
-                    break;
-                default:
-                    item = scene->addPixmap(empty);
-                    break;
-                }
-            else if (current.snail)
-                switch (current.snail->getType()) {
-                case 1:
-                    item = scene->addPixmap(helix);
-                    break;
-                case 2:
-                    item = scene->addPixmap(slug);
-                    break;
-                case 3:
-                    item = scene->addPixmap(worm);
-                    break;
-                default:
-                    item = scene->addPixmap(empty);
-                    break;
-                }
-            else if(current.plant)
-            {
-                switch (current.plant->getType()) {
-                case 1:
-                    item = scene->addPixmap(lettuce);
-                    break;
-                case 2:
-                    item = scene->addPixmap(cabbage);
-                    break;
-                case 3:
-                    item = scene->addPixmap(grass);
-                    break;
-                default:
-                    item = scene->addPixmap(empty);
-                    break;
-                }
-            }
-            else
+            switch(board.at(row * boardCols + col)){
+            case 1:
+                item = scene->addPixmap(lettuce);
+                break;
+            case 2:
+                item = scene->addPixmap(cabbage);
+                break;
+            case 3:
+                item = scene->addPixmap(grass);
+                break;
+            case 10:
+                item = scene->addPixmap(helix);
+                break;
+            case 20:
+                item = scene->addPixmap(slug);
+                break;
+            case 30:
+                item = scene->addPixmap(worm);
+                break;
+            case 11:
+                item = scene->addPixmap(snailWithPlant);
+                break;
+            case 12:
+                item = scene->addPixmap(snailWithPlant);
+                break;
+            case 13:
+                item = scene->addPixmap(snailWithPlant);
+                break;
+            case 21:
+                item = scene->addPixmap(slugWithPlant);
+                break;
+            case 22:
+                item = scene->addPixmap(slugWithPlant);
+                break;
+            case 23:
+                item = scene->addPixmap(slugWithPlant);
+                break;
+            case 31 :
+                item = scene->addPixmap(wormWithPlant);
+                break;
+            case 32 :
+                item = scene->addPixmap(wormWithPlant);
+                break;
+            case 33 :
+                item = scene->addPixmap(wormWithPlant);
+                break;
+            default:
                 item = scene->addPixmap(empty);
+                break;
+            }
             item->moveBy(15*row, 15*col);
-            boardObjects.at(row*boardColumns + col) =  item;
-            item = NULL;
+            boardObjects.at(row*boardCols + col) =  item;
         }
     }
-    currentBoard.clear();
     ui->qBoard->setScene(scene);
-    ui->qBoard->setMaximumHeight(boardColumns*15);
+    ui->qBoard->setMaximumHeight(boardCols*15);
     ui->qBoard->setMaximumWidth(boardRows*15);
 }
 
 void MainWindow::on_nextTurn_clicked()
 {
-    if(this->board.getTurn() > 0)
+    if(game.getTurnNumber() > 0)
     {
-        board.nextTurn();
+        game.nextTurn();
         QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
-        displayBoard(board);
+        displayBoard();
         ui->qBoard->centerOn(center);
         updateCounterValues();
 
@@ -150,26 +150,38 @@ void MainWindow::on_automaticMode_clicked()
     int helix = ui->helixNumberEdit->value();
     int slug = ui->slugNumberEdit->value();
     int worm = ui->wormNumberEdit->value();
-    if(ui->mapHuge->isChecked() && board.getTurn() < 1)
+    if(ui->mapHuge->isChecked() && game.getTurnNumber() < 1)
     {
         if(!ui->emptyMapCheckBox->isChecked())
-            this->board = Board(75, 75, lettuce, cabbage, grass, helix, slug ,worm);
+        {
+             game.newGame(3, lettuce, cabbage, grass, helix, slug ,worm);
+        }
         else
-            this->board = Board(75, 75, 0, 0, 0, 0, 0, 0);
+        {
+            game.newGame(3, 0, 0, 0, 0, 0, 0);
+        }
     }
-    else if(ui->mapMedium->isChecked() && board.getTurn() < 1)
+    else if(ui->mapMedium->isChecked() && game.getTurnNumber() < 1)
     {
         if(!ui->emptyMapCheckBox->isChecked())
-            this->board = Board(50, 50, lettuce, cabbage, grass, helix, slug ,worm);
+        {
+            game.newGame(2, lettuce, cabbage, grass, helix, slug ,worm);
+        }
         else
-            this->board = Board(50, 50, 0, 0, 0, 0, 0, 0);
+        {
+            game.newGame(2, 0, 0, 0, 0, 0, 0);
+        }
     }
-    else if(board.getTurn() < 1)
+    else if(game.getTurnNumber() < 1)
     {
         if(!ui->emptyMapCheckBox->isChecked())
-            this->board = Board(30, 30, lettuce, cabbage, grass, helix, slug ,worm);
+        {
+            game.newGame(1, lettuce, cabbage, grass, helix, slug ,worm);
+        }
         else
-            this->board = Board(30, 30, 0, 0, 0, 0, 0, 0);
+        {
+            game.newGame(1, 0, 0, 0, 0, 0, 0);
+        }
     }
     if(!simStarted)
     {
@@ -179,7 +191,7 @@ void MainWindow::on_automaticMode_clicked()
         ui->resetButton->setEnabled(false);
         simStarted = true;
         emit startSimulation(simStarted);
-        emit sendPrevBoard(this->board);
+        emit sendCurrentGame(this->game);
     }
     else
     {
@@ -194,9 +206,8 @@ void MainWindow::on_automaticMode_clicked()
 void MainWindow::updateCounterValues()
 {
     int lettuce = 0, cabbage = 0, grass = 0, helix = 0, slug = 0, worm = 0;
-    board.getPlantNumber(lettuce, cabbage, grass);
-    board.getSnailNumber(helix, slug, worm);
-    QString turnNumber = QString::number(board.getTurn());
+    game.getOrganismsNumber(lettuce, cabbage, grass, helix, slug, worm);
+    QString turnNumber = QString::number(game.getTurnNumber());
     QString lettuceNumber = QString::number(lettuce);
     QString cabbageNumber = QString::number(cabbage);
     QString grassNumber = QString::number(grass);
@@ -211,12 +222,11 @@ void MainWindow::updateCounterValues()
     ui->slugNumber->setText(slugNumber);
     ui->wormNumber->setText(wormNumber);
 }
-
-void MainWindow::getNextBoard(Board board)
+void MainWindow::getUpdatedGame(Game game)
 {
-    this->board = board;
+    this->game = game;
     QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
-    displayBoard(board);
+    displayBoard();
     ui->qBoard->centerOn(center);
     updateCounterValues();
 }
@@ -232,68 +242,74 @@ void MainWindow::on_resetButton_clicked()
     if(ui->mapHuge->isChecked())
     {
         if(!ui->emptyMapCheckBox->isChecked())
-            this->board = Board(75, 75, lettuce, cabbage, grass, helix, slug ,worm);
+        {
+            game.newGame(3, lettuce, cabbage, grass, helix, slug ,worm);
+        }
         else
-            this->board = Board(75, 75, 0, 0, 0, 0, 0, 0);
+        {
+            game.newGame(3, 0, 0, 0, 0, 0, 0);
+        }
     }
     else if(ui->mapMedium->isChecked())
     {
         if(!ui->emptyMapCheckBox->isChecked())
-            this->board = Board(50, 50, lettuce, cabbage, grass, helix, slug ,worm);
+        {
+            game.newGame(2, lettuce, cabbage, grass, helix, slug ,worm);
+        }
         else
-            this->board = Board(50, 50, 0, 0, 0, 0, 0, 0);
+        {
+            game.newGame(2, 0, 0, 0, 0, 0, 0);
+        }
     }
     else
     {
         if(!ui->emptyMapCheckBox->isChecked())
-            this->board = Board(30, 30, lettuce, cabbage, grass, helix, slug ,worm);
+        {
+            game.newGame(1, lettuce, cabbage, grass, helix, slug ,worm);
+        }
         else
-            this->board = Board(30, 30, 0, 0, 0, 0, 0, 0);
+        {
+            game.newGame(1, 0, 0, 0, 0, 0, 0);
+        }
     }
-    board.nextTurn();
-    displayBoard(board);
+    game.nextTurn();
+    displayBoard();
     updateCounterValues();
 }
 void MainWindow::getMouseCoords(int x, int y)
 {
-    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 3)
+    if(!simStarted && game.getTurnNumber() > 0 && ui->tabWidget->currentIndex() == 3)
     {
-        int type = 0;
+        int index = 0;
         if(ui->addHelixRadioButton->isChecked())
-            type = 1;
+            index = 1;
         if(ui->addSlugRadioButton->isChecked())
-            type = 2;
+            index = 2;
         if(ui->addWormRadioButton->isChecked())
-            type = 3;
-        board.addSnail(x/15, y/15, type);
+            index = 3;
+        game.addOrganism(x/15, y/15, index, "snail");
         updateCounterValues();
     }
-    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 2)
+    if(!simStarted && game.getTurnNumber() > 0 && ui->tabWidget->currentIndex() == 2)
     {
-        int type = 0;
+        int index = 0;
         if(ui->addLettuceRadioButton->isChecked())
-            type = 1;
+            index = 1;
         if(ui->addCabbageRadioButton->isChecked())
-            type = 2;
+            index = 2;
         if(ui->addGrassRadioButton->isChecked())
-            type = 3;
-        board.addPlant(x/15, y/15,type);
+            index = 3;
+        game.addOrganism(x/15, y/15, index, "plant");
         updateCounterValues();
     }
-    if(!simStarted && board.getTurn() > 0 && ui->tabWidget->currentIndex() == 1)
+    if(!simStarted && game.getTurnNumber() > 0 && ui->tabWidget->currentIndex() == 1)
     {
-         vector <Field> currentBoard = board.getBoard();
-         Field current = currentBoard[(x/15) * board.getBoardColumnsNumber() + (y/15)];
-         QString info = "";
-         if(current.plant != NULL)
-            info += QString::fromStdString(current.plant->getPlantInfo());
-         if(current.snail != NULL)
-            info += QString::fromStdString(current.snail->getSnailInfo());
+         QString info = QString::fromStdString(game.getFieldInfo(x/15, y/15));
          ui->plainTextEdit->clear();
          ui->plainTextEdit->appendPlainText(info);
 
     }
     QPointF center = ui->qBoard->mapToScene(ui->qBoard->viewport()->rect()).boundingRect().center();
-    displayBoard(board);
+    displayBoard();
     ui->qBoard->centerOn(center);
 }

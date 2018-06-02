@@ -2,7 +2,7 @@
 #define BOARD_H
 
 #include <vector>
-#include <iostream>
+#include <string>
 #include <ctime>
 #include <cstdlib>
 #include <algorithm>
@@ -48,7 +48,9 @@ public:
     int getTurn();
     void getSnailNumber(int& helix, int& slug, int& worm);
     void getPlantNumber(int& lettuce, int& cabbage, int& grass);
+    string getFieldInfo(int x, int y);
     vector<Field> getBoard();
+    vector<int> getEncodedBoard();
 };
 
 #endif // BOARD_H

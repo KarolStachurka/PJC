@@ -24,7 +24,7 @@ Worm::~Worm()
 
 void Worm::die()
 {
-    if(energy < 1 || age > 20)
+    if(energy < 1 || age > 25)
         dead = true;
 }
 void Worm::grow()
@@ -33,7 +33,7 @@ void Worm::grow()
     energy--;
     lastReproduction++;
     hunger = 5 - (age/5);
-    if(lastReproduction > 4 && energy > 5)
+    if(lastReproduction > 8 && energy > 7)
         reproduction = true;
 }
 

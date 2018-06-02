@@ -22,7 +22,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void displayBoard(Board board);
+    void displayBoard();
     void updateCounterValues();
     SimulationThread *secondThread;
     ~MainWindow();
@@ -31,10 +31,11 @@ signals:
 
     void endSecondThread(bool);
 
-    void sendPrevBoard(Board);
+    void sendCurrentGame(Game);
 
 private slots:
-    void getNextBoard(Board board);
+
+    void getUpdatedGame(Game game);
 
     void getMouseCoords(int x, int y);
 
@@ -47,7 +48,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     myQGraphicsscene *scene;
-    Board board;
+    Game game;
     bool simStarted = false;
     QString text1 = "Start";
     QString text2 = "Pauza";

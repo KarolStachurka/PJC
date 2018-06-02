@@ -13,13 +13,14 @@ private:
 
 public:
     Game();
-    Game(int size, int lettuce, int cabbage, int grass, int helix, int slug, int worm);
-    void newGame();
+    void newGame(int size, int lettuce, int cabbage, int grass, int helix, int slug, int worm);
     void nextTurn();
-    void addOrganism(int x, int y, string type);
-    int getTurnBumber();
-    Board getBoard();
-
+    void addOrganism(int x, int y, int index, string type);
+    int getTurnNumber();
+    void getBoardSize(int& rows, int& cols);
+    string getFieldInfo(int x, int y);
+    vector<int> getEncodedBoard();
+    void getOrganismsNumber(int& lettuce, int& cabbage, int& grass, int& helix, int& slug, int& worm);
 };
 
 #endif // GAME_H

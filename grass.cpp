@@ -38,7 +38,7 @@ void Grass::grow()
 
 void Grass::die()
 {
-    if(age > 30 || energy < 1)
+    if(age > 50 || energy < 1)
         dead = true;
 }
 

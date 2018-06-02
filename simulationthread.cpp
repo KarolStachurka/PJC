@@ -18,15 +18,16 @@ void SimulationThread::endThread(bool end)
 {
     this->end = end;
 }
-void SimulationThread::getPrevBoard(Board board)
+void SimulationThread::getCurrentGame(Game game)
 {
-    this->board = board;
+    this->game = game;
 }
+
 void SimulationThread::iteration()
 {
     if(started)
     {
-        board.nextTurn();
-        emit sendNextBoard(board);
+        game.nextTurn();
+        emit sendUpdatedGame(game);
     }
 }
