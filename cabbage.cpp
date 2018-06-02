@@ -21,7 +21,7 @@ void Cabbage::grow()
     age++;
     if(energy < 10 && !eaten)
         energy = energy + 1;
-    if(size > 7 && lastReproduction > 10 && energy > 0)
+    if(size > 7 && lastReproduction > 18 && energy > 0)
     {
         reproduction = true;
     }
@@ -32,6 +32,6 @@ void Cabbage::grow()
 
 void Cabbage::die()
 {
-    if(age > 80 || energy < 1)
+    if(age > 50 || energy < 1)
         dead = true;
 }

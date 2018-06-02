@@ -16,12 +16,13 @@ Worm::Worm()
 }
 void Worm::die()
 {
-    if(energy < 1 || age > 20)
+    if(energy < 1 || age > 25)
         dead = true;
 }
 void Worm::eat(int type)
 {
-    this->energy = 15;
+    if(type == 0)
+        this->energy = 15;
 }
 
 void Worm::grow()
@@ -30,7 +31,7 @@ void Worm::grow()
     energy--;
     lastReproduction++;
     hunger = 5 - (age/5);
-    if(lastReproduction > 8 && energy > 12)
+    if(lastReproduction > 3 && energy > 10)
         reproduction = true;
 }
 

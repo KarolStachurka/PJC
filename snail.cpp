@@ -12,6 +12,7 @@ int Snail::getHunger()
 
 void Snail::grow(){}
 void Snail::die(){}
+void Snail::eat(int type){}
 bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
 {
     int rangeInt = 1 + 2*speed;
@@ -26,23 +27,16 @@ bool Snail::getNewPosition(int &x, int &y, int maxX, int maxY)
     }
     return false;
 }
+
 bool Snail::isTired()
 {
     return tiredness;
 }
+
 void Snail::setTired(bool tiredness)
 {
     this->tiredness = tiredness;
 }
-void Snail::eat(int type)
-{
-
-    if(type != 3)
-        energy = energy + hunger;
-    else
-        energy++;
-}
-
 string Snail::getSnailInfo()
 {
     string info = "";

@@ -343,8 +343,10 @@ void Board::snailsNextTurn()
                 delete current.snail;
                 current.snail = NULL;
             }
-            if(current.plant)
+            if(current.plant && !temp->isDead())
+            {
                 temp->eat(current.plant->getType());
+            }
             if(temp->isReproduced() && !temp->isDead())
             {
                 int newX = i.getX();
@@ -405,6 +407,7 @@ void Board::snailsNextTurn()
                     else if(temp->getType() == 3 && next.snail->getType() == 1)
                     {
                         delete next.snail;
+                        temp->eat(0);
                         next.snail = temp;
                         current.snail = NULL;
                     }

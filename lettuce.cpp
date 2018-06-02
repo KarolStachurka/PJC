@@ -20,7 +20,7 @@ void Lettuce::grow()
     age++;
     if(energy < 10 && !eaten)
         energy = energy + 2;
-    if(size > 3 && lastReproduction > 8 && energy > 4)
+    if(size > 3 && lastReproduction > 5 && energy > 4)
     {
         reproduction = true;
     }

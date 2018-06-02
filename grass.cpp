@@ -7,7 +7,7 @@ Grass::Grass()
     name = "trawa";
     type = 3;
     age = 0;
-    energy = 500;
+    energy = 1000;
     range = 5;
     size = 1;
     lastReproduction = 0;

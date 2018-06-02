@@ -12,7 +12,7 @@ class Snail: public Organism
 public:
     Snail();
     ~Snail();
-    void eat(int type);
+    virtual void eat(int type);
     void die();
     void grow();
     bool getNewPosition(int &x, int &y, int maxX, int maxY);
