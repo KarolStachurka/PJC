@@ -402,6 +402,12 @@ void Board::snailsNextTurn()
                         next.snail = temp;
                         current.snail = NULL;
                     }
+                    else if(temp->getType() == 3 && next.snail->getType() == 1)
+                    {
+                        delete next.snail;
+                        next.snail = temp;
+                        current.snail = NULL;
+                    }
                     board.at(boardColumnsNumber*newX + newY) = next;
                 }
             }

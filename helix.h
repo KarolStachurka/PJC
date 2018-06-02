@@ -9,6 +9,7 @@ public:
     Helix();
     void grow();
     void die();
+    void eat(int type);
 };
 
 #endif // HELIX_H

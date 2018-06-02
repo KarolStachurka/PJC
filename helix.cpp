@@ -21,6 +21,14 @@ void Helix::die()
     if(energy < 1 || age > 32)
         dead = true;
 }
+void Helix::eat(int type)
+{
+    if(type != 3)
+        energy = energy + hunger;
+    else
+        energy++;
+}
+
 void Helix::grow()
 {
     age++;

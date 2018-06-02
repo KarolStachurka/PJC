@@ -17,6 +17,7 @@ public:
     bool getNewPosition(int &x, int &y, int maxX, int maxY);
     void grow();
     void die();
+    void eat(int type);
 
     //getters
     bool isEaten();

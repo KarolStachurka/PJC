@@ -8,6 +8,7 @@ public:
     Slug();
     void grow();
     void die();
+    void eat(int type);
 };
 
 #endif // SLUG_H

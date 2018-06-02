@@ -20,6 +20,14 @@ void Slug::die()
     if(energy < 1 || age > 40)
         dead = true;
 }
+void Slug::eat(int type)
+{
+    if(type != 3)
+        energy = energy + hunger;
+    else
+        energy++;
+}
+
 void Slug::grow()
 {
     age++;

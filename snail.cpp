@@ -30,17 +30,17 @@ bool Snail::isTired()
 {
     return tiredness;
 }
-
+void Snail::setTired(bool tiredness)
+{
+    this->tiredness = tiredness;
+}
 void Snail::eat(int type)
 {
+
     if(type != 3)
         energy = energy + hunger;
     else
         energy++;
-}
-void Snail::setTired(bool tiredness)
-{
-    this->tiredness = tiredness;
 }
 
 string Snail::getSnailInfo()
