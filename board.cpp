@@ -259,11 +259,6 @@ void Board::plantsNextTurn()
                 temp->beEaten(current.snail->getHunger());
             temp->grow();
             temp->die();
-            if(temp->isDead())
-            {
-                delete current.plant;
-                current.plant = NULL;
-            }
             if(temp->isReproduced() && !temp->isDead())
             {
                 int newX = i.getX();
@@ -272,40 +267,53 @@ void Board::plantsNextTurn()
                 if(isReady)
                 {
                     Field next = board.at(boardColumnsNumber*newX + newY);
-                    if(!next.plant)
+                    switch (temp->getType()) {
+                    case 1:
                     {
-                        switch (temp->getType()) {
-                        case 1:
+                        if(!next.plant || next.plant->getType() == 3)
                         {
+                            delete next.plant;
                             Lettuce *lettuce = new Lettuce;
                             next.plant = lettuce;
                             lettuce = NULL;
                             delete lettuce;
-                            break;
                         }
-                        case 2:
+                        break;
+                    }
+                    case 2:
+                    {
+                        if(!next.plant || next.plant->getType() == 3)
                         {
+                            delete next.plant;
                             Cabbage *cabbage = new Cabbage;
                             next.plant = cabbage;
                             cabbage = NULL;
                             delete cabbage;
-                            break;
                         }
-                        case 3:
+                        break;
+                    }
+                    case 3:
+                    {
+                        if(!next.plant)
                         {
                             Grass *grass = new Grass;
                             next.plant = grass;
                             grass = NULL;
                             delete grass;
-                            break;
                         }
-                        default:
-                            break;
-                        }
+                        break;
+                    }
+                    default:
+                        break;
                     }
                     temp->reproduce();
                     board.at(boardColumnsNumber*newX + newY) = next;
                 }
+            }
+            if(temp->isDead())
+            {
+                delete current.plant;
+                current.plant = NULL;
             }
             temp = NULL;
             delete temp;
@@ -336,7 +344,7 @@ void Board::snailsNextTurn()
                 current.snail = NULL;
             }
             if(current.plant)
-                temp->eat();
+                temp->eat(current.plant->getType());
             if(temp->isReproduced() && !temp->isDead())
             {
                 int newX = i.getX();

@@ -6,10 +6,10 @@ Helix::Helix()
     name = "Ślimak Winniczek";
     type = 1;
     age = 0;
-    energy = 12;
+    energy = 10;
     speed = 1;
     lastReproduction = 0;
-    hunger = 2;
+    hunger = 4;
     dead = false;
     reproduction = false;
     tiredness = true;
@@ -18,7 +18,7 @@ Helix::Helix()
 
 void Helix::die()
 {
-    if(energy < 1 || age > 20)
+    if(energy < 1 || age > 32)
         dead = true;
 }
 void Helix::grow()
@@ -26,7 +26,7 @@ void Helix::grow()
     age++;
     energy--;
     lastReproduction++;
-    if(lastReproduction > 5 && energy > 5)
+    if(lastReproduction > 7 && energy > 10)
         reproduction = true;
 }
 

@@ -32,6 +32,6 @@ void Cabbage::grow()
 
 void Cabbage::die()
 {
-    if(age > 40 || energy < 1)
+    if(age > 80 || energy < 1)
         dead = true;
 }

@@ -7,7 +7,7 @@ Grass::Grass()
     name = "trawa";
     type = 3;
     age = 0;
-    energy = 5;
+    energy = 500;
     range = 5;
     size = 1;
     lastReproduction = 0;
@@ -19,7 +19,7 @@ Grass::Grass()
 void Grass::grow()
 {
     age++;
-    if(energy < 10 && !eaten)
+    if(energy < 10 )
         energy = energy + 1;
     if(size > 5 && lastReproduction > 2 && energy > 4)
     {
@@ -32,7 +32,7 @@ void Grass::grow()
 
 void Grass::die()
 {
-    if(age > 50 || energy < 1)
+    if(age > 70 || energy < 1)
         dead = true;
 }
 
