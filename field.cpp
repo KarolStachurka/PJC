@@ -18,14 +18,6 @@ int Field::getY()
 {
     return coordinateY;
 }
-void Field::setX(int x)
-{
-    this->coordinateX = x;
-}
-void Field::setY(int y)
-{
-    this->coordinateY = y;
-}
 void Field::setCoordinates(int x, int y)
 {
     this->coordinateX = x;

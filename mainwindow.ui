@@ -113,7 +113,7 @@
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="StartTab">
            <attribute name="title">
@@ -302,7 +302,7 @@
              <item row="13" column="0">
               <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>  Ślimaki łyse</string>
+                <string>  Śliniki Luzytańskie</string>
                </property>
               </widget>
              </item>
@@ -418,7 +418,7 @@
                <item row="2" column="0">
                 <widget class="QLabel" name="label_10">
                  <property name="text">
-                  <string>Łyse</string>
+                  <string>Luzytańskie</string>
                  </property>
                 </widget>
                </item>
@@ -605,7 +605,7 @@
              <item row="2" column="1">
               <widget class="QRadioButton" name="addWormRadioButton">
                <property name="text">
-                <string>Ślimak nagi</string>
+                <string>Ślinik Luzytański</string>
                </property>
               </widget>
              </item>

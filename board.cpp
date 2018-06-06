@@ -43,10 +43,6 @@ void Board::setBoardRowsNumber(int rows)
     this->boardRowsNumber = rows;
 }
 
-vector<Field> Board::getBoard()
-{
-    return board;
-}
 int Board::getBoardRowsNumber()
 {
     return boardRowsNumber;
