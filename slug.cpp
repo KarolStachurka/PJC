@@ -35,7 +35,7 @@ void Slug::eat(int type)
 void Slug::grow()
 {
     age++;
-    energy = energy - 2;
+    energy = energy - 3;
     lastReproduction++;
     if(lastReproduction > 25)
         reproduction = true;
