@@ -84,6 +84,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="killPlantsButton">
+          <property name="text">
+           <string>Usuń rośliny</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QTabWidget" name="tabWidget">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -113,7 +120,7 @@
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="StartTab">
            <attribute name="title">

@@ -41,9 +41,6 @@ public:
         */
     void updateCounterValues();
 
-    /// drugi wątek służący do obsługi symulacji
-    SimulationThread *secondThread;
-
     //! Destruktor
         /*!
         */
@@ -90,7 +87,13 @@ private slots:
     //!  Slot obsługujący wydarzenia po kliknięciu przycisku Nowa Gra
     void on_resetButton_clicked();
 
+    //!  Slot obsługujący wydarzenia po kliknięciu przycisku Usuń rośliny
+    void on_killPlantsButton_clicked();
+
 private:
+    /// drugi wątek służący do obsługi symulacji
+    SimulationThread *secondThread;
+
     ///Pole zawierające wskaźnik do GUI
     Ui::MainWindow *ui;
 

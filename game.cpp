@@ -66,3 +66,7 @@ int Game::getTurnNumber()
 {
     return this->turnNumber;
 }
+void Game::removePlants()
+{
+    board.removePlants();
+}

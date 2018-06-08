@@ -81,6 +81,9 @@ public:
           \param worm       liczba obiektów Worm na planszy
         */
     void getOrganismsNumber(int& lettuce, int& cabbage, int& grass, int& helix, int& slug, int& worm);
+
+    //! Usuwa wszystkie rośliny z gry
+    void removePlants();
 };
 
 #endif // GAME_H

@@ -155,6 +155,9 @@ public:
           \returns wektor liczb którymi zakodowana jest zawartość pól
         */
     vector<int> getEncodedBoard();
+
+    //! Usuwa wszystkie rośliny z planszy
+    void removePlants();
 };
 
 #endif // BOARD_H

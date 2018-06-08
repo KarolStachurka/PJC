@@ -28,8 +28,8 @@ Board::~Board()
 {
     for(auto &i: board)
     {
-        i.plant = NULL;
-        i.snail = NULL;
+        i.setPlant(NULL);
+        i.setSnail(NULL);
     }
     board.clear();
 }
@@ -56,9 +56,9 @@ void Board::getPlantNumber(int &lettuce, int &cabbage, int &grass)
     lettuce = 0, cabbage = 0, grass = 0;
     for(auto &i: board)
     {
-        if(i.plant)
+        if(i.getPlant())
         {
-            Plant *temp = i.plant;
+            Plant *temp = i.getPlant();
             if(temp->getType() == 1)
             {
                 lettuce++;
@@ -78,10 +78,10 @@ string Board::getFieldInfo(int x, int y)
 {
     string output = "";
     Field current = board.at(boardColumnsNumber*x + y);
-    if(current.plant)
-        output += current.plant->getPlantInfo();
-    if(current.snail)
-        output += current.snail->getSnailInfo();
+    if(current.getPlant())
+        output += current.getPlant()->getPlantInfo();
+    if(current.getSnail())
+        output += current.getSnail()->getSnailInfo();
     return output;
 
 }
@@ -91,9 +91,9 @@ vector<int> Board::getEncodedBoard()
     for(auto &i: board)
     {
         int info = 0;
-        if(i.plant)
+        if(i.getPlant())
         {
-            Plant *temp = i.plant;
+            Plant *temp = i.getPlant();
             if(temp->getType() == 1)
             {
                 info += 1;
@@ -107,9 +107,9 @@ vector<int> Board::getEncodedBoard()
                 info += 3;
             }
         }
-        if(i.snail)
+        if(i.getSnail())
         {
-            Snail *temp = i.snail;
+            Snail *temp = i.getSnail();
             if(temp->getType() == 1)
             {
                info += 10;
@@ -132,9 +132,9 @@ void Board::getSnailNumber(int& helix, int& slug, int& worm){
     helix = 0, slug = 0, worm = 0;
     for(auto &i: board)
     {
-        if(i.snail)
+        if(i.getSnail())
         {
-            Snail *temp = i.snail;
+            Snail *temp = i.getSnail();
             if(temp->getType() == 1)
             {
                helix++;
@@ -157,10 +157,10 @@ void Board::setSnailStartingPosition(int helix, int slug, int worm)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.snail)
+        if(!current.getSnail())
         {
             Helix *helix = new Helix;
-            current.snail = helix;
+            current.setSnail(helix);
             helix = NULL;
             delete helix;
             board.at(fieldNumber) = current;
@@ -171,10 +171,10 @@ void Board::setSnailStartingPosition(int helix, int slug, int worm)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.snail)
+        if(!current.getSnail())
         {
             Slug *slug = new Slug;
-            current.snail = slug;
+            current.setSnail(slug);
             slug = NULL;
             delete slug;
             board.at(fieldNumber) = current;
@@ -185,10 +185,10 @@ void Board::setSnailStartingPosition(int helix, int slug, int worm)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.snail)
+        if(!current.getSnail())
         {
             Worm *worm = new Worm;
-            current.snail = worm;
+            current.setSnail(worm);
             worm = NULL;
             delete worm;
             board.at(fieldNumber) = current;
@@ -204,10 +204,10 @@ void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.plant)
+        if(!current.getPlant())
         {
             Lettuce *lettuce = new Lettuce;
-            current.plant = lettuce;
+            current.setPlant(lettuce);
             lettuce = NULL;
             delete lettuce;
             board.at(fieldNumber) = current;
@@ -218,10 +218,10 @@ void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.plant)
+        if(!current.getPlant())
         {
             Cabbage *cabbage = new Cabbage;
-            current.plant = cabbage;
+            current.setPlant(cabbage);
             cabbage = NULL;
             delete cabbage;
             board.at(fieldNumber) = current;
@@ -232,10 +232,10 @@ void Board::setPlantStartingPosition(int lettuce, int cabbage, int grass)
     {
         int fieldNumber = rand()%board.size();
         Field current = board.at(fieldNumber);
-        if(!current.plant)
+        if(!current.getPlant())
         {
             Grass *grass = new Grass;
-            current.plant = grass;
+            current.setPlant(grass);
             grass = NULL;
             delete grass;
             board.at(fieldNumber) = current;
@@ -248,11 +248,11 @@ void Board::plantsNextTurn()
     for(auto &i: board)
     {
         Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
-        if(current.plant)
+        if(current.getPlant())
         {
-            Plant *temp = current.plant;
-            if(current.snail)
-                temp->beEaten(current.snail->getHunger());
+            Plant *temp = current.getPlant();
+            if(current.getSnail())
+                temp->beEaten(current.getSnail()->getHunger());
             temp->grow();
             temp->die();
             if(temp->isReproduced() && !temp->isDead())
@@ -266,11 +266,10 @@ void Board::plantsNextTurn()
                     switch (temp->getType()) {
                     case 1:
                     {
-                        if(!next.plant || next.plant->getType() == 3)
+                        if(!next.getPlant() || next.getPlant()->getType() == 3)
                         {
-                            delete next.plant;
                             Lettuce *lettuce = new Lettuce;
-                            next.plant = lettuce;
+                            next.setPlant(lettuce);
                             lettuce = NULL;
                             delete lettuce;
                         }
@@ -278,11 +277,10 @@ void Board::plantsNextTurn()
                     }
                     case 2:
                     {
-                        if(!next.plant || next.plant->getType() == 3)
+                        if(!next.getPlant() || next.getPlant()->getType() == 3)
                         {
-                            delete next.plant;
                             Cabbage *cabbage = new Cabbage;
-                            next.plant = cabbage;
+                            next.setPlant(cabbage);
                             cabbage = NULL;
                             delete cabbage;
                         }
@@ -290,10 +288,10 @@ void Board::plantsNextTurn()
                     }
                     case 3:
                     {
-                        if(!next.plant)
+                        if(!next.getPlant())
                         {
                             Grass *grass = new Grass;
-                            next.plant = grass;
+                            next.setPlant(grass);
                             grass = NULL;
                             delete grass;
                         }
@@ -308,8 +306,7 @@ void Board::plantsNextTurn()
             }
             if(temp->isDead())
             {
-                delete current.plant;
-                current.plant = NULL;
+                current.setPlant(NULL);
             }
             temp = NULL;
             delete temp;
@@ -323,25 +320,24 @@ void Board::snailsNextTurn()
     for(auto &i: board)
     {
         Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
-        if(current.snail)
-            i.snail->setTired(false);
+        if(current.getSnail())
+            i.getSnail()->setTired(false);
     }
     for(auto &i: board)
     {
         Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
-        if(current.snail && !current.snail->isTired())
+        if(current.getSnail() && !current.getSnail()->isTired())
         {
-            Snail *temp = current.snail;
+            Snail *temp = current.getSnail();
             temp->grow();
             temp->die();
             if(temp->isDead())
             {
-                delete current.snail;
-                current.snail = NULL;
+                current.setSnail(NULL);
             }
-            if(current.plant && !temp->isDead())
+            if(current.getPlant() && !temp->isDead())
             {
-                temp->eat(current.plant->getType());
+                temp->eat(current.getPlant()->getType());
             }
             if(temp->isReproduced() && !temp->isDead())
             {
@@ -351,13 +347,13 @@ void Board::snailsNextTurn()
                 if(isReady)
                 {
                     Field next = board.at(boardColumnsNumber*newX + newY);
-                    if(!next.snail)
+                    if(!next.getSnail())
                     {
                         switch (temp->getType()) {
                         case 1:
                         {
                             Helix *helix = new Helix;
-                            next.snail = helix;
+                            next.setSnail(helix);
                             helix = NULL;
                             delete helix;
                             break;
@@ -365,7 +361,7 @@ void Board::snailsNextTurn()
                         case 2:
                         {
                             Slug *slug = new Slug;
-                            next.snail = slug;
+                            next.setSnail(slug);
                             slug = NULL;
                             delete slug;
                             break;
@@ -374,7 +370,7 @@ void Board::snailsNextTurn()
                         case 3:
                         {
                             Worm *worm = new Worm;
-                            next.snail = worm;
+                            next.setSnail(worm);
                             worm = NULL;
                             delete worm;
                             break;
@@ -395,17 +391,16 @@ void Board::snailsNextTurn()
                 if(isReady)
                 {
                     Field next = board.at(boardColumnsNumber*newX + newY);
-                    if(!next.snail)
+                    if(!next.getSnail())
                     {
-                        next.snail = temp;
-                        current.snail = NULL;
+                        next.setSnail(temp);
+                        current.setSnail(NULL);
                     }
-                    else if(temp->getType() == 3 && next.snail->getType() == 1)
+                    else if(temp->getType() == 3 && next.getSnail()->getType() == 1)
                     {
-                        delete next.snail;
                         temp->eat(0);
-                        next.snail = temp;
-                        current.snail = NULL;
+                        next.setSnail(temp);
+                        current.setSnail(NULL);
                     }
                     board.at(boardColumnsNumber*newX + newY) = next;
                 }
@@ -420,13 +415,13 @@ void Board::snailsNextTurn()
 void Board::addSnail(int x, int y, int index)
 {
     Field current = board[boardColumnsNumber*x + y];
-    if(!current.snail)
+    if(!current.getSnail())
     {
         switch (index) {
         case 1:
         {
             Helix *helix = new Helix;
-            current.snail = helix;
+            current.setSnail(helix);
             helix = NULL;
             delete helix;
             break;
@@ -434,7 +429,7 @@ void Board::addSnail(int x, int y, int index)
         case 2:
         {
             Slug *slug = new Slug;
-            current.snail = slug;
+            current.setSnail(slug);
             slug = NULL;
             delete slug;
             break;
@@ -442,7 +437,7 @@ void Board::addSnail(int x, int y, int index)
         case 3:
         {
             Worm *worm = new Worm;
-            current.snail = worm;
+            current.setSnail(worm);
             worm = NULL;
             delete worm;
             break;
@@ -456,13 +451,13 @@ void Board::addSnail(int x, int y, int index)
 void Board::addPlant(int x, int y, int index)
 {
     Field current = board[boardColumnsNumber*x + y];
-    if(!current.plant)
+    if(!current.getPlant())
     {
         switch (index) {
         case 1:
         {
             Lettuce *lettuce = new Lettuce;
-            current.plant = lettuce;
+            current.setPlant(lettuce);
             lettuce = NULL;
             delete lettuce;
             break;
@@ -470,7 +465,7 @@ void Board::addPlant(int x, int y, int index)
         case 2:
         {
             Cabbage *cabbage = new Cabbage;
-            current.plant = cabbage;
+            current.setPlant(cabbage);
             cabbage = NULL;
             delete cabbage;
             break;
@@ -478,7 +473,7 @@ void Board::addPlant(int x, int y, int index)
         case 3:
         {
             Grass *grass = new Grass;
-            current.plant = grass;
+            current.setPlant(grass);
             grass = NULL;
             delete grass;
             break;
@@ -488,4 +483,16 @@ void Board::addPlant(int x, int y, int index)
         }
     }
     board[boardColumnsNumber*x + y] = current;
+}
+void Board::removePlants()
+{
+    for(auto &i: board)
+    {
+        Field current = board.at(boardColumnsNumber*(i.getX()) + i.getY());
+        if(current.getPlant())
+        {
+            current.setPlant(NULL);
+        }
+        board.at(boardColumnsNumber*current.getX() + current.getY()) = current;
+    }
 }

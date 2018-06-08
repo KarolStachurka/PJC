@@ -2,7 +2,7 @@
 
 Worm::Worm()
 {
-    name = "Ślimak nagi";
+    name = "Ślinik Luzytański";
     type = 3;
     age = 0;
     energy = 15;
@@ -31,7 +31,7 @@ void Worm::grow()
     energy--;
     lastReproduction++;
     hunger = 5 - (age/5);
-    if(lastReproduction > 3 && energy > 10)
+    if(lastReproduction > 3 && energy > 13)
         reproduction = true;
 }
 

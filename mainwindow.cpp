@@ -314,3 +314,10 @@ void MainWindow::getMouseCoords(int x, int y)
     displayBoard();
     ui->qBoard->centerOn(center);
 }
+
+void MainWindow::on_killPlantsButton_clicked()
+{
+    game.removePlants();
+    displayBoard();
+    updateCounterValues();
+}

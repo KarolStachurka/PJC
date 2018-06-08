@@ -23,3 +23,19 @@ void Field::setCoordinates(int x, int y)
     this->coordinateX = x;
     this->coordinateY = y;
 }
+Plant* Field::getPlant()
+{
+    return plant;
+}
+Snail* Field::getSnail()
+{
+    return snail;
+}
+void Field::setPlant(Plant *plant)
+{
+    this->plant = plant;
+}
+void Field::setSnail(Snail *snail)
+{
+    this->snail = snail;
+}
